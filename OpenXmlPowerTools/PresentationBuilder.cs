@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -372,18 +372,13 @@ namespace OpenXmlPowerTools
         {
             XElement newRegular;
             FontPart oldFontPart = (FontPart)sourceDocument.PresentationPart.GetPartById((string)font.Element(fontXName).Attributes(R.id).FirstOrDefault());
-            FontPartType fpt;
-            if (oldFontPart.ContentType == "application/x-fontdata")
-                fpt = FontPartType.FontData;
-            else if (oldFontPart.ContentType == "application/x-font-ttf")
-                fpt = FontPartType.FontTtf;
-            else
-                fpt = FontPartType.FontOdttf;
-            var newId = "R" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
-            var newFontPart = newDocument.PresentationPart.AddFontPart(fpt, newId);
-            newFontPart.FeedData(oldFontPart.GetStream());
+            FontPart newFontPart = newDocument.PresentationPart.AddFontPart(oldFontPart.ContentType);
+            using (var stream = oldFontPart.GetStream())
+            {
+                newFontPart.FeedData(stream);
+            }
             newRegular = new XElement(fontXName,
-                new XAttribute(R.id, newId));
+                new XAttribute(R.id, newDocument.PresentationPart.GetIdOfPart(newFontPart)));
             return newRegular;
         }
 
@@ -708,7 +703,7 @@ namespace OpenXmlPowerTools
                 ExternalRelationship tempEr2 = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
                 if (tempEr2 != null)
                     continue;
-                
+
                 oldPart = oldContentPart.GetPartById(relId);
                 newPart = newContentPart.AddNewPart<DiagramLayoutDefinitionPart>();
                 newPart.GetXDocument().Add(oldPart.GetXDocument().Root);
@@ -1038,6 +1033,7 @@ namespace OpenXmlPowerTools
                 string relId = dataReference.Attribute(R.id).Value;
 
                 var oldPartIdPair = oldChart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
+
                 if (oldPartIdPair != null)
                 {
                     EmbeddedPackagePart oldPart = oldPartIdPair.OpenXmlPart as EmbeddedPackagePart;
@@ -1059,26 +1055,16 @@ namespace OpenXmlPowerTools
                     if (oldEmbeddedObjectPart != null)
                     {
                         EmbeddedPackagePart newPart = newChart.AddEmbeddedPackagePart(oldEmbeddedObjectPart.ContentType);
-                        using (Stream oldObject = oldEmbeddedObjectPart.GetStream(FileMode.Open, FileAccess.Read))
-                        using (Stream newObject = newPart.GetStream(FileMode.Create, FileAccess.ReadWrite))
-                        {
-                            int byteCount;
-                            byte[] buffer = new byte[65536];
-                            while ((byteCount = oldObject.Read(buffer, 0, 65536)) != 0)
-                                newObject.Write(buffer, 0, byteCount);
-                        }
-
+                        newPart.FeedData(oldPart.GetStream());
                         var rId = newChart.GetIdOfPart(newPart);
                         dataReference.Attribute(R.id).Value = rId;
 
                         // following is a hack to fix the package because the Open XML SDK does not let us create
                         // a relationship from a chart with the oleObject relationship type.
 
-                        var pkg = newChart.OpenXmlPackage.OpenXmlPackage;
-                        var fromPart = pkg.GetParts().FirstOrDefault(p => p.Uri == newChart.Uri);
-                        var rel = fromPart.GetRelationships().FirstOrDefault(p => p.Id == rId);
+                        var fromPart = newChart.OpenXmlPackage.GetPackage().GetPart(newChart.Uri);
+                        var rel = fromPart.GetRelationship(rId);
                         var targetUri = rel.TargetUri;
-
                         fromPart.DeleteRelationship(rId);
                         fromPart.CreateRelationship(targetUri, System.IO.Packaging.TargetMode.Internal,
                             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject", rId);
@@ -1154,7 +1140,8 @@ namespace OpenXmlPowerTools
                     Guid g = Guid.NewGuid();
                     string newRid = "R" + g.ToString().Replace("-", "");
                     var oldHyperlink = oldPart.HyperlinkRelationships.FirstOrDefault(h => h.Id == relId);
-                    if (oldHyperlink == null) {
+                    if (oldHyperlink == null)
+                    {
                         //TODO Issue with reference to another part: var temp = oldPart.GetPartById(relId);
                         RemoveContent(newContent, e.Name, relId);
                         continue;
@@ -1306,7 +1293,7 @@ namespace OpenXmlPowerTools
                         temp.AddContentPartRelTypeResourceIdTupple(newContentPart, imagePart.RelationshipType, newId);
                         imageReference.Attribute(attributeName).Value = newId;
                     }
-                    
+
                 }
             }
             else
@@ -1319,7 +1306,7 @@ namespace OpenXmlPowerTools
                 }
                 else
                 {
-                    var fromPart = newContentPart.OpenXmlPackage.GetParts().FirstOrDefault(p => p.Uri == newContentPart.Uri);
+                    var fromPart = newContentPart.GetPackagePart();
                     fromPart.CreateRelationship(new Uri("NULL", UriKind.RelativeOrAbsolute), System.IO.Packaging.TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image", relId);
                 }
             }
@@ -1506,7 +1493,7 @@ namespace OpenXmlPowerTools
 
             var newId = "R" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
             EmbeddedControlPersistencePart newPart = newContentPart.AddNewPart<EmbeddedControlPersistencePart>("application/vnd.ms-office.activeX+xml", newId);
-            
+
             newPart.FeedData(oldPart.GetStream());
             activeXPartReference.Attribute(attributeName).Value = newId;
 
@@ -1574,142 +1561,142 @@ namespace OpenXmlPowerTools
                     newPart = ((ChartColorStylePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
                 else
 #endif
-                if (newContentPart is ChartDrawingPart)
-                    newPart = ((ChartDrawingPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ChartPart)
-                    newPart = ((ChartPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ChartsheetPart)
-                    newPart = ((ChartsheetPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    if (newContentPart is ChartDrawingPart)
+                        newPart = ((ChartDrawingPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ChartPart)
+                        newPart = ((ChartPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ChartsheetPart)
+                        newPart = ((ChartsheetPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
 #if !NET35
-                else if (newContentPart is ChartStylePart)
-                    newPart = ((ChartStylePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ChartStylePart)
+                        newPart = ((ChartStylePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
 #endif
-                else if (newContentPart is CommentAuthorsPart)
-                    newPart = ((CommentAuthorsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ConnectionsPart)
-                    newPart = ((ConnectionsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ControlPropertiesPart)
-                    newPart = ((ControlPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CoreFilePropertiesPart)
-                    newPart = ((CoreFilePropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomDataPart)
-                    newPart = ((CustomDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomDataPropertiesPart)
-                    newPart = ((CustomDataPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomFilePropertiesPart)
-                    newPart = ((CustomFilePropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomizationPart)
-                    newPart = ((CustomizationPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomPropertyPart)
-                    newPart = ((CustomPropertyPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomUIPart)
-                    newPart = ((CustomUIPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomXmlMappingsPart)
-                    newPart = ((CustomXmlMappingsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomXmlPart)
-                    newPart = ((CustomXmlPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is CustomXmlPropertiesPart)
-                    newPart = ((CustomXmlPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is DiagramColorsPart)
-                    newPart = ((DiagramColorsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is DiagramDataPart)
-                    newPart = ((DiagramDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is DiagramLayoutDefinitionPart)
-                    newPart = ((DiagramLayoutDefinitionPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is DiagramPersistLayoutPart)
-                    newPart = ((DiagramPersistLayoutPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is DiagramStylePart)
-                    newPart = ((DiagramStylePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is DigitalSignatureOriginPart)
-                    newPart = ((DigitalSignatureOriginPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is DrawingsPart)
-                    newPart = ((DrawingsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is EmbeddedControlPersistenceBinaryDataPart)
-                    newPart = ((EmbeddedControlPersistenceBinaryDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is EmbeddedControlPersistencePart)
-                    newPart = ((EmbeddedControlPersistencePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is EmbeddedObjectPart)
-                    newPart = ((EmbeddedObjectPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is EmbeddedPackagePart)
-                    newPart = ((EmbeddedPackagePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ExtendedFilePropertiesPart)
-                    newPart = ((ExtendedFilePropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ExtendedPart)
-                    newPart = ((ExtendedPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is FontPart)
-                    newPart = ((FontPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is FontTablePart)
-                    newPart = ((FontTablePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is HandoutMasterPart)
-                    newPart = ((HandoutMasterPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is InternationalMacroSheetPart)
-                    newPart = ((InternationalMacroSheetPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is LegacyDiagramTextInfoPart)
-                    newPart = ((LegacyDiagramTextInfoPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is LegacyDiagramTextPart)
-                    newPart = ((LegacyDiagramTextPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is MacroSheetPart)
-                    newPart = ((MacroSheetPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is NotesMasterPart)
-                    newPart = ((NotesMasterPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is NotesSlidePart)
-                    newPart = ((NotesSlidePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is PresentationPart)
-                    newPart = ((PresentationPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is PresentationPropertiesPart)
-                    newPart = ((PresentationPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is QuickAccessToolbarCustomizationsPart)
-                    newPart = ((QuickAccessToolbarCustomizationsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is RibbonAndBackstageCustomizationsPart)
-                    newPart = ((RibbonAndBackstageCustomizationsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is RibbonExtensibilityPart)
-                    newPart = ((RibbonExtensibilityPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is SingleCellTablePart)
-                    newPart = ((SingleCellTablePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is SlideCommentsPart)
-                    newPart = ((SlideCommentsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is SlideLayoutPart)
-                    newPart = ((SlideLayoutPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is SlideMasterPart)
-                    newPart = ((SlideMasterPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is SlidePart)
-                    newPart = ((SlidePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is SlideSyncDataPart)
-                    newPart = ((SlideSyncDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is StyleDefinitionsPart)
-                    newPart = ((StyleDefinitionsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is StylesPart)
-                    newPart = ((StylesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is StylesWithEffectsPart)
-                    newPart = ((StylesWithEffectsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is TableDefinitionPart)
-                    newPart = ((TableDefinitionPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is TableStylesPart)
-                    newPart = ((TableStylesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ThemeOverridePart)
-                    newPart = ((ThemeOverridePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ThemePart)
-                    newPart = ((ThemePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ThumbnailPart)
-                    newPart = ((ThumbnailPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CommentAuthorsPart)
+                        newPart = ((CommentAuthorsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ConnectionsPart)
+                        newPart = ((ConnectionsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ControlPropertiesPart)
+                        newPart = ((ControlPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CoreFilePropertiesPart)
+                        newPart = ((CoreFilePropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomDataPart)
+                        newPart = ((CustomDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomDataPropertiesPart)
+                        newPart = ((CustomDataPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomFilePropertiesPart)
+                        newPart = ((CustomFilePropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomizationPart)
+                        newPart = ((CustomizationPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomPropertyPart)
+                        newPart = ((CustomPropertyPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomUIPart)
+                        newPart = ((CustomUIPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomXmlMappingsPart)
+                        newPart = ((CustomXmlMappingsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomXmlPart)
+                        newPart = ((CustomXmlPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is CustomXmlPropertiesPart)
+                        newPart = ((CustomXmlPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is DiagramColorsPart)
+                        newPart = ((DiagramColorsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is DiagramDataPart)
+                        newPart = ((DiagramDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is DiagramLayoutDefinitionPart)
+                        newPart = ((DiagramLayoutDefinitionPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is DiagramPersistLayoutPart)
+                        newPart = ((DiagramPersistLayoutPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is DiagramStylePart)
+                        newPart = ((DiagramStylePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is DigitalSignatureOriginPart)
+                        newPart = ((DigitalSignatureOriginPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is DrawingsPart)
+                        newPart = ((DrawingsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is EmbeddedControlPersistenceBinaryDataPart)
+                        newPart = ((EmbeddedControlPersistenceBinaryDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is EmbeddedControlPersistencePart)
+                        newPart = ((EmbeddedControlPersistencePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is EmbeddedObjectPart)
+                        newPart = ((EmbeddedObjectPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is EmbeddedPackagePart)
+                        newPart = ((EmbeddedPackagePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ExtendedFilePropertiesPart)
+                        newPart = ((ExtendedFilePropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ExtendedPart)
+                        newPart = ((ExtendedPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is FontPart)
+                        newPart = ((FontPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is FontTablePart)
+                        newPart = ((FontTablePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is HandoutMasterPart)
+                        newPart = ((HandoutMasterPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is InternationalMacroSheetPart)
+                        newPart = ((InternationalMacroSheetPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is LegacyDiagramTextInfoPart)
+                        newPart = ((LegacyDiagramTextInfoPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is LegacyDiagramTextPart)
+                        newPart = ((LegacyDiagramTextPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is MacroSheetPart)
+                        newPart = ((MacroSheetPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is NotesMasterPart)
+                        newPart = ((NotesMasterPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is NotesSlidePart)
+                        newPart = ((NotesSlidePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is PresentationPart)
+                        newPart = ((PresentationPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is PresentationPropertiesPart)
+                        newPart = ((PresentationPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is QuickAccessToolbarCustomizationsPart)
+                        newPart = ((QuickAccessToolbarCustomizationsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is RibbonAndBackstageCustomizationsPart)
+                        newPart = ((RibbonAndBackstageCustomizationsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is RibbonExtensibilityPart)
+                        newPart = ((RibbonExtensibilityPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is SingleCellTablePart)
+                        newPart = ((SingleCellTablePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is SlideCommentsPart)
+                        newPart = ((SlideCommentsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is SlideLayoutPart)
+                        newPart = ((SlideLayoutPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is SlideMasterPart)
+                        newPart = ((SlideMasterPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is SlidePart)
+                        newPart = ((SlidePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is SlideSyncDataPart)
+                        newPart = ((SlideSyncDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is StyleDefinitionsPart)
+                        newPart = ((StyleDefinitionsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is StylesPart)
+                        newPart = ((StylesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is StylesWithEffectsPart)
+                        newPart = ((StylesWithEffectsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is TableDefinitionPart)
+                        newPart = ((TableDefinitionPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is TableStylesPart)
+                        newPart = ((TableStylesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ThemeOverridePart)
+                        newPart = ((ThemeOverridePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ThemePart)
+                        newPart = ((ThemePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ThumbnailPart)
+                        newPart = ((ThumbnailPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
 #if !NET35
-                else if (newContentPart is TimeLineCachePart)
-                    newPart = ((TimeLineCachePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is TimeLinePart)
-                    newPart = ((TimeLinePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is TimeLineCachePart)
+                        newPart = ((TimeLineCachePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is TimeLinePart)
+                        newPart = ((TimeLinePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
 #endif
-                else if (newContentPart is UserDefinedTagsPart)
-                    newPart = ((UserDefinedTagsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is VbaDataPart)
-                    newPart = ((VbaDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is VbaProjectPart)
-                    newPart = ((VbaProjectPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is ViewPropertiesPart)
-                    newPart = ((ViewPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is VmlDrawingPart)
-                    newPart = ((VmlDrawingPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
-                else if (newContentPart is XmlSignaturePart)
-                    newPart = ((XmlSignaturePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is UserDefinedTagsPart)
+                        newPart = ((UserDefinedTagsPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is VbaDataPart)
+                        newPart = ((VbaDataPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is VbaProjectPart)
+                        newPart = ((VbaProjectPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is ViewPropertiesPart)
+                        newPart = ((ViewPropertiesPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is VmlDrawingPart)
+                        newPart = ((VmlDrawingPart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
+                    else if (newContentPart is XmlSignaturePart)
+                        newPart = ((XmlSignaturePart)newContentPart).AddExtendedPart(oldPart.RelationshipType, oldPart.ContentType, fileInfo.Extension);
 
                 relId = newContentPart.GetIdOfPart(newPart);
                 newPart.FeedData(oldPart.GetStream());
@@ -1725,7 +1712,7 @@ namespace OpenXmlPowerTools
                 }
                 catch (KeyNotFoundException)
                 {
-                    var fromPart = newContentPart.OpenXmlPackage.GetParts().FirstOrDefault(p => p.Uri == newContentPart.Uri);
+                    var fromPart = newContentPart.GetPackagePart();
                     fromPart.CreateRelationship(new Uri("NULL", UriKind.RelativeOrAbsolute), System.IO.Packaging.TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image", relId);
                 }
             }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 /*
@@ -182,6 +182,7 @@ namespace OpenXmlPowerTools
                                 continue;
                             }
                         }
+                        sDoc.Save();
                     }
                 }
                 else if (type == typeof(SpreadsheetDocument))
@@ -200,6 +201,7 @@ namespace OpenXmlPowerTools
                                 continue;
                             }
                         }
+                        sDoc.Save();
                     }
                 }
                 else if (type == typeof(PresentationDocument))
@@ -218,6 +220,7 @@ namespace OpenXmlPowerTools
                                 continue;
                             }
                         }
+                        sDoc.Save();
                     }
                 }
                 this.FileName = fileName;
@@ -299,10 +302,10 @@ namespace OpenXmlPowerTools
 
         private static Type GetDocumentType(byte[] bytes)
         {
-            using (MemoryStream stream = new MemoryStream())
+using (MemoryStream stream = new MemoryStream())
             {
                 stream.Write(bytes, 0, bytes.Length);
-                using (Package package = Package.Open(stream, FileMode.Open))
+                using (Package package = Package.Open(stream, FileMode.Open, FileAccess.Read))
                 {
                     PackageRelationship relationship = package.GetRelationshipsByType("http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument").FirstOrDefault();
                     if (relationship == null)
@@ -610,7 +613,7 @@ namespace OpenXmlPowerTools
         {
             MemoryStream stream = new MemoryStream();
             Package package = Package.Open(stream, FileMode.Create);
-            package.Dispose();
+            package.Close();
             return new OpenXmlMemoryStreamDocument(stream);
         }
 
@@ -625,7 +628,7 @@ namespace OpenXmlPowerTools
             {
                 if (GetDocumentType() != typeof(WordprocessingDocument))
                     throw new PowerToolsDocumentException("Not a Wordprocessing document.");
-                return WordprocessingDocument.Open(DocPackage);
+                return WordprocessingDocument.Open(DocMemoryStream, true);
             }
             catch (Exception e)
             {
@@ -638,7 +641,7 @@ namespace OpenXmlPowerTools
             {
                 if (GetDocumentType() != typeof(SpreadsheetDocument))
                     throw new PowerToolsDocumentException("Not a Spreadsheet document.");
-                return SpreadsheetDocument.Open(DocPackage);
+                return SpreadsheetDocument.Open(DocMemoryStream, true);
             }
             catch (Exception e)
             {
@@ -652,7 +655,7 @@ namespace OpenXmlPowerTools
             {
                 if (GetDocumentType() != typeof(PresentationDocument))
                     throw new PowerToolsDocumentException("Not a Presentation document.");
-                return PresentationDocument.Open(DocPackage);
+                return PresentationDocument.Open(DocMemoryStream, true);
             }
             catch (Exception e)
             {
@@ -693,29 +696,29 @@ namespace OpenXmlPowerTools
 
         public OpenXmlPowerToolsDocument GetModifiedDocument()
         {
-            DocPackage.Dispose();
-            DocPackage = null;
+            // DocPackage.Dispose();
+            // DocPackage = null;
             return new OpenXmlPowerToolsDocument((Document == null) ? null : Document.FileName, DocMemoryStream);
         }
 
         public WmlDocument GetModifiedWmlDocument()
         {
-            DocPackage.Dispose();
-            DocPackage = null;
+            // DocPackage.Dispose();
+            // DocPackage = null;
             return new WmlDocument((Document == null) ? null : Document.FileName, DocMemoryStream);
         }
 
         public SmlDocument GetModifiedSmlDocument()
         {
-            DocPackage.Dispose();
-            DocPackage = null;
+            // DocPackage.Dispose();
+            // DocPackage = null;
             return new SmlDocument((Document == null) ? null : Document.FileName, DocMemoryStream);
         }
 
         public PmlDocument GetModifiedPmlDocument()
         {
-            DocPackage.Dispose();
-            DocPackage = null;
+            // DocPackage.Dispose();
+            // DocPackage = null;
             return new PmlDocument((Document == null) ? null : Document.FileName, DocMemoryStream);
         }
 
@@ -734,24 +737,30 @@ namespace OpenXmlPowerTools
             Dispose(false);
         }
 
-        private void Dispose(Boolean disposing)
+        private void Dispose(bool disposing)
         {
             if (disposing)
             {
-                if (DocPackage != null)
-                {
-                    DocPackage.Dispose();
-                }
+                // In .NET 10, closing the Package after modifications can cause
+                // EndOfStreamException errors in ZipArchive. The Package is managed
+                // by the OpenXmlDocument and will be disposed when needed.
+                // if (DocPackage != null)
+                // {
+                //     DocPackage.Close();
+                // }
                 if (DocMemoryStream != null)
                 {
                     DocMemoryStream.Dispose();
                 }
             }
             if (DocPackage == null && DocMemoryStream == null)
+            {
                 return;
+            }
             DocPackage = null;
             DocMemoryStream = null;
             GC.SuppressFinalize(this);
         }
     }
 }
+

@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
@@ -18,6 +20,45 @@ using System.Drawing.Imaging;
 
 namespace OpenXmlPowerTools
 {
+    /// <summary>
+    /// Extension methods to bridge API changes in Open XML SDK 3.4.1
+    /// The SDK no longer exposes Package and PackagePart properties directly,
+    /// so we use reflection to access them for backward compatibility.
+    /// </summary>
+    public static class OpenXmlPackageExtensions
+    {
+        private static readonly PropertyInfo s_packageProperty;
+        private static readonly PropertyInfo s_packagePartProperty;
+
+        static OpenXmlPackageExtensions()
+        {
+            // Use reflection to get the internal Package property
+            s_packageProperty = typeof(OpenXmlPackage).GetProperty("Package", BindingFlags.NonPublic | BindingFlags.Instance);
+            s_packagePartProperty = typeof(OpenXmlPart).GetProperty("PackagePart", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            if (s_packageProperty == null)
+                throw new InvalidOperationException("Unable to find Package property on OpenXmlPackage. The Open XML SDK API may have changed.");
+            if (s_packagePartProperty == null)
+                throw new InvalidOperationException("Unable to find PackagePart property on OpenXmlPart. The Open XML SDK API may have changed.");
+        }
+
+        /// <summary>
+        /// Gets the underlying Package from an OpenXmlPackage using reflection.
+        /// </summary>
+        public static Package GetPackage(this OpenXmlPackage package)
+        {
+            return (Package)s_packageProperty.GetValue(package);
+        }
+
+        /// <summary>
+        /// Gets the underlying PackagePart from an OpenXmlPart using reflection.
+        /// </summary>
+        public static PackagePart GetPackagePart(this OpenXmlPart part)
+        {
+            return (PackagePart)s_packagePartProperty.GetValue(part);
+        }
+    }
+
     public static class AddDocxTextHelper
     {
         public static WmlDocument AppendParagraphToDocument(

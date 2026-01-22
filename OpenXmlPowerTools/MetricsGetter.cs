@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Validation;
 using System.Globalization;
+using System.Drawing.Imaging;
 
 namespace OpenXmlPowerTools
 {
@@ -189,10 +190,7 @@ namespace OpenXmlPowerTools
 
         private static XElement RetrieveContentTypeList(OpenXmlPackage oxPkg)
         {
-            Package pkg = oxPkg.Package;
-
-            var nonRelationshipParts = pkg.GetParts().Cast<ZipPackagePart>().Where(p => p.ContentType != "application/vnd.openxmlformats-package.relationships+xml");
-            var contentTypes = nonRelationshipParts
+            var contentTypes = oxPkg.GetAllParts()
                 .Select(p => p.ContentType)
                 .OrderBy(t => t)
                 .Distinct();
@@ -203,11 +201,8 @@ namespace OpenXmlPowerTools
 
         private static XElement RetrieveNamespaceList(OpenXmlPackage oxPkg)
         {
-            Package pkg = oxPkg.Package;
-
-            var nonRelationshipParts = pkg.GetParts().Cast<ZipPackagePart>().Where(p => p.ContentType != "application/vnd.openxmlformats-package.relationships+xml");
-            var xmlParts = nonRelationshipParts
-                .Where(p => p.ContentType.ToLower().EndsWith("xml"));
+            var xmlParts = oxPkg.GetAllParts()
+                .Where(p => p.ContentType.EndsWith("xml", StringComparison.OrdinalIgnoreCase));
 
             var uniqueNamespaces = new HashSet<string>();
             foreach (var xp in xmlParts)
@@ -226,7 +221,7 @@ namespace OpenXmlPowerTools
                             .Distinct()
                             .ToList();
                         foreach (var item in namespaces)
-		                    uniqueNamespaces.Add(item);
+                            uniqueNamespaces.Add(item);
                     }
                     // if catch exception, forget about it.  Just trying to get a most complete survey possible of all namespaces in all documents.
                     // if caught exception, chances are the document is bad anyway.

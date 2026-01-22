@@ -13,6 +13,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Text;
 using System;
+
 namespace Peg.Base
 {
     #region Input File Support
