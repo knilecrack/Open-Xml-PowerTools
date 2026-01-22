@@ -5009,6 +5009,7 @@ public static class WmlComparer
                     break;
                 }
                 var unidList = relevantAncestors
+                    .Where(a => a.Name != W.footnotes && a.Name != W.endnotes)  // Filter out footnotes/endnotes which may not have Unid
                     .Select(a =>
                     {
                         var unid = (string)a.Attribute(PtOpenXml.Unid);

@@ -24,6 +24,16 @@ namespace OpenXmlPowerTools;
 /// Extension methods to bridge API changes in Open XML SDK 3.4.1
 /// The SDK no longer exposes Package and PackagePart properties directly,
 /// so we use reflection to access them for backward compatibility.
+///
+/// TODO: REFACTOR - Replace reflection-based approach with proper SDK API usage
+/// This is a temporary workaround to bridge the API gap in Open XML SDK 3.4.1.
+/// Future work should refactor all Package/PackagePart usage to use the new SDK APIs:
+/// - Replace package.GetPackage().GetParts() with package.GetAllParts()
+/// - Replace package.GetPackage().GetPart(uri) with package.GetPartById(relationshipId)
+/// - Replace part.GetPackagePart().CreateRelationship() with part.CreateRelationshipToPart()
+/// - Use package.GetIdOfPart(part) instead of accessing relationship IDs directly
+/// This will eliminate reflection, improve performance, and make the code more maintainable.
+/// Estimated effort: 8-16 hours to refactor all usages across WmlComparer, PresentationBuilder, etc.
 /// </summary>
 public static class OpenXmlPackageExtensions
 {
