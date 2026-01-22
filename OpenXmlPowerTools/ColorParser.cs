@@ -3,34 +3,33 @@
 
 using System.Drawing;
 
-namespace OpenXmlPowerTools
+namespace OpenXmlPowerTools;
+
+public static class ColorParser
 {
-    public static class ColorParser
+    public static Color FromName(string name)
     {
-        public static Color FromName(string name)
+        return Color.FromName(name);
+    }
+
+    public static bool TryFromName(string name, out Color color)
+    {
+        try
         {
-            return Color.FromName(name);
-        }
+            color = Color.FromName(name);
 
-        public static bool TryFromName(string name, out Color color)
+            return color.IsNamedColor;
+        }
+        catch
         {
-            try
-            {
-                color = Color.FromName(name);
+            color = default(Color);
 
-                return color.IsNamedColor;
-            }
-            catch
-            {
-                color = default(Color);
-
-                return false;
-            }
+            return false;
         }
+    }
 
-        public static bool IsValidName(string name)
-        {
-            return TryFromName(name, out _);
-        }
+    public static bool IsValidName(string name)
+    {
+        return TryFromName(name, out _);
     }
 }

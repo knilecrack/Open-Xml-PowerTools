@@ -15,52 +15,52 @@ using OpenXmlPowerTools.HtmlToWml;
 using OpenXmlPowerTools.HtmlToWml.CSS;
 using System.Text.RegularExpressions;
 
-namespace OpenXmlPowerTools
-{
-    public class HtmlToWmlConverterSettings
-    {
-        public string MajorLatinFont;
-        public string MinorLatinFont;
-        public double DefaultFontSize;
-        public XElement DefaultSpacingElement;
-        public XElement DefaultSpacingElementForParagraphsInTables;
-        public XElement SectPr;
-        public string DefaultBlockContentMargin;
-        public string BaseUriForImages;
+namespace OpenXmlPowerTools;
 
-        public Twip PageWidthTwips { get { return (long)SectPr.Elements(W.pgSz).Attributes(W._w).FirstOrDefault(); } }
-        public Twip PageMarginLeftTwips { get { return (long)SectPr.Elements(W.pgMar).Attributes(W.left).FirstOrDefault(); } }
-        public Twip PageMarginRightTwips { get { return (long)SectPr.Elements(W.pgMar).Attributes(W.right).FirstOrDefault(); } }
-        public Emu PageWidthEmus { get { return Emu.TwipsToEmus(PageWidthTwips); } }
-        public Emu PageMarginLeftEmus { get { return Emu.TwipsToEmus(PageMarginLeftTwips); } }
-        public Emu PageMarginRightEmus { get { return Emu.TwipsToEmus(PageMarginRightTwips); } }
+public class HtmlToWmlConverterSettings
+{
+    public string MajorLatinFont;
+    public string MinorLatinFont;
+    public double DefaultFontSize;
+    public XElement DefaultSpacingElement;
+    public XElement DefaultSpacingElementForParagraphsInTables;
+    public XElement SectPr;
+    public string DefaultBlockContentMargin;
+    public string BaseUriForImages;
+
+    public Twip PageWidthTwips { get { return (long)SectPr.Elements(W.pgSz).Attributes(W._w).FirstOrDefault(); } }
+    public Twip PageMarginLeftTwips { get { return (long)SectPr.Elements(W.pgMar).Attributes(W.left).FirstOrDefault(); } }
+    public Twip PageMarginRightTwips { get { return (long)SectPr.Elements(W.pgMar).Attributes(W.right).FirstOrDefault(); } }
+    public Emu PageWidthEmus { get { return Emu.TwipsToEmus(PageWidthTwips); } }
+    public Emu PageMarginLeftEmus { get { return Emu.TwipsToEmus(PageMarginLeftTwips); } }
+    public Emu PageMarginRightEmus { get { return Emu.TwipsToEmus(PageMarginRightTwips); } }
+}
+
+public class HtmlToWmlConverter
+{
+    public static WmlDocument ConvertHtmlToWml(
+        string defaultCss,
+        string authorCss,
+        string userCss,
+        XElement xhtml,
+        HtmlToWmlConverterSettings settings)
+    {
+        return HtmlToWmlConverterCore.ConvertHtmlToWml(defaultCss, authorCss, userCss, xhtml, settings, null, null);
     }
 
-    public class HtmlToWmlConverter
+    public static WmlDocument ConvertHtmlToWml(
+        string defaultCss,
+        string authorCss,
+        string userCss,
+        XElement xhtml,
+        HtmlToWmlConverterSettings settings,
+        WmlDocument emptyDocument,
+        string annotatedHtmlDumpFileName)
     {
-        public static WmlDocument ConvertHtmlToWml(
-            string defaultCss,
-            string authorCss,
-            string userCss,
-            XElement xhtml,
-            HtmlToWmlConverterSettings settings)
-        {
-            return HtmlToWmlConverterCore.ConvertHtmlToWml(defaultCss, authorCss, userCss, xhtml, settings, null, null);
-        }
+        return HtmlToWmlConverterCore.ConvertHtmlToWml(defaultCss, authorCss, userCss, xhtml, settings, emptyDocument, annotatedHtmlDumpFileName);
+    }
 
-        public static WmlDocument ConvertHtmlToWml(
-            string defaultCss,
-            string authorCss,
-            string userCss,
-            XElement xhtml,
-            HtmlToWmlConverterSettings settings,
-            WmlDocument emptyDocument,
-            string annotatedHtmlDumpFileName)
-        {
-            return HtmlToWmlConverterCore.ConvertHtmlToWml(defaultCss, authorCss, userCss, xhtml, settings, emptyDocument, annotatedHtmlDumpFileName);
-        }
-
-        private static string s_Blank_wml_base64 = @"UEsDBBQABgAIAAAAIQAJJIeCgQEAAI4FAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIooAAC
+    private static string s_Blank_wml_base64 = @"UEsDBBQABgAIAAAAIQAJJIeCgQEAAI4FAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIooAAC
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -299,235 +299,234 @@ ABMkAAB3b3JkL3N0eWxlcy54bWxQSwECLQAUAAYACAAAACEATbb2nsIBAACiBAAAEgAAAAAAAAAA
 AAAAAABELQAAd29yZC9mb250VGFibGUueG1sUEsBAi0AFAAGAAgAAAAhAE5wytZwAQAAxQIAABAA
 AAAAAAAAAAAAAAAANi8AAGRvY1Byb3BzL2FwcC54bWxQSwUGAAAAAAwADAAJAwAA3DEAAAAA";
 
-        private static WmlDocument s_EmptyDocument = null;
+    private static WmlDocument s_EmptyDocument = null;
 
-        public static WmlDocument EmptyDocument
+    public static WmlDocument EmptyDocument
+    {
+        get {
+            if (s_EmptyDocument == null)
+            {
+                s_EmptyDocument = new WmlDocument("EmptyDocument.docx", Convert.FromBase64String(s_Blank_wml_base64));
+            }
+            return s_EmptyDocument;
+        }
+    }
+
+    public static HtmlToWmlConverterSettings GetDefaultSettings()
+    {
+        return GetDefaultSettings(EmptyDocument);
+    }
+
+    public static HtmlToWmlConverterSettings GetDefaultSettings(WmlDocument wmlDocument)
+    {
+        HtmlToWmlConverterSettings settings = new HtmlToWmlConverterSettings();
+        using (MemoryStream ms = new MemoryStream())
         {
-            get {
-                if (s_EmptyDocument == null)
-                {
-                    s_EmptyDocument = new WmlDocument("EmptyDocument.docx", Convert.FromBase64String(s_Blank_wml_base64));
-                }
-                return s_EmptyDocument;
+            ms.Write(wmlDocument.DocumentByteArray, 0, wmlDocument.DocumentByteArray.Length);
+            using (WordprocessingDocument wDoc = WordprocessingDocument.Open(ms, false))
+            {
+                string majorLatinFont, minorLatinFont;
+                double defaultFontSize;
+                GetDefaultFontInfo(wDoc, out majorLatinFont, out minorLatinFont, out defaultFontSize);
+                settings.MajorLatinFont = majorLatinFont;
+                settings.MinorLatinFont = minorLatinFont;
+                settings.DefaultFontSize = defaultFontSize;
+
+                settings.MinorLatinFont = "Times New Roman";
+                settings.DefaultFontSize = 12d;
+                settings.DefaultBlockContentMargin = "auto";
+                settings.DefaultSpacingElement = new XElement(W.spacing,
+                    new XAttribute(W.before, 100),
+                    new XAttribute(W.beforeAutospacing, 1),
+                    new XAttribute(W.after, 100),
+                    new XAttribute(W.afterAutospacing, 1),
+                    new XAttribute(W.line, 240),
+                    new XAttribute(W.lineRule, "auto"));
+                settings.DefaultSpacingElementForParagraphsInTables = new XElement(W.spacing,
+                    new XAttribute(W.before, 100),
+                    new XAttribute(W.beforeAutospacing, 1),
+                    new XAttribute(W.after, 100),
+                    new XAttribute(W.afterAutospacing, 1),
+                    new XAttribute(W.line, 240),
+                    new XAttribute(W.lineRule, "auto"));
+
+                XDocument mXDoc = wDoc.MainDocumentPart.GetXDocument();
+                XElement existingSectPr = mXDoc.Root.Descendants(W.sectPr).FirstOrDefault();
+                settings.SectPr = new XElement(W.sectPr,
+                    existingSectPr.Elements(W.pgSz),
+                    existingSectPr.Elements(W.pgMar));
             }
         }
+        return settings;
+    }
 
-        public static HtmlToWmlConverterSettings GetDefaultSettings()
+    private static void GetDefaultFontInfo(WordprocessingDocument wDoc, out string majorLatinFont, out string minorLatinFont, out double defaultFontSize)
+    {
+        if (wDoc.MainDocumentPart.ThemePart != null)
         {
-            return GetDefaultSettings(EmptyDocument);
-        }
-
-        public static HtmlToWmlConverterSettings GetDefaultSettings(WmlDocument wmlDocument)
-        {
-            HtmlToWmlConverterSettings settings = new HtmlToWmlConverterSettings();
-            using (MemoryStream ms = new MemoryStream())
+            XElement fontScheme = wDoc.MainDocumentPart.ThemePart.GetXDocument().Root.Elements(A.themeElements).Elements(A.fontScheme).FirstOrDefault();
+            if (fontScheme != null)
             {
-                ms.Write(wmlDocument.DocumentByteArray, 0, wmlDocument.DocumentByteArray.Length);
-                using (WordprocessingDocument wDoc = WordprocessingDocument.Open(ms, false))
+                majorLatinFont = (string)fontScheme.Elements(A.majorFont).Elements(A.latin).Attributes(NoNamespace.typeface).FirstOrDefault();
+                minorLatinFont = (string)fontScheme.Elements(A.minorFont).Elements(A.latin).Attributes(NoNamespace.typeface).FirstOrDefault();
+                string defaultFontSizeString = (string)wDoc.MainDocumentPart.StyleDefinitionsPart.GetXDocument().Root.Elements(W.docDefaults)
+                    .Elements(W.rPrDefault).Elements(W.rPr).Elements(W.sz).Attributes(W.val).FirstOrDefault();
+                if (defaultFontSizeString != null)
                 {
-                    string majorLatinFont, minorLatinFont;
-                    double defaultFontSize;
-                    GetDefaultFontInfo(wDoc, out majorLatinFont, out minorLatinFont, out defaultFontSize);
-                    settings.MajorLatinFont = majorLatinFont;
-                    settings.MinorLatinFont = minorLatinFont;
-                    settings.DefaultFontSize = defaultFontSize;
-
-                    settings.MinorLatinFont = "Times New Roman";
-                    settings.DefaultFontSize = 12d;
-                    settings.DefaultBlockContentMargin = "auto";
-                    settings.DefaultSpacingElement = new XElement(W.spacing,
-                        new XAttribute(W.before, 100),
-                        new XAttribute(W.beforeAutospacing, 1),
-                        new XAttribute(W.after, 100),
-                        new XAttribute(W.afterAutospacing, 1),
-                        new XAttribute(W.line, 240),
-                        new XAttribute(W.lineRule, "auto"));
-                    settings.DefaultSpacingElementForParagraphsInTables = new XElement(W.spacing,
-                        new XAttribute(W.before, 100),
-                        new XAttribute(W.beforeAutospacing, 1),
-                        new XAttribute(W.after, 100),
-                        new XAttribute(W.afterAutospacing, 1),
-                        new XAttribute(W.line, 240),
-                        new XAttribute(W.lineRule, "auto"));
-
-                    XDocument mXDoc = wDoc.MainDocumentPart.GetXDocument();
-                    XElement existingSectPr = mXDoc.Root.Descendants(W.sectPr).FirstOrDefault();
-                    settings.SectPr = new XElement(W.sectPr,
-                        existingSectPr.Elements(W.pgSz),
-                        existingSectPr.Elements(W.pgMar));
-                }
-            }
-            return settings;
-        }
-
-        private static void GetDefaultFontInfo(WordprocessingDocument wDoc, out string majorLatinFont, out string minorLatinFont, out double defaultFontSize)
-        {
-            if (wDoc.MainDocumentPart.ThemePart != null)
-            {
-                XElement fontScheme = wDoc.MainDocumentPart.ThemePart.GetXDocument().Root.Elements(A.themeElements).Elements(A.fontScheme).FirstOrDefault();
-                if (fontScheme != null)
-                {
-                    majorLatinFont = (string)fontScheme.Elements(A.majorFont).Elements(A.latin).Attributes(NoNamespace.typeface).FirstOrDefault();
-                    minorLatinFont = (string)fontScheme.Elements(A.minorFont).Elements(A.latin).Attributes(NoNamespace.typeface).FirstOrDefault();
-                    string defaultFontSizeString = (string)wDoc.MainDocumentPart.StyleDefinitionsPart.GetXDocument().Root.Elements(W.docDefaults)
-                        .Elements(W.rPrDefault).Elements(W.rPr).Elements(W.sz).Attributes(W.val).FirstOrDefault();
-                    if (defaultFontSizeString != null)
+                    double dfs;
+                    if (double.TryParse(defaultFontSizeString, out dfs))
                     {
-                        double dfs;
-                        if (double.TryParse(defaultFontSizeString, out dfs))
-                        {
-                            defaultFontSize = dfs / 2d;
-                            return;
-                        }
-                        defaultFontSize = 12;
+                        defaultFontSize = dfs / 2d;
                         return;
                     }
+                    defaultFontSize = 12;
+                    return;
                 }
             }
-            majorLatinFont = "";
-            minorLatinFont = "";
-            defaultFontSize = 12;
         }
-
-        public static string CleanUpCss(string css)
-        {
-            if (css == null)
-                return "";
-            css = css.Trim();
-            string cleanCss = Regex.Split(css, "\r\n|\r|\n")
-                .Where(l =>
-                {
-                    string lTrim = l.Trim();
-                    if (lTrim == "//")
-                        return false;
-                    if (lTrim == "////")
-                        return false;
-                    if (lTrim == "<!--" || lTrim == "&lt;!--")
-                        return false;
-                    if (lTrim == "-->" || lTrim == "--&gt;")
-                        return false;
-                    return true;
-                })
-                .Select(l => l + Environment.NewLine )
-                .StringConcatenate();
-            return cleanCss;
-        }
+        majorLatinFont = "";
+        minorLatinFont = "";
+        defaultFontSize = 12;
     }
 
-    public struct Emu
+    public static string CleanUpCss(string css)
     {
-        public long m_Value;
-        public static int s_EmusPerInch = 914400;
+        if (css == null)
+            return "";
+        css = css.Trim();
+        string cleanCss = Regex.Split(css, "\r\n|\r|\n")
+            .Where(l =>
+            {
+                string lTrim = l.Trim();
+                if (lTrim == "//")
+                    return false;
+                if (lTrim == "////")
+                    return false;
+                if (lTrim == "<!--" || lTrim == "&lt;!--")
+                    return false;
+                if (lTrim == "-->" || lTrim == "--&gt;")
+                    return false;
+                return true;
+            })
+            .Select(l => l + Environment.NewLine )
+            .StringConcatenate();
+        return cleanCss;
+    }
+}
 
-        public static Emu TwipsToEmus(long twips)
-        {
-            float v1 = (float)twips / 20f;
-            float v2 = v1 / 72f;
-            float v3 = v2 * s_EmusPerInch;
-            long emus = (long)v3;
-            return new Emu(emus);
-        }
+public struct Emu
+{
+    public long m_Value;
+    public static int s_EmusPerInch = 914400;
 
-        public static Emu PointsToEmus(double points)
-        {
-            double v1 = points / 72;
-            double v2 = v1 * s_EmusPerInch;
-            long emus = (long)v2;
-            return new Emu(emus);
-        }
-
-        public Emu(long value)
-        {
-            m_Value = value;
-        }
-
-        public static implicit operator long(Emu e)
-        {
-            return e.m_Value;
-        }
-
-        public static implicit operator Emu(long l)
-        {
-            return new Emu(l);
-        }
-
-        public override string ToString()
-        {
-            throw new OpenXmlPowerToolsException("Can't convert directly to string, must cast to long");
-        }
+    public static Emu TwipsToEmus(long twips)
+    {
+        float v1 = (float)twips / 20f;
+        float v2 = v1 / 72f;
+        float v3 = v2 * s_EmusPerInch;
+        long emus = (long)v3;
+        return new Emu(emus);
     }
 
-    public struct TPoint
+    public static Emu PointsToEmus(double points)
     {
-        public double m_Value;
-
-        public TPoint(double value)
-        {
-            m_Value = value;
-        }
-
-        public static implicit operator double(TPoint t)
-        {
-            return t.m_Value;
-        }
-
-        public static implicit operator TPoint(double d)
-        {
-            return new TPoint(d);
-        }
-
-        public override string ToString()
-        {
-            throw new OpenXmlPowerToolsException("Can't convert directly to string, must cast to double");
-        }
+        double v1 = points / 72;
+        double v2 = v1 * s_EmusPerInch;
+        long emus = (long)v2;
+        return new Emu(emus);
     }
 
-    public struct Twip
+    public Emu(long value)
     {
-        public long m_Value;
-
-        public Twip(long value)
-        {
-            m_Value = value;
-        }
-
-        public static implicit operator long(Twip t)
-        {
-            return t.m_Value;
-        }
-
-        public static implicit operator Twip(long l)
-        {
-            return new Twip(l);
-        }
-
-        public static implicit operator Twip(double d)
-        {
-            return new Twip((long)d);
-        }
-
-        public override string ToString()
-        {
-            throw new OpenXmlPowerToolsException("Can't convert directly to string, must cast to long");
-        }
+        m_Value = value;
     }
 
-    public class SizeEmu
+    public static implicit operator long(Emu e)
     {
-        public Emu m_Height;
-        public Emu m_Width;
+        return e.m_Value;
+    }
 
-        public SizeEmu(Emu width, Emu height)
-        {
-            m_Width = width;
-            m_Height = height;
-        }
+    public static implicit operator Emu(long l)
+    {
+        return new Emu(l);
+    }
 
-        public SizeEmu(long width, long height)
-        {
-            m_Width = width;
-            m_Height = height;
-        }
+    public override string ToString()
+    {
+        throw new OpenXmlPowerToolsException("Can't convert directly to string, must cast to long");
+    }
+}
+
+public struct TPoint
+{
+    public double m_Value;
+
+    public TPoint(double value)
+    {
+        m_Value = value;
+    }
+
+    public static implicit operator double(TPoint t)
+    {
+        return t.m_Value;
+    }
+
+    public static implicit operator TPoint(double d)
+    {
+        return new TPoint(d);
+    }
+
+    public override string ToString()
+    {
+        throw new OpenXmlPowerToolsException("Can't convert directly to string, must cast to double");
+    }
+}
+
+public struct Twip
+{
+    public long m_Value;
+
+    public Twip(long value)
+    {
+        m_Value = value;
+    }
+
+    public static implicit operator long(Twip t)
+    {
+        return t.m_Value;
+    }
+
+    public static implicit operator Twip(long l)
+    {
+        return new Twip(l);
+    }
+
+    public static implicit operator Twip(double d)
+    {
+        return new Twip((long)d);
+    }
+
+    public override string ToString()
+    {
+        throw new OpenXmlPowerToolsException("Can't convert directly to string, must cast to long");
+    }
+}
+
+public class SizeEmu
+{
+    public Emu m_Height;
+    public Emu m_Width;
+
+    public SizeEmu(Emu width, Emu height)
+    {
+        m_Width = width;
+        m_Height = height;
+    }
+
+    public SizeEmu(long width, long height)
+    {
+        m_Width = width;
+        m_Height = height;
     }
 }
 

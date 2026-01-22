@@ -6,22 +6,21 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace OpenXmlPowerTools.Tests
-{
-    /// <summary>
-    /// Base class for unit tests providing utility methods.
-    /// </summary>
-    public class TestsBase
-    {
-        private const WordprocessingDocumentType DocumentType = WordprocessingDocumentType.Document;
+namespace OpenXmlPowerTools.Tests;
 
-        protected static void CreateEmptyWordprocessingDocument(Stream stream)
+/// <summary>
+/// Base class for unit tests providing utility methods.
+/// </summary>
+public class TestsBase
+{
+    private const WordprocessingDocumentType DocumentType = WordprocessingDocumentType.Document;
+
+    protected static void CreateEmptyWordprocessingDocument(Stream stream)
+    {
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
         {
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.Document = new Document(new Body());
-            }
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.Document = new Document(new Body());
         }
     }
 }
