@@ -2313,7 +2313,28 @@ public class HtmlToWmlConverterCore
 
         MainDocumentPart mdp = wDoc.MainDocumentPart;
         string rId = "R" + Guid.NewGuid().ToString().Replace("-", "");
-         PartTypeInfo ipt = default;
+
+        // Determine the image format and create appropriate PartTypeInfo
+        PartTypeInfo ipt;
+        if (bmp.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
+            ipt = ImagePartType.Png;
+        else if (bmp.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Jpeg))
+            ipt = ImagePartType.Jpeg;
+        else if (bmp.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Gif))
+            ipt = ImagePartType.Gif;
+        else if (bmp.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Bmp))
+            ipt = ImagePartType.Bmp;
+        else if (bmp.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Tiff))
+            ipt = ImagePartType.Tiff;
+        else if (bmp.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Icon))
+            ipt = ImagePartType.Icon;
+        else if (bmp.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Emf))
+            ipt = ImagePartType.Emf;
+        else if (bmp.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Wmf))
+            ipt = ImagePartType.Wmf;
+        else
+            ipt = ImagePartType.Png; // Default to PNG if format unknown
+
         ImagePart newPart = mdp.AddImagePart(ipt, rId);
         using (Stream s = newPart.GetStream(FileMode.Create, FileAccess.ReadWrite))
             s.Write(ba, 0, ba.GetUpperBound(0) + 1);
