@@ -158,7 +158,7 @@ public class WorksheetAccessor
         XDocument workbook = document.WorkbookPart.GetXDocument();
         return (WorksheetPart)document.WorkbookPart.GetPartById(
             workbook.Root.Element(S.sheets).Elements(S.sheet).Where(
-                s => s.Attribute(NoNamespace.name).Value.ToLower().Equals(worksheetName.ToLower()))
+                s => s.Attribute(NoNamespace.name).Value.Equals(worksheetName, StringComparison.OrdinalIgnoreCase))
             .FirstOrDefault().Attribute(R.id).Value);
     }
 

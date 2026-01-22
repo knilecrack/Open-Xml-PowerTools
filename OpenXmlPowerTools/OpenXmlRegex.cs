@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace OpenXmlPowerTools;
 
-public class OpenXmlRegex
+public static class OpenXmlRegex
 {
     private const string DontConsolidate = "DontConsolidate";
 
@@ -50,7 +50,7 @@ public class OpenXmlRegex
 
     /// <summary>
     /// If callback == null Then returns count of matches in the content
-    /// If callback != null Then Match calls Found for each match
+    /// If callback != null Then Match calls Found for each match.
     /// </summary>
     public static int Match(IEnumerable<XElement> content, Regex regex, Action<XElement, Match> found)
     {

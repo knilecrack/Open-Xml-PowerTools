@@ -447,7 +447,7 @@ public class MetricsGetter
     private static void ValidateImageExists(OpenXmlPart part, string relId, Dictionary<XName, int> metrics)
     {
         var imagePart = part.Parts.FirstOrDefault(ipp => ipp.RelationshipId == relId);
-        if (imagePart == null)
+        if (imagePart.OpenXmlPart == null)
             IncrementMetric(metrics, H.ReferenceToNullImage);
     }
 

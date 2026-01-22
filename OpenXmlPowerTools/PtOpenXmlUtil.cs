@@ -568,49 +568,49 @@ public static class FlatOpc
     }
 }
 
-public class Base64
-{
-    public static string ConvertToBase64(string fileName)
-    {
-        byte[] ba = System.IO.File.ReadAllBytes(fileName);
-        string base64String = (System.Convert.ToBase64String(ba))
-            .Select
-            (
-                (c, i) => new
-                {
-                    Chunk = i / 76,
-                    Character = c
-                }
-            )
-            .GroupBy(c => c.Chunk)
-            .Aggregate(
-                new StringBuilder(),
-                (s, i) =>
-                    s.Append(
-                        i.Aggregate(
-                            new StringBuilder(),
-                            (seed, it) => seed.Append(it.Character),
-                            sb => sb.ToString()
-                        )
-                    )
-                    .Append(Environment.NewLine),
-                s =>
-                {
-                    s.Length -= Environment.NewLine.Length;
-                    return s.ToString();
-                }
-            );
+//public class Base64
+//{
+//    public static string ConvertToBase64(string fileName)
+//    {
+//        byte[] ba = System.IO.File.ReadAllBytes(fileName);
+//        string base64String = (System.Convert.ToBase64String(ba))
+//            .Select
+//            (
+//                (c, i) => new
+//                {
+//                    Chunk = i / 76,
+//                    Character = c
+//                }
+//            )
+//            .GroupBy(c => c.Chunk)
+//            .Aggregate(
+//                new StringBuilder(),
+//                (s, i) =>
+//                    s.Append(
+//                        i.Aggregate(
+//                            new StringBuilder(),
+//                            (seed, it) => seed.Append(it.Character),
+//                            sb => sb.ToString()
+//                        )
+//                    )
+//                    .Append(Environment.NewLine),
+//                s =>
+//                {
+//                    s.Length -= Environment.NewLine.Length;
+//                    return s.ToString();
+//                }
+//            );
 
-        return base64String;
-    }
+//        return base64String;
+//    }
 
-    public static byte[] ConvertFromBase64(string fileName, string b64)
-    {
-        string b64b = b64.Replace("\r\n", "");
-        byte[] ba = System.Convert.FromBase64String(b64b);
-        return ba;
-    }
-}
+//    public static byte[] ConvertFromBase64(string fileName, string b64)
+//    {
+//        string b64b = b64.Replace("\r\n", "");
+//        byte[] ba = System.Convert.FromBase64String(b64b);
+//        return ba;
+//    }
+//}
 
 public static class XmlUtil
 {
@@ -1820,7 +1820,7 @@ public static class FieldParser
         if (field.Length == 0)
             return emptyField;
         string fieldType = field.TrimStart().Split(' ').FirstOrDefault();
-        if (fieldType == null || fieldType.ToUpper() != "HYPERLINK" || fieldType.ToUpper() != "REF")
+        if (fieldType == null || !fieldType.Equals("HYPERLINK", StringComparison.CurrentCultureIgnoreCase) || !fieldType.Equals("REF", StringComparison.CurrentCultureIgnoreCase))
             return emptyField;
         string[] tokens = GetTokens(field);
         if (tokens.Length == 0)

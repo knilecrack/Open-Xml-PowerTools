@@ -658,7 +658,7 @@ public static class WmlToXml
             var instrText = FieldRetriever.InstrText(mainXDoc.Root, item.Key).TrimStart('{').TrimEnd('}');
             var fi = FieldRetriever.ParseField(instrText);
 
-            if (fi.FieldType.ToUpper() == "SEQ" || fi.FieldType.ToUpper() == "STYLEREF")
+            if (string.Equals(fi.FieldType, "SEQ", StringComparison.OrdinalIgnoreCase) || string.Equals(fi.FieldType, "STYLEREF", StringComparison.OrdinalIgnoreCase))
             {
                 var runsForField = mainXDoc
                     .Root
@@ -709,7 +709,7 @@ public static class WmlToXml
                         {
                             var instrText2 = FieldRetriever.InstrText(mainXDoc.Root, stackItem.Id).TrimStart('{').TrimEnd('}');
                             var fi2 = FieldRetriever.ParseField(instrText2);
-                            if (fi2.FieldType.ToUpper() == "SEQ" || fi2.FieldType.ToUpper() == "STYLEREF")
+                            if (string.Equals(fi2.FieldType, "SEQ", StringComparison.OrdinalIgnoreCase) || string.Equals(fi2.FieldType, "STYLEREF", StringComparison.OrdinalIgnoreCase))
                                 return true;
                             return false;
                         }))

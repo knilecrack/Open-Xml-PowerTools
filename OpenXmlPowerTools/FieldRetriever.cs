@@ -368,22 +368,26 @@ public class FieldRetriever
         string fieldType = field.TrimStart().Split(' ').FirstOrDefault();
         if (fieldType == null)
             return emptyField;
-        if (fieldType.ToUpper() != "HYPERLINK" &&
-            fieldType.ToUpper() != "REF" &&
-            fieldType.ToUpper() != "SEQ" &&
-            fieldType.ToUpper() != "STYLEREF" &&
-            fieldType.ToUpper() != "LISTNUM" &&
-            fieldType.ToUpper() != "PAGE")
+        if (!string.Equals(fieldType, "HYPERLINK", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(fieldType, "REF", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(fieldType, "SEQ", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(fieldType, "STYLEREF", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(fieldType, "LISTNUM", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(fieldType, "PAGE", StringComparison.OrdinalIgnoreCase))
             return emptyField;
+
         string[] tokens = GetTokens(field);
+
         if (tokens.Length == 0)
             return emptyField;
+
         FieldInfo fieldInfo = new FieldInfo()
         {
             FieldType = tokens[0],
             Switches = tokens.Where(t => t[0] == '\\').ToArray(),
             Arguments = tokens.Skip(1).Where(t => t[0] != '\\').ToArray(),
         };
+
         return fieldInfo;
     }
 

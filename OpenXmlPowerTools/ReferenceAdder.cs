@@ -15,19 +15,19 @@ public partial class WmlDocument : OpenXmlPowerToolsDocument
 {
     public WmlDocument AddToc(string xPath, string switches, string title, int? rightTabPos)
     {
-        return (WmlDocument)ReferenceAdder.AddToc(this, xPath, switches, title, rightTabPos);
+        return ReferenceAdder.AddToc(this, xPath, switches, title, rightTabPos);
     }
     public WmlDocument AddTof(string xPath, string switches, int? rightTabPos)
     {
-        return (WmlDocument)ReferenceAdder.AddTof(this, xPath, switches, rightTabPos);
+        return ReferenceAdder.AddTof(this, xPath, switches, rightTabPos);
     }
     public WmlDocument AddToa(string xPath, string switches, int? rightTabPos)
     {
-        return (WmlDocument)ReferenceAdder.AddToa(this, xPath, switches, rightTabPos);
+        return ReferenceAdder.AddToa(this, xPath, switches, rightTabPos);
     }
 }
 
-public class ReferenceAdder
+public static class ReferenceAdder
 {
     public static WmlDocument AddToc(WmlDocument document, string xPath, string switches, string title, int? rightTabPos)
     {
@@ -591,8 +591,7 @@ public class ReferenceAdder
         AddElementIfMissing(
             xDoc,
             xDoc.Root.Elements(W.style)
-                .Where(e => (string)e.Attribute(W.type) == "paragraph" && (string)e.Attribute(W.styleId) == "TOAHeading")
-                .FirstOrDefault(),
+                .FirstOrDefault(e => (string)e.Attribute(W.type) == "paragraph" && (string)e.Attribute(W.styleId) == "TOAHeading"),
             @"<w:style w:type='paragraph'
                            w:styleId='TOAHeading'
                            xmlns:w='http://schemas.openxmlformats.org/wordprocessingml/2006/main'>

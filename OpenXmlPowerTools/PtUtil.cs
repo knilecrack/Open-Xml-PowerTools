@@ -13,6 +13,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using System.IO.Hashing;
 
 namespace OpenXmlPowerTools;
 
@@ -24,6 +25,15 @@ public static class PtUtils
         var sha1 = SHA1.Create();
         byte[] hashBytes = sha1.ComputeHash(bytes);
         return HexStringFromBytes(hashBytes);
+    }
+
+    public static string XxHash3FoerUTF8String(string s)
+    {
+        if(string.IsNullOrWhiteSpace(s))
+            return string.Empty;
+
+        var xXHash3 = XxHash3.Hash(Encoding.UTF8.GetBytes(s));
+        return HexStringFromBytes(xXHash3);
     }
 
     public static string SHA1HashStringForByteArray(byte[] bytes)
@@ -110,9 +120,9 @@ public class MhtParser
 
         foreach (var item in priamble)
         {
-            if (item.ToUpper().StartsWith("MIME-VERSION:"))
+            if (item.StartsWith("MIME-VERSION:", StringComparison.OrdinalIgnoreCase))
                 mimeVersion = item.Substring("MIME-VERSION:".Length).Trim();
-            else if (item.ToUpper().StartsWith("CONTENT-TYPE:"))
+            else if (item.StartsWith("CONTENT-TYPE:", StringComparison.OrdinalIgnoreCase))
             {
                 var contentTypeLine = item.Substring("CONTENT-TYPE:".Length).Trim();
                 var spl = contentTypeLine.Split(';').Select(z => z.Trim()).ToArray();
@@ -168,11 +178,11 @@ public class MhtParser
 
                 foreach (var item in partPriamble)
                 {
-                    if (item.ToUpper().StartsWith("CONTENT-LOCATION:"))
+                    if (item.StartsWith("CONTENT-LOCATION:", StringComparison.OrdinalIgnoreCase))
                         contentLocation = item.Substring("CONTENT-LOCATION:".Length).Trim();
-                    else if (item.ToUpper().StartsWith("CONTENT-TRANSFER-ENCODING:"))
+                    else if (item.StartsWith("CONTENT-TRANSFER-ENCODING:", StringComparison.OrdinalIgnoreCase))
                         contentTransferEncoding = item.Substring("CONTENT-TRANSFER-ENCODING:".Length).Trim();
-                    else if (item.ToUpper().StartsWith("CONTENT-TYPE:"))
+                    else if (item.StartsWith("CONTENT-TYPE:", StringComparison.OrdinalIgnoreCase))
                         partContentType = item.Substring("CONTENT-TYPE:".Length).Trim();
                 }
 
@@ -210,7 +220,7 @@ public class MhtParser
                     partContentType = thisPartContentType;
                 }
 
-                if (contentTransferEncoding != null && contentTransferEncoding.ToUpper() == "BASE64")
+                if (contentTransferEncoding != null && string.Equals(contentTransferEncoding, "BASE64", StringComparison.OrdinalIgnoreCase))
                 {
                     partBinary = Convert.FromBase64String(partText);
                 }

@@ -563,7 +563,7 @@ class CssApplier
                     {
                         if (settings.DefaultBlockContentMargin == "auto")
                             return new CssExpression { Terms = new List<CssTerm> { new CssTerm { Value = "auto", Type = OpenXmlPowerTools.HtmlToWml.CSS.CssTermType.String } } };
-                        else if (settings.DefaultBlockContentMargin.ToLower().EndsWith("pt"))
+                        else if (settings.DefaultBlockContentMargin.EndsWith("pt", StringComparison.OrdinalIgnoreCase))
                         {
                             string s1 = settings.DefaultBlockContentMargin.Substring(0, settings.DefaultBlockContentMargin.Length - 2);
                             double d1;
@@ -2977,7 +2977,7 @@ else
         if (color.Terms.Count() == 1)
         {
             CssTerm term = color.Terms.First();
-            if (term.Type == CssTermType.Function && term.Function.Name.ToUpper() == "RGB" && term.Function.Expression.Terms.Count == 3)
+            if (term.Type == CssTermType.Function && string.Equals(term.Function.Name, "RGB", StringComparison.OrdinalIgnoreCase) && term.Function.Expression.Terms.Count == 3)
             {
                 List<CssTerm> lt = term.Function.Expression.Terms;
                 if (lt.First().Unit == CssUnit.Percent)

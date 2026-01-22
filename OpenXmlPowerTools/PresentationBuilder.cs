@@ -680,7 +680,7 @@ public static class PresentationBuilder
             // dm attribute
             string relId = diagramReference.Attribute(R.dm).Value;
             var tempPartIdPair = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair != null)
+            if (tempPartIdPair.OpenXmlPart != null)
                 continue;
 
             ExternalRelationship tempEr = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -697,7 +697,7 @@ public static class PresentationBuilder
             // lo attribute
             relId = diagramReference.Attribute(R.lo).Value;
             var tempPartIdPair2 = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair2 != null)
+            if (tempPartIdPair2.OpenXmlPart != null)
                 continue;
 
             ExternalRelationship tempEr2 = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -714,7 +714,7 @@ public static class PresentationBuilder
             // qs attribute
             relId = diagramReference.Attribute(R.qs).Value;
             var tempPartIdPair3 = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair3 != null)
+            if (tempPartIdPair3.OpenXmlPart != null)
                 continue;
 
             ExternalRelationship tempEr3 = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -731,7 +731,7 @@ public static class PresentationBuilder
             // cs attribute
             relId = diagramReference.Attribute(R.cs).Value;
             var tempPartIdPair4 = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair4 != null)
+            if (tempPartIdPair4.OpenXmlPart != null)
                 continue;
 
             ExternalRelationship tempEr4 = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -755,7 +755,7 @@ public static class PresentationBuilder
             // part.  This is not necessary for parts such as the main document part, but this code won't malfunction
             // in that case.
             var tempPartIdPair5 = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair5 != null)
+            if (tempPartIdPair5.OpenXmlPart != null)
                 continue;
 
             ExternalRelationship tempEr5 = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -763,7 +763,7 @@ public static class PresentationBuilder
                 continue;
 
             var oldPartIdPair = oldContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (oldPartIdPair != null)
+            if (oldPartIdPair.OpenXmlPart != null)
             {
                 OpenXmlPart oldPart = oldPartIdPair.OpenXmlPart;
                 OpenXmlPart newPart = null;
@@ -826,7 +826,7 @@ public static class PresentationBuilder
                 continue;
 
             var tempPartIdPair6 = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair6 != null)
+            if (tempPartIdPair6.OpenXmlPart != null)
                 continue;
 
             ExternalRelationship tempEr6 = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -834,7 +834,7 @@ public static class PresentationBuilder
                 continue;
 
             var oldPartIdPair2 = oldContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (oldPartIdPair2 != null)
+            if (oldPartIdPair2.OpenXmlPart != null)
             {
                 ChartPart oldPart = oldPartIdPair2.OpenXmlPart as ChartPart;
                 if (oldPart != null)
@@ -857,7 +857,7 @@ public static class PresentationBuilder
                 continue;
 
             var tempPartIdPair7 = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair7 != null)
+            if (tempPartIdPair7.OpenXmlPart != null)
                 continue;
 
             ExternalRelationship tempEr7 = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -865,7 +865,7 @@ public static class PresentationBuilder
                 continue;
 
             var oldPartIdPair3 = oldContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (oldPartIdPair3 != null)
+            if (oldPartIdPair3.OpenXmlPart != null)
             {
                 ChartDrawingPart oldPart = oldPartIdPair3.OpenXmlPart as ChartDrawingPart;
                 if (oldPart != null)
@@ -888,7 +888,7 @@ public static class PresentationBuilder
                 continue;
 
             var tempPartIdPair8 = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair8 != null)
+            if (tempPartIdPair8.OpenXmlPart != null)
                 continue;
 
             ExternalRelationship tempEr8 = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -896,7 +896,7 @@ public static class PresentationBuilder
                 continue;
 
             var oldPartIdPair4 = oldContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (oldPartIdPair4 != null)
+            if (oldPartIdPair4.OpenXmlPart != null)
             {
                 UserDefinedTagsPart oldPart = oldPartIdPair4.OpenXmlPart as UserDefinedTagsPart;
                 if (oldPart != null)
@@ -917,11 +917,11 @@ public static class PresentationBuilder
                 continue;
 
             var tempPartIdPair9 = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair9 != null)
+            if (tempPartIdPair9.OpenXmlPart != null)
                 continue;
 
             var oldPartIdPair9 = oldContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (oldPartIdPair9 != null)
+            if (oldPartIdPair9.OpenXmlPart != null)
             {
                 CustomXmlPart newPart = newDocument.PresentationPart.AddCustomXmlPart(CustomXmlPartType.CustomXml);
                 newPart.FeedData(oldPartIdPair9.OpenXmlPart.GetStream());
@@ -1034,7 +1034,7 @@ public static class PresentationBuilder
 
             var oldPartIdPair = oldChart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
 
-            if (oldPartIdPair != null)
+            if (oldPartIdPair.OpenXmlPart != null)
             {
                 EmbeddedPackagePart oldPart = oldPartIdPair.OpenXmlPart as EmbeddedPackagePart;
                 if (oldPart != null)
@@ -1196,7 +1196,7 @@ public static class PresentationBuilder
         // part.  This is not necessary for parts such as the main document part, but this code won't malfunction
         // in that case.
         var partIdPair = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-        if (partIdPair != null)
+        if (partIdPair.OpenXmlPart != null)
             return;
 
         ExternalRelationship extRel = newContentPart.ExternalRelationships.FirstOrDefault(r => r.Id == relId);
@@ -1204,7 +1204,7 @@ public static class PresentationBuilder
             return;
 
         var oldPartIdPair = oldContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-        if (oldPartIdPair != null)
+        if (oldPartIdPair.OpenXmlPart != null)
         {
             ImagePart oldPart = oldPartIdPair.OpenXmlPart as ImagePart;
             ImageData temp = ManageImageCopy(oldPart, newContentPart, images);
@@ -1463,7 +1463,7 @@ public static class PresentationBuilder
             return;
 
         var tempPartIdPair = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-        if (tempPartIdPair != null)
+        if (tempPartIdPair.OpenXmlPart != null)
             return;
 
         var tempEr = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);
@@ -1486,7 +1486,7 @@ public static class PresentationBuilder
             return;
 
         var tempPartIdPair = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-        if (tempPartIdPair != null)
+        if (tempPartIdPair.OpenXmlPart != null)
             return;
 
         var oldPart = oldContentPart.GetPartById(relId);
@@ -1521,7 +1521,7 @@ public static class PresentationBuilder
             return;
 
         var tempPartIdPair = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-        if (tempPartIdPair != null)
+        if (tempPartIdPair.OpenXmlPart != null)
             return;
 
         var oldPart = oldContentPart.GetPartById(relId);
@@ -1545,7 +1545,7 @@ public static class PresentationBuilder
             // part.  This is not necessary for parts such as the main document part, but this code won't malfunction
             // in that case.
             var tempPartIdPair = newContentPart.Parts.FirstOrDefault(p => p.RelationshipId == relId);
-            if (tempPartIdPair != null)
+            if (tempPartIdPair.OpenXmlPart != null)
                 return;
 
             var tempEr = newContentPart.ExternalRelationships.FirstOrDefault(er => er.Id == relId);

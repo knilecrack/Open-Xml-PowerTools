@@ -1528,8 +1528,8 @@ public class CssTerm
             }
             else if (m_type == CssTermType.Function)
             {
-                if ((m_function.Name.ToLower().Equals("rgb") && m_function.Expression.Terms.Count == 3)
-                    || (m_function.Name.ToLower().Equals("rgba") && m_function.Expression.Terms.Count == 4)
+                if ((m_function.Name.Equals("rgb", StringComparison.OrdinalIgnoreCase) && m_function.Expression.Terms.Count == 3)
+                    || (m_function.Name.Equals("rgba", StringComparison.OrdinalIgnoreCase) && m_function.Expression.Terms.Count == 4)
                     )
                 {
                     for (int i = 0; i < m_function.Expression.Terms.Count; i++)
@@ -1541,8 +1541,8 @@ public class CssTerm
                     }
                     return true;
                 }
-                else if ((m_function.Name.ToLower().Equals("hsl") && m_function.Expression.Terms.Count == 3)
-                  || (m_function.Name.ToLower().Equals("hsla") && m_function.Expression.Terms.Count == 4)
+                else if ((m_function.Name.Equals("hsl", StringComparison.OrdinalIgnoreCase) && m_function.Expression.Terms.Count == 3)
+                  || (m_function.Name.Equals("hsla", StringComparison.OrdinalIgnoreCase) && m_function.Expression.Terms.Count == 4)
                   )
                 {
                     for (int i = 0; i < m_function.Expression.Terms.Count; i++)
@@ -1599,8 +1599,8 @@ public class CssTerm
         }
         else if (m_type == CssTermType.Function)
         {
-            if ((m_function.Name.ToLower().Equals("rgb") && m_function.Expression.Terms.Count == 3)
-                || (m_function.Name.ToLower().Equals("rgba") && m_function.Expression.Terms.Count == 4)
+            if ((m_function.Name.Equals("rgb", StringComparison.OrdinalIgnoreCase) && m_function.Expression.Terms.Count == 3)
+                || (m_function.Name.Equals("rgba", StringComparison.OrdinalIgnoreCase) && m_function.Expression.Terms.Count == 4)
                 )
             {
                 int fr = 0, fg = 0, fb = 0;
@@ -1622,7 +1622,7 @@ public class CssTerm
                 }
                 return Color.FromArgb(fr, fg, fb);
             }
-            else if ((m_function.Name.ToLower().Equals("hsl") && m_function.Expression.Terms.Count == 3)
+            else if ((m_function.Name.Equals("hsl", StringComparison.OrdinalIgnoreCase) && m_function.Expression.Terms.Count == 3)
               || (m_function.Name.Equals("hsla") && m_function.Expression.Terms.Count == 4)
               )
             {
@@ -3253,7 +3253,7 @@ public class Parser
                 }
                 if (StartOf(20))
                 {
-                    if (m_lookaheadToken.m_tokenValue.ToLower().Equals("n"))
+                    if (m_lookaheadToken.m_tokenValue.Equals("n", StringComparison.OrdinalIgnoreCase))
                     {
                         Expect(22);
                         val += m_lastRecognizedToken.m_tokenValue;

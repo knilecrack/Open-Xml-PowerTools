@@ -63,7 +63,7 @@ public class TextReplacer
             {
                 string contents = element.Descendants(W.t).Select(t => (string)t).StringConcatenate();
                 if (contents.Contains(search) ||
-                    (!matchCase && contents.ToUpper().Contains(search.ToUpper())))
+                    (!matchCase && contents.Contains(search, StringComparison.OrdinalIgnoreCase)))
                 {
                     XElement paragraphWithSplitRuns = new XElement(W.p,
                         element.Attributes(),
@@ -97,7 +97,7 @@ public class TextReplacer
                             if (matchCase)
                                 b = z.ParagraphChildProjection.Value != z.CharacterToCompare.ToString();
                             else
-                                b = z.ParagraphChildProjection.Value.ToUpper() != z.CharacterToCompare.ToString().ToUpper();
+                                b = !string.Equals(z.ParagraphChildProjection.Value, z.CharacterToCompare.ToString(), StringComparison.OrdinalIgnoreCase);
                             return b;
                         });
                         bool match = !dontMatch;
@@ -269,7 +269,7 @@ public class TextReplacer
             {
                 string contents = element.Descendants(A.t).Select(t => (string)t).StringConcatenate();
                 if (contents.Contains(search) ||
-                    (!matchCase && contents.ToUpper().Contains(search.ToUpper())))
+                    (!matchCase && contents.Contains(search, StringComparison.OrdinalIgnoreCase)))
                 {
                     XElement paragraphWithSplitRuns = new XElement(A.p,
                         element.Attributes(),
@@ -305,7 +305,7 @@ public class TextReplacer
                             if (matchCase)
                                 b = z.ParagraphChildProjection.Value != z.CharacterToCompare.ToString();
                             else
-                                b = z.ParagraphChildProjection.Value.ToUpper() != z.CharacterToCompare.ToString().ToUpper();
+                                b = !string.Equals(z.ParagraphChildProjection.Value, z.CharacterToCompare.ToString(), StringComparison.OrdinalIgnoreCase);
                             return b;
                         });
                         bool match = !dontMatch;

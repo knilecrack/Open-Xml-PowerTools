@@ -1073,7 +1073,7 @@ public static class WmlToHtmlConverter
             .Elements(W.r)
             .Elements(W.instrText)
             .Select(e => e.Value)
-            .Any(value => value != null && value.TrimStart().ToUpper().StartsWith("HYPERLINK"));
+            .Any(value => value != null && value.TrimStart().StartsWith("HYPERLINK", StringComparison.OrdinalIgnoreCase));
         if (hyperlinkPrecedesTab)
         {
             var paraElement1 = new XElement(elementName,
@@ -1537,7 +1537,7 @@ public static class WmlToHtmlConverter
         var addDirectionalMarks = true;
         if (style.ContainsKey("font-family"))
         {
-            if (style["font-family"].ToLower() == "symbol")
+            if (string.Equals(style["font-family"], "symbol", StringComparison.OrdinalIgnoreCase))
                 addDirectionalMarks = false;
         }
         if (!addDirectionalMarks) return;
@@ -2713,7 +2713,7 @@ public static class WmlToHtmlConverter
                     else
                         borderWidthInPoints = 11.25m;
                 }
-                else if (type.ToLower().Contains("dash"))
+                else if (type.Contains("dash", StringComparison.OrdinalIgnoreCase))
                 {
                     if (sz <= 4)
                         borderWidthInPoints = 1m;
@@ -3059,7 +3059,7 @@ public static class WmlToHtmlConverter
         if (imageRid == null) return null;
 
         var pp3 = wordDoc.MainDocumentPart.Parts.FirstOrDefault(pp => pp.RelationshipId == imageRid);
-        if (pp3 == null) return null;
+        if (pp3.OpenXmlPart == null) return null;
 
         var imagePart = (ImagePart)pp3.OpenXmlPart;
         if (imagePart == null) return null;
@@ -3132,7 +3132,7 @@ public static class WmlToHtmlConverter
         try
         {
             var pp = wordDoc.MainDocumentPart.Parts.FirstOrDefault(pp2 => pp2.RelationshipId == imageRid);
-            if (pp == null) return null;
+            if (pp.OpenXmlPart == null) return null;
 
             var imagePart = (ImagePart)pp.OpenXmlPart;
             if (imagePart == null) return null;

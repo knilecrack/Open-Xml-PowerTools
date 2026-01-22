@@ -293,7 +293,8 @@ public static class WmlComparer
                     var cloneBlockLevelContentForHashing = (XElement)CloneBlockLevelContentForHashing(wDocAfterProc.MainDocumentPart, blockLevelContent, true, settings);
                     var shaString = cloneBlockLevelContentForHashing.ToString(SaveOptions.DisableFormatting)
                         .Replace(" xmlns=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"", "");
-                    var sha1Hash = PtUtils.SHA1HashStringForUTF8String(shaString);
+                    //var sha1Hash = PtUtils.SHA1HashStringForUTF8String(shaString);
+                    var sha1Hash = PtUtils.XxHash3FoerUTF8String(shaString);
                     var thisUnid = (string)blockLevelContent.Attribute(PtOpenXml.Unid);
                     if (thisUnid != null)
                     {
@@ -812,7 +813,8 @@ public static class WmlComparer
                             {
                                 // Get a hash after first accepting revisions and compressing the text.
                                 var acceptedRevisionElement = RevisionProcessor.AcceptRevisionsForElement(ci.RevisionElement);
-                                var sha1Hash = PtUtils.SHA1HashStringForUTF8String(acceptedRevisionElement.Value.Replace(" ", "").Replace(" ", "").Replace(" ", "").Replace("\n", "").Replace(".", "").Replace(",", "").ToUpper());
+                                //var sha1Hash = PtUtils.SHA1HashStringForUTF8String(acceptedRevisionElement.Value.Replace(" ", "").Replace(" ", "").Replace(" ", "").Replace("\n", "").Replace(".", "").Replace(",", "").ToUpper());
+                                var sha1Hash = PtUtils.XxHash3FoerUTF8String(acceptedRevisionElement.Value.Replace(" ", "").Replace(" ", "").Replace(" ", "").Replace("\n", "").Replace(".", "").Replace(",", "").ToUpper());
                                 return sha1Hash;
                             })
                             .OrderByDescending(g => g.Count())
@@ -1050,7 +1052,7 @@ public static class WmlComparer
         {
             return new XElement(element.Name,
                 element.Attributes().Where(a => a.Name.Namespace != PtOpenXml.pt &&
-                    !a.Name.LocalName.ToLower().Contains("rsid")),
+                    !a.Name.LocalName.Contains("rsid", StringComparison.OrdinalIgnoreCase)),
                 element.Nodes().Select(n => CleanPartTransform(n)));
         }
         return node;
@@ -1348,7 +1350,7 @@ public static class WmlComparer
         clonedForHashing.Descendants().Where(d => d.Name == W.ins || d.Name == W.del).Attributes(W.id).Remove();
         var shaString = clonedForHashing.ToString(SaveOptions.DisableFormatting)
             .Replace(" xmlns=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"", "");
-        var sha1Hash = PtUtils.SHA1HashStringForUTF8String(shaString);
+        var sha1Hash = PtUtils.XxHash3FoerUTF8String(shaString);
         consolidationInfo.RevisionString = shaString;
         consolidationInfo.RevisionHash = sha1Hash;
 
@@ -3496,7 +3498,8 @@ public static class WmlComparer
             var cloneBlockLevelContentForHashing = (XElement)CloneBlockLevelContentForHashing(part, blockLevelContent, true, settings);
             var shaString = cloneBlockLevelContentForHashing.ToString(SaveOptions.DisableFormatting)
                 .Replace(" xmlns=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"", "");
-            var sha1Hash = PtUtils.SHA1HashStringForUTF8String(shaString);
+            //var sha1Hash = PtUtils.SHA1HashStringForUTF8String(shaString);
+            var sha1Hash = PtUtils.XxHash3FoerUTF8String(shaString);
             blockLevelContent.Add(new XAttribute(PtOpenXml.SHA1Hash, sha1Hash));
 
             if (blockLevelContent.Name == W.tbl ||
@@ -3511,7 +3514,8 @@ public static class WmlComparer
 
                 var shaString2 = clonedForStructureHash.ToString(SaveOptions.DisableFormatting)
                     .Replace(" xmlns=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"", "");
-                var sha1Hash2 = PtUtils.SHA1HashStringForUTF8String(shaString2);
+                //var sha1Hash2 = PtUtils.SHA1HashStringForUTF8String(shaString2);
+                var sha1Hash2 = PtUtils.XxHash3FoerUTF8String(shaString2);
                 blockLevelContent.Add(new XAttribute(PtOpenXml.StructureSHA1Hash, sha1Hash2));
             }
         }
@@ -7129,7 +7133,9 @@ internal class ComparisonUnitWord : ComparisonUnit
         var sha1String = Contents
             .Select(c => c.SHA1Hash)
             .StringConcatenate();
-        SHA1Hash = PtUtils.SHA1HashStringForUTF8String(sha1String);
+
+       //SHA1Hash = PtUtils.SHA1HashStringForUTF8String(sha1String);
+        SHA1Hash = PtUtils.XxHash3FoerUTF8String(sha1String);
     }
 
     public static XName[] s_ElementsWithRelationshipIds = new XName[] {
@@ -7226,7 +7232,8 @@ public class ComparisonUnitAtom : ComparisonUnit
         else
         {
             var shaHashString = GetSha1HashStringForElement(ContentElement, settings);
-            SHA1Hash = PtUtils.SHA1HashStringForUTF8String(shaHashString);
+            //SHA1Hash = PtUtils.SHA1HashStringForUTF8String(shaHashString);
+            SHA1Hash = PtUtils.XxHash3FoerUTF8String(shaHashString);
         }
     }
 
@@ -7531,7 +7538,7 @@ internal class DocxComparerUtil
 #if false
 public class PtpSHA1Util
 {
-    public static string SHA1HashStringForUTF8String(string s)
+    public static string HA1HashStringForUTF8String(string s)
     {
         byte[] bytes = Encoding.UTF8.GetBytes(s);
         var sha1 = SHA1.Create();

@@ -95,7 +95,7 @@ public class TableRow
         {
             TableColumn tc = Parent
                 .TableColumns()
-                .Where(x => x.Name.ToLower() == columnName.ToLower())
+                .Where(x => string.Equals(x.Name, columnName, StringComparison.OrdinalIgnoreCase))
                 .FirstOrDefault();
             if (tc == null)
                 throw new Exception("Invalid column name: " + columnName);
@@ -361,7 +361,7 @@ public static class XlsxTables
     public static Table Table(this SpreadsheetDocument spreadsheet,
         string tableName)
     {
-        return spreadsheet.Tables().Where(t => t.TableName.ToLower() == tableName.ToLower()).FirstOrDefault();
+        return spreadsheet.Tables().Where(t => string.Equals(t.TableName, tableName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
     }
 
     public static IEnumerable<Row> Rows(this WorksheetPart worksheetPart)

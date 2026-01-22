@@ -3159,13 +3159,13 @@ public class HtmlToWmlConverterCore
     {
         string retValue = "ltr";
         string dirString = (string)element.Attribute(XhtmlNoNamespace.dir);
-        if (dirString != null && dirString.ToLower() == "rtl")
+        if (dirString != null && string.Equals(dirString, "rtl", StringComparison.OrdinalIgnoreCase))
             retValue = "rtl";
         CssExpression directionProp = element.GetProp("direction");
         if (directionProp != null)
         {
             string directionValue = directionProp.ToString();
-            if (directionValue.ToLower() == "rtl")
+            if (string.Equals(directionValue, "rtl", StringComparison.OrdinalIgnoreCase))
                 retValue = "rtl";
         }
         return retValue;

@@ -556,6 +556,7 @@ public class DocumentAssembler
             if (message == null)
                 message = e.Message;
         }, true);
+
         if (message != null)
             return message;
         return null;
@@ -602,7 +603,7 @@ public class DocumentAssembler
 
                 var xPath = (string) element.Attribute(PA.Select);
                 var optionalString = (string) element.Attribute(PA.Optional);
-                bool optional = (optionalString != null && optionalString.ToLower() == "true");
+                bool optional = (optionalString != null && string.Equals(optionalString, "true", StringComparison.OrdinalIgnoreCase));
 
                 string newValue;
                 try
@@ -644,7 +645,7 @@ public class DocumentAssembler
             {
                 string selector = (string)element.Attribute(PA.Select);
                 var optionalString = (string)element.Attribute(PA.Optional);
-                bool optional = (optionalString != null && optionalString.ToLower() == "true");
+                bool optional = (optionalString != null && string.Equals(optionalString, "true", StringComparison.OrdinalIgnoreCase));
 
                 IEnumerable<XElement> repeatingData;
                 try

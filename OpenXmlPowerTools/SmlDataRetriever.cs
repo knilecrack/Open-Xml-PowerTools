@@ -1080,7 +1080,7 @@ public class SmlDataRetriever
         {
             if (applyNumberFormatStr == "1")
                 returnValue = true;
-            if (applyNumberFormatStr.Substring(0, 1).ToUpper() == "T")
+            if (string.Equals(applyNumberFormatStr.Substring(0, 1), "T", StringComparison.OrdinalIgnoreCase))
                 returnValue = true;
         }
         return returnValue;
