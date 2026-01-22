@@ -1340,10 +1340,8 @@ public static class WmlComparer
         ConsolidationInfo consolidationInfo,
         WmlComparerSettings settings)
     {
-        Package packageOfDeletedContent = wDocDelta.MainDocumentPart.OpenXmlPackage.GetPackage();
-        Package packageOfNewContent = consolidatedWDoc.MainDocumentPart.OpenXmlPackage.GetPackage();
-        PackagePart partInDeletedDocument = packageOfDeletedContent.GetPart(wDocDelta.MainDocumentPart.Uri);
-        PackagePart partInNewDocument = packageOfNewContent.GetPart(consolidatedWDoc.MainDocumentPart.Uri);
+        PackagePart partInDeletedDocument = wDocDelta.MainDocumentPart.GetPackagePart();
+        PackagePart partInNewDocument = consolidatedWDoc.MainDocumentPart.GetPackagePart();
         consolidationInfo.RevisionElement = MoveRelatedPartsToDestination(partInDeletedDocument, partInNewDocument, consolidationInfo.RevisionElement);
 
         var clonedForHashing = (XElement)CloneBlockLevelContentForHashing(consolidatedWDoc.MainDocumentPart, consolidationInfo.RevisionElement, false, settings);
@@ -2979,13 +2977,8 @@ public static class WmlComparer
                     // my hypothesis is that these ancestor unids should be the same for all content unit atoms within that paragraph.
                     currentAncestorUnids = cua
                         .AncestorElements
-                        .Select(ae =>
-                        {
-                            var thisUnid = (string)ae.Attribute(PtOpenXml.Unid);
-                            if (thisUnid == null)
-                                throw new OpenXmlPowerToolsException("Internal error");
-                            return thisUnid;
-                        })
+                        .Where(ae => ae.Attribute(PtOpenXml.Unid) != null)  // Only include elements with Unid
+                        .Select(ae => (string)ae.Attribute(PtOpenXml.Unid))
                         .ToArray();
                     cua.AncestorUnids = currentAncestorUnids;
                     if (deepestAncestorUnid != null)
@@ -3060,13 +3053,8 @@ public static class WmlComparer
 
                     currentAncestorUnids = cua
                         .AncestorElements
-                        .Select(ae =>
-                        {
-                            var thisUnid = (string)ae.Attribute(PtOpenXml.Unid);
-                            if (thisUnid == null)
-                                throw new OpenXmlPowerToolsException("Internal error");
-                            return thisUnid;
-                        })
+                        .Where(ae => ae.Attribute(PtOpenXml.Unid) != null)  // Only include elements with Unid
+                        .Select(ae => (string)ae.Attribute(PtOpenXml.Unid))
                         .ToArray();
                     cua.AncestorUnids = currentAncestorUnids;
                     continue;
@@ -4607,10 +4595,8 @@ public static class WmlComparer
                                     var openXmlPartInNewDocument = part;
                                     return gc.Select(gce =>
                                     {
-                                        Package packageOfDeletedContent = openXmlPartOfDeletedContent.OpenXmlPackage.GetPackage();
-                                        Package packageOfNewContent = openXmlPartInNewDocument.OpenXmlPackage.GetPackage();
-                                        PackagePart partInDeletedDocument = packageOfDeletedContent.GetPart(part.Uri);
-                                        PackagePart partInNewDocument = packageOfNewContent.GetPart(part.Uri);
+                                        PackagePart partInDeletedDocument = openXmlPartInNewDocument.GetPackagePart();
+                                        PackagePart partInNewDocument = openXmlPartInNewDocument.GetPackagePart();
                                         return MoveRelatedPartsToDestination(partInDeletedDocument, partInNewDocument, newDrawing);
                                     });
                                 });
@@ -4626,10 +4612,8 @@ public static class WmlComparer
                                     var openXmlPartInNewDocument = part;
                                     return gc.Select(gce =>
                                     {
-                                        Package packageOfSourceContent = openXmlPartOfInsertedContent.OpenXmlPackage.GetPackage();
-                                        Package packageOfNewContent = openXmlPartInNewDocument.OpenXmlPackage.GetPackage();
-                                        PackagePart partInDeletedDocument = packageOfSourceContent.GetPart(part.Uri);
-                                        PackagePart partInNewDocument = packageOfNewContent.GetPart(part.Uri);
+                                        PackagePart partInDeletedDocument = openXmlPartInNewDocument.GetPackagePart();
+                                        PackagePart partInNewDocument = openXmlPartInNewDocument.GetPackagePart();
                                         return MoveRelatedPartsToDestination(partInDeletedDocument, partInNewDocument, newDrawing);
                                     });
                                 });
@@ -5009,14 +4993,8 @@ public static class WmlComparer
                     break;
                 }
                 var unidList = relevantAncestors
-                    .Where(a => a.Name != W.footnotes && a.Name != W.endnotes)  // Filter out footnotes/endnotes which may not have Unid
-                    .Select(a =>
-                    {
-                        var unid = (string)a.Attribute(PtOpenXml.Unid);
-                        if (unid == null)
-                            throw new OpenXmlPowerToolsException("Internal error");
-                        return unid;
-                    })
+                    .Where(a => a.Attribute(PtOpenXml.Unid) != null)  // Only include elements that have a Unid attribute
+                    .Select(a => (string)a.Attribute(PtOpenXml.Unid))
                     .ToArray();
                 foreach (var da in da2)
                 {
@@ -5032,11 +5010,10 @@ public static class WmlComparer
                     {
                         var unid = z.Ancestor.Attribute(PtOpenXml.Unid);
 
-                        if (z.Ancestor.Name == W.footnotes || z.Ancestor.Name == W.endnotes)
+                        // Skip elements that don't have Unid attributes (footnotes, endnotes, and other special elements)
+                        if (unid == null)
                             continue;
 
-                        if (unid == null)
-                            throw new OpenXmlPowerToolsException("Internal error");
                         unid.Value = z.Unid;
                     }
                 }

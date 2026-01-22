@@ -54,10 +54,72 @@ public static class OpenXmlPackageExtensions
 
     /// <summary>
     /// Gets the underlying Package from an OpenXmlPackage using reflection.
+    /// Handles MalformedUriHandlingPackage wrapper that the SDK uses when documents have malformed URIs.
     /// </summary>
     public static Package GetPackage(this OpenXmlPackage package)
     {
-        return (Package)s_packageProperty.GetValue(package);
+        var packageValue = s_packageProperty.GetValue(package);
+        if (packageValue == null)
+        {
+            throw new InvalidOperationException("Package property returned null");
+        }
+
+        // Check if it's already a Package (most common case)
+        if (packageValue is Package pkg)
+        {
+            return pkg;
+        }
+
+        // The SDK wraps packages in MalformedUriHandlingPackage when URIs have issues.
+        // MalformedUriHandlingPackage is NOT a Package subclass, but wraps one.
+        // It has a Package property of type IPackage (interface) that we need to extract.
+        var packageType = packageValue.GetType();
+
+        // Try to get the "Package" property which is of type IPackage
+        var packageProp = packageType.GetProperty("Package", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+        if (packageProp != null)
+        {
+            var innerValue = packageProp.GetValue(packageValue);
+            if (innerValue is Package innerPkg)
+            {
+                return innerPkg;
+            }
+        }
+
+        // Also try all fields and properties to find anything that implements IPackage or is a Package
+        foreach (var field in packageType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public))
+        {
+            if (typeof(Package).IsAssignableFrom(field.FieldType) ||
+                field.FieldType.Name == "IPackage" ||
+                field.FieldType.GetInterfaces().Any(i => i.Name == "IPackage"))
+            {
+                var innerValue = field.GetValue(packageValue);
+                if (innerValue is Package innerPkg)
+                {
+                    return innerPkg;
+                }
+            }
+        }
+
+        // Try all properties
+        foreach (var prop in packageType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public))
+        {
+            if (typeof(Package).IsAssignableFrom(prop.PropertyType) ||
+                prop.PropertyType.Name == "IPackage" ||
+                prop.PropertyType.GetInterfaces().Any(i => i.Name == "IPackage"))
+            {
+                var innerValue = prop.GetValue(packageValue);
+                if (innerValue is Package innerPkg)
+                {
+                    return innerPkg;
+                }
+            }
+        }
+
+        // Last resort: throw a descriptive error
+        throw new InvalidOperationException(
+            $"Unable to extract Package from {packageType.FullName}. " +
+            $"The SDK returned an unexpected package type that doesn't contain an accessible Package instance.");
     }
 
     /// <summary>

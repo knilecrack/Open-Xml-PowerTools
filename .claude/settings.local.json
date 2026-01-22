@@ -6,7 +6,10 @@
       "Bash(git checkout:*)",
       "Bash(dotnet build:*)",
       "Bash(dotnet list:*)",
-      "Bash(dotnet test:*)"
+      "Bash(dotnet test:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(tee:*)"
     ]
   }
 }
