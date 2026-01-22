@@ -124,10 +124,54 @@ public static class OpenXmlPackageExtensions
 
     /// <summary>
     /// Gets the underlying PackagePart from an OpenXmlPart using reflection.
+    /// Handles SDK type wrapping similar to MalformedUriHandlingPackage.
     /// </summary>
     public static PackagePart GetPackagePart(this OpenXmlPart part)
     {
-        return (PackagePart)s_packagePartProperty.GetValue(part);
+        var packagePartValue = s_packagePartProperty.GetValue(part);
+        if (packagePartValue == null)
+        {
+            throw new InvalidOperationException("PackagePart property returned null");
+        }
+
+        // Check if it's already a PackagePart (most common case)
+        if (packagePartValue is PackagePart pkgPart)
+        {
+            return pkgPart;
+        }
+
+        // The SDK may wrap the PackagePart in a different type. Try to extract it via reflection.
+        var packagePartType = packagePartValue.GetType();
+
+        // Try to find a PackagePart-typed field or property
+        foreach (var field in packagePartType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public))
+        {
+            if (typeof(PackagePart).IsAssignableFrom(field.FieldType))
+            {
+                var innerValue = field.GetValue(packagePartValue);
+                if (innerValue is PackagePart innerPart)
+                {
+                    return innerPart;
+                }
+            }
+        }
+
+        foreach (var prop in packagePartType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public))
+        {
+            if (typeof(PackagePart).IsAssignableFrom(prop.PropertyType))
+            {
+                var innerValue = prop.GetValue(packagePartValue);
+                if (innerValue is PackagePart innerPart)
+                {
+                    return innerPart;
+                }
+            }
+        }
+
+        // Last resort: throw a descriptive error
+        throw new InvalidOperationException(
+            $"Unable to extract PackagePart from {packagePartType.FullName}. " +
+            $"The SDK returned an unexpected type that doesn't contain an accessible PackagePart instance.");
     }
 }
 

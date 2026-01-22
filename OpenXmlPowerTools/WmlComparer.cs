@@ -2981,7 +2981,7 @@ public static class WmlComparer
                         .Select(ae => (string)ae.Attribute(PtOpenXml.Unid))
                         .ToArray();
                     cua.AncestorUnids = currentAncestorUnids;
-                    if (deepestAncestorUnid != null)
+                    if (deepestAncestorUnid != null && cua.AncestorUnids.Length > 0)
                         cua.AncestorUnids[0] = deepestAncestorUnid;
                     continue;
                 }
@@ -3002,7 +3002,7 @@ public static class WmlComparer
                 .Concat(additionalAncestorUnids)
                 .ToArray();
             cua.AncestorUnids = thisAncestorUnids;
-            if (deepestAncestorUnid != null)
+            if (deepestAncestorUnid != null && cua.AncestorUnids.Length > 0)
                 cua.AncestorUnids[0] = deepestAncestorUnid;
         }
 
@@ -4437,7 +4437,8 @@ public static class WmlComparer
     {
         var grouped = list.GroupBy(ca =>
         {
-            if (level >= ca.AncestorElements.Length)
+            // Check both arrays since filtering may have made AncestorUnids shorter
+            if (level >= ca.AncestorElements.Length || level >= ca.AncestorUnids.Length)
                 return "";
             return ca.AncestorUnids[level];
         })

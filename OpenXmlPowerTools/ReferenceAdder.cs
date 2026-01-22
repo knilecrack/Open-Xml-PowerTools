@@ -56,8 +56,8 @@ public class ReferenceAdder
         // {1} rightTabPosition (default = 9350)
         // {2} switches
 
-        String xmlString =
-@"<w:sdt xmlns:w='http://schemas.openxmlformats.org/wordprocessingml/2006/main'>
+        const string xmlString = """
+<w:sdt xmlns:w='http://schemas.openxmlformats.org/wordprocessingml/2006/main'>
   <w:sdtPr>
     <w:docPartObj>
       <w:docPartGallery w:val='Table of Contents'/>
@@ -113,7 +113,8 @@ public class ReferenceAdder
       </w:r>
     </w:p>
   </w:sdtContent>
-</w:sdt>";
+</w:sdt>"
+""";
 
         XmlReader sdtReader = XmlReader.Create(new StringReader(String.Format(xmlString, title, rightTabPos, switches)));
         XElement sdt = XElement.Load(sdtReader);

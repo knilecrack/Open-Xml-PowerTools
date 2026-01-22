@@ -3128,30 +3128,30 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml
             if (temp.ImagePart == null)
             {
                 ImagePart newPart = null;
-                if (newContentPart is MainDocumentPart)
-                    newPart = ((MainDocumentPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is HeaderPart)
-                    newPart = ((HeaderPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is FooterPart)
-                    newPart = ((FooterPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is EndnotesPart)
-                    newPart = ((EndnotesPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is FootnotesPart)
-                    newPart = ((FootnotesPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is ThemePart)
-                    newPart = ((ThemePart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is WordprocessingCommentsPart)
-                    newPart = ((WordprocessingCommentsPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is DocumentSettingsPart)
-                    newPart = ((DocumentSettingsPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is ChartPart)
-                    newPart = ((ChartPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is NumberingDefinitionsPart)
-                    newPart = ((NumberingDefinitionsPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is DiagramDataPart)
-                    newPart = ((DiagramDataPart)newContentPart).AddImagePart(oldPart.ContentType);
-                if (newContentPart is ChartDrawingPart)
-                    newPart = ((ChartDrawingPart)newContentPart).AddImagePart(oldPart.ContentType);
+                if (newContentPart is MainDocumentPart mainDocumentPart)
+                    newPart = mainDocumentPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is HeaderPart headerPart)
+                    newPart = headerPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is FooterPart footerPart)
+                    newPart = footerPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is EndnotesPart endnotesPart)
+                    newPart = endnotesPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is FootnotesPart footnotesPart)
+                    newPart = footnotesPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is ThemePart themePart)
+                    newPart = themePart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is WordprocessingCommentsPart wordprocessingCommentsPart)
+                    newPart = wordprocessingCommentsPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is DocumentSettingsPart documentSettingsPart)
+                    newPart = documentSettingsPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is ChartPart chartPart)
+                    newPart = chartPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is NumberingDefinitionsPart numberingDefinitionsPart)
+                    newPart = numberingDefinitionsPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is DiagramDataPart diagramDataPart)
+                    newPart = diagramDataPart.AddImagePart(oldPart.ContentType);
+                if (newContentPart is ChartDrawingPart chartDrawingPart)
+                    newPart = chartDrawingPart.AddImagePart(oldPart.ContentType);
                 temp.ImagePart = newPart;
                 var id = newContentPart.GetIdOfPart(newPart);
                 temp.AddContentPartRelTypeResourceIdTupple(newContentPart, newPart.RelationshipType, id);
@@ -4010,7 +4010,7 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml
         return oldImageData;
     }
 
-    private static XAttribute[] NamespaceAttributes =
+    private static readonly XAttribute[] NamespaceAttributes =
     {
         new XAttribute(XNamespace.Xmlns + "wpc", WPC.wpc),
         new XAttribute(XNamespace.Xmlns + "mc", MC.mc),
