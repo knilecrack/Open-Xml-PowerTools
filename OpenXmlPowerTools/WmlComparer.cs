@@ -4476,7 +4476,8 @@ public static class WmlComparer
                     .GroupAdjacent(gc =>
                     {
                         var key = "";
-                        if (level < (gc.AncestorElements.Length - 1))
+                        // Check both AncestorElements and AncestorUnids length since filtering may have made them different
+                        if (level < (gc.AncestorElements.Length - 1) && (level + 1) < gc.AncestorUnids.Length)
                         {
                             key = gc.AncestorUnids[level + 1];
                         }
