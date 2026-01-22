@@ -242,10 +242,16 @@ public static class DocumentBuilder
         using OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(doc);
         using WordprocessingDocument document = streamDoc.GetWordprocessingDocument();
         XDocument mainDocument = document.MainDocumentPart.GetXDocument();
-        var divs = mainDocument
+        // Filter out body-level w:sectPr elements as they are section properties, not block-level content
+        // A body-level sectPr marks a section boundary and should not be included in element counts
+        var bodyElements = mainDocument
             .Root
             .Element(W.body)
             .Elements()
+            .Where(e => e.Name != W.sectPr)
+            .ToList();
+
+        var divs = bodyElements
             .Select((p, i) => new Atbi
             {
                 BlockLevelContent = p,
