@@ -9,14 +9,12 @@ public static class RevisionAccepter
 {
     public static WmlDocument AcceptRevisions(WmlDocument document)
     {
-        using (OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(document))
+        using OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(document);
+        using (WordprocessingDocument doc = streamDoc.GetWordprocessingDocument())
         {
-            using (WordprocessingDocument doc = streamDoc.GetWordprocessingDocument())
-            {
-                AcceptRevisions(doc);
-            }
-            return streamDoc.GetModifiedWmlDocument();
+            AcceptRevisions(doc);
         }
+        return streamDoc.GetModifiedWmlDocument();
     }
 
     public static void AcceptRevisions(WordprocessingDocument doc)

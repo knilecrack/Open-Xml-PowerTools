@@ -425,42 +425,40 @@ public static class DocumentBuilder
                 }
                 else
                 {
-                    using (OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(source.WmlDocument))
-                    using (WordprocessingDocument doc = streamDoc.GetWordprocessingDocument())
-                    {
+                    using OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(source.WmlDocument);
+                    using WordprocessingDocument doc = streamDoc.GetWordprocessingDocument();
 #if TestForUnsupportedDocuments
-                        // throws exceptions if a document contains unsupported content
-                        TestForUnsupportedDocument(doc, sources.IndexOf(source));
+                    // throws exceptions if a document contains unsupported content
+                    TestForUnsupportedDocument(doc, sources.IndexOf(source));
 #endif
-                        if (source.KeepSections && source.DiscardHeadersAndFootersInKeptSections)
-                            RemoveHeadersAndFootersFromSections(doc);
-                        else if (source.KeepSections)
-                            ProcessSectionsForLinkToPreviousHeadersAndFooters(doc);
+                    if (source.KeepSections && source.DiscardHeadersAndFootersInKeptSections)
+                        RemoveHeadersAndFootersFromSections(doc);
+                    else if (source.KeepSections)
+                        ProcessSectionsForLinkToPreviousHeadersAndFooters(doc);
 
-                        var body = doc.MainDocumentPart.GetXDocument()
-                            .Root
-                            .Element(W.body);
+                    var body = doc.MainDocumentPart.GetXDocument()
+                        .Root
+                        .Element(W.body);
 
-                        if (body == null)
-                            throw new DocumentBuilderException(
-                                String.Format("Source {0} is unsupported document - contains no body element in the correct namespace", sourceNum2));
+                    if (body == null)
+                        throw new DocumentBuilderException(
+                            String.Format("Source {0} is unsupported document - contains no body element in the correct namespace", sourceNum2));
 
-                        List<XElement> contents = body
-                            .Elements()
-                            .Skip(source.Start)
-                            .Take(source.Count)
-                            .ToList();
-                        try
-                        {
-                            AppendDocument(doc, output, contents, source.KeepSections, null, images);
-                        }
-                        catch (DocumentBuilderInternalException dbie)
-                        {
-                            if (dbie.Message.Contains("{0}"))
-                                throw new DocumentBuilderException(string.Format(dbie.Message, sourceNum2));
-                            else
-                                throw dbie;
-                        }
+                    List<XElement> contents = body
+                        .Elements()
+                        .Skip(source.Start)
+                        .Take(source.Count)
+                        .ToList();
+                    try
+                    {
+                        AppendDocument(doc, output, contents, source.KeepSections, null, images);
+                    }
+                    catch (DocumentBuilderInternalException dbie)
+                    {
+                        if (dbie.Message.Contains("{0}"))
+                            throw new DocumentBuilderException(string.Format(dbie.Message, sourceNum2));
+                        else
+                            throw dbie;
                     }
                 }
                 ++sourceNum2;
