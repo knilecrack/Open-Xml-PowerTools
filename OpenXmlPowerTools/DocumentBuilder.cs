@@ -319,7 +319,9 @@ public static class DocumentBuilder
                     if (lastElement.Name != W.sectPr &&
                         lastElement.Descendants(W.sectPr).Any())
                     {
-                        mainXDoc.Root.Element(W.body).Add(lastElement.Descendants(W.sectPr).First());
+                        // Move the LAST w:sectPr to the body to preserve correct section structure
+                        // when multiple sectPr elements exist (e.g., in tables with multiple sections)
+                        mainXDoc.Root.Element(W.body).Add(lastElement.Descendants(W.sectPr).Last());
                         lastElement.Descendants(W.sectPr).Remove();
                         if (!lastElement.Elements()
                             .Where(e => e.Name != W.pPr)
