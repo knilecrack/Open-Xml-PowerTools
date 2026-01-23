@@ -303,7 +303,8 @@ AAAAAAAAAAAAAAAANi8AAGRvY1Byb3BzL2FwcC54bWxQSwUGAAAAAAwADAAJAwAA3DEAAAAA";
 
     public static WmlDocument EmptyDocument
     {
-        get {
+        get
+        {
             if (s_EmptyDocument == null)
             {
                 s_EmptyDocument = new WmlDocument("EmptyDocument.docx", Convert.FromBase64String(s_Blank_wml_base64));
@@ -408,7 +409,7 @@ AAAAAAAAAAAAAAAANi8AAGRvY1Byb3BzL2FwcC54bWxQSwUGAAAAAAwADAAJAwAA3DEAAAAA";
                     return false;
                 return true;
             })
-            .Select(l => l + Environment.NewLine )
+            .Select(l => l + Environment.NewLine)
             .StringConcatenate();
         return cleanCss;
     }

@@ -117,7 +117,7 @@ public class MetricsGetter
             {
                 var proposedSize = new Size(int.MaxValue, int.MaxValue);
                 var sf = Graphics.Value.MeasureString(text, f, proposedSize);
-                return (int) sf.Width;
+                return (int)sf.Width;
             }
         }
         catch
@@ -881,30 +881,30 @@ public class MetricsGetter
                 var isGroup = element.Elements(W.sdtPr).Elements(W.group).Any();
                 var isPicture = element.Elements(W.sdtPr).Elements(W.picture).Any();
                 var isRichText = element.Elements(W.sdtPr).Elements(W.richText).Any() ||
-                    (! isText && 
-                    ! isBibliography && 
-                    ! isCitation && 
-                    ! isComboBox && 
-                    ! isDate && 
-                    ! isDocPartList && 
-                    ! isDocPartObj && 
-                    ! isDropDownList && 
-                    ! isEquation && 
-                    ! isGroup && 
-                    ! isPicture);
+                    (!isText &&
+                    !isBibliography &&
+                    !isCitation &&
+                    !isComboBox &&
+                    !isDate &&
+                    !isDocPartList &&
+                    !isDocPartObj &&
+                    !isDropDownList &&
+                    !isEquation &&
+                    !isGroup &&
+                    !isPicture);
                 string type = null;
-                if (isText        ) type = "Text";
+                if (isText) type = "Text";
                 if (isBibliography) type = "Bibliography";
-                if (isCitation    ) type = "Citation";
-                if (isComboBox    ) type = "ComboBox";
-                if (isDate        ) type = "Date";
-                if (isDocPartList ) type = "DocPartList";
-                if (isDocPartObj  ) type = "DocPartObj";
+                if (isCitation) type = "Citation";
+                if (isComboBox) type = "ComboBox";
+                if (isDate) type = "Date";
+                if (isDocPartList) type = "DocPartList";
+                if (isDocPartObj) type = "DocPartObj";
                 if (isDropDownList) type = "DropDownList";
-                if (isEquation    ) type = "Equation";
-                if (isGroup       ) type = "Group";
-                if (isPicture     ) type = "Picture";
-                if (isRichText    ) type = "RichText";
+                if (isEquation) type = "Equation";
+                if (isGroup) type = "Group";
+                if (isPicture) type = "Picture";
+                if (isRichText) type = "RichText";
                 var typeAttr = new XAttribute(H.Type, type);
 
                 return new XElement(H.ContentControl,

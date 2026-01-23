@@ -29,7 +29,7 @@ public static class PtUtils
 
     public static string XxHash3FoerUTF8String(string s)
     {
-        if(string.IsNullOrWhiteSpace(s))
+        if (string.IsNullOrWhiteSpace(s))
             return string.Empty;
 
         var xXHash3 = XxHash3.Hash(Encoding.UTF8.GetBytes(s));
@@ -66,7 +66,7 @@ public static class PtUtils
     public static string MakeValidXml(string p)
     {
         return p.Any(c => c < 0x20)
-            ? p.Select(c => c < 0x20 ? string.Format("_{0:X}_", (int) c) : c.ToString()).StringConcatenate()
+            ? p.Select(c => c < 0x20 ? string.Format("_{0:X}_", (int)c) : c.ToString()).StringConcatenate()
             : p;
     }
 
@@ -586,9 +586,9 @@ public static class PtExtensions
     /// Efficiently removes specified characters from a string using Span&lt;char&gt;.
     /// This avoids creating intermediate string allocations that occur with multiple Replace() calls.
     /// </summary>
-    /// <param name="input">The input string to process</param>
-    /// <param name="charsToRemove">Characters to remove from the string</param>
-    /// <returns>A new string with specified characters removed</returns>
+    /// <param name="input">The input string to process.</param>
+    /// <param name="charsToRemove">Characters to remove from the string.</param>
+    /// <returns>A new string with specified characters removed.</returns>
     public static string RemoveChars(this string input, ReadOnlySpan<char> charsToRemove)
     {
         if (string.IsNullOrEmpty(input))
@@ -873,7 +873,7 @@ public static class PtExtensions
         if (a == null)
             return null;
 
-        string s = ((string) a).ToLower();
+        string s = ((string)a).ToLower();
         switch (s)
         {
             case "1":
@@ -889,7 +889,7 @@ public static class PtExtensions
             case "off":
                 return false;
             default:
-                return (bool) a;
+                return (bool)a;
         }
     }
 
@@ -1213,12 +1213,12 @@ public class GroupOfAdjacent<TSource, TKey> : IGrouping<TKey, TSource>
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return ((IEnumerable<TSource>) this).GetEnumerator();
+        return ((IEnumerable<TSource>)this).GetEnumerator();
     }
 
     IEnumerator<TSource> IEnumerable<TSource>.GetEnumerator()
     {
-        return ((IEnumerable<TSource>) GroupList).GetEnumerator();
+        return ((IEnumerable<TSource>)GroupList).GetEnumerator();
     }
 }
 

@@ -601,8 +601,8 @@ public class DocumentAssembler
                 XElement para = element.Descendants(W.p).FirstOrDefault();
                 XElement run = element.Descendants(W.r).FirstOrDefault();
 
-                var xPath = (string) element.Attribute(PA.Select);
-                var optionalString = (string) element.Attribute(PA.Optional);
+                var xPath = (string)element.Attribute(PA.Select);
+                var optionalString = (string)element.Attribute(PA.Optional);
                 bool optional = (optionalString != null && string.Equals(optionalString, "true", StringComparison.OrdinalIgnoreCase));
 
                 string newValue;
@@ -619,7 +619,7 @@ public class DocumentAssembler
                 {
 
                     XElement p = new XElement(W.p, para.Elements(W.pPr));
-                    foreach(string line in newValue.Split('\n'))
+                    foreach (string line in newValue.Split('\n'))
                     {
                         p.Add(new XElement(W.r,
                                 para.Elements(W.r).Elements(W.rPr).FirstOrDefault(),
@@ -631,7 +631,7 @@ public class DocumentAssembler
                 else
                 {
                     List<XElement> list = new List<XElement>();
-                    foreach(string line in newValue.Split('\n'))
+                    foreach (string line in newValue.Split('\n'))
                     {
                         list.Add(new XElement(W.r,
                             run.Elements().Where(e => e.Name != W.t),
@@ -757,17 +757,17 @@ public class DocumentAssembler
                 if (match != null && notMatch != null)
                     return CreateContextErrorMessage(element, "Conditional: Cannot specify both Match and NotMatch", templateError);
 
-                string testValue = null; 
-               
+                string testValue = null;
+
                 try
                 {
                     testValue = EvaluateXPathToString(data, xPath, false);
                 }
-	                catch (XPathException e)
+                catch (XPathException e)
                 {
                     return CreateContextErrorMessage(element, e.Message, templateError);
                 }
-              
+
                 if ((match != null && testValue == match) || (notMatch != null && testValue != notMatch))
                 {
                     var content = element.Elements().Select(e => ContentReplacementTransform(e, data, templateError));
@@ -816,14 +816,14 @@ public class DocumentAssembler
         return errorPara;
     }
 
-    private static string EvaluateXPathToString(XElement element, string xPath, bool optional )
+    private static string EvaluateXPathToString(XElement element, string xPath, bool optional)
     {
         object xPathSelectResult;
         try
         {
             //support some cells in the table may not have an xpath expression.
             if (String.IsNullOrWhiteSpace(xPath)) return String.Empty;
-            
+
             xPathSelectResult = element.XPathEvaluate(xPath);
         }
         catch (XPathException e)
@@ -833,7 +833,7 @@ public class DocumentAssembler
 
         if ((xPathSelectResult is IEnumerable) && !(xPathSelectResult is string))
         {
-            var selectedData = ((IEnumerable) xPathSelectResult).Cast<XObject>();
+            var selectedData = ((IEnumerable)xPathSelectResult).Cast<XObject>();
             if (!selectedData.Any())
             {
                 if (optional) return string.Empty;
@@ -844,11 +844,11 @@ public class DocumentAssembler
                 throw new XPathException(string.Format("XPath expression ({0}) returned more than one node", xPath));
             }
 
-            XObject selectedDatum = selectedData.First(); 
-            
-            if (selectedDatum is XElement) return ((XElement) selectedDatum).Value;
+            XObject selectedDatum = selectedData.First();
 
-            if (selectedDatum is XAttribute) return ((XAttribute) selectedDatum).Value;
+            if (selectedDatum is XElement) return ((XElement)selectedDatum).Value;
+
+            if (selectedDatum is XAttribute) return ((XAttribute)selectedDatum).Value;
         }
 
         return xPathSelectResult.ToString();

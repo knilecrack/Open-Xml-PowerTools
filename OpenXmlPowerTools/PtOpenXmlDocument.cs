@@ -302,7 +302,7 @@ public class OpenXmlPowerToolsDocument
 
     private static Type GetDocumentType(byte[] bytes)
     {
-using (MemoryStream stream = new MemoryStream())
+        using (MemoryStream stream = new MemoryStream())
         {
             stream.Write(bytes, 0, bytes.Length);
             using (Package package = Package.Open(stream, FileMode.Open, FileAccess.Read))

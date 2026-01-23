@@ -28,7 +28,7 @@ using OpenXmlPowerTools;
  * 
  * We don't include the HtmlAgilityPack in Open-Xml-PowerTools, to simplify installation.  The XUnit tests in
  * this module do not require the HtmlAgilityPack to run.
-*******************************************************************************************/ 
+*******************************************************************************************/
 
 #if USE_HTMLAGILITYPACK
 using HtmlAgilityPack;

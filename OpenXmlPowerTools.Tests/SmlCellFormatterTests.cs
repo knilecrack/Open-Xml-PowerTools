@@ -82,7 +82,7 @@ public class CfTests
     [InlineData("mm:ss.0", "42344.295445092591", "05:26:456", null)]
     [InlineData("##0.0E+0", "100.0", "100.0E+0", null)]
     [InlineData("##0.0E+0", "543.210", "543.2E+0", null)]
-    
+
     public void CF001(string formatCode, string value, string expected, string expectedColor)
     {
         string color;
@@ -124,7 +124,7 @@ public class CfTests
     [InlineData("SH202-Cell-C1-D1-Without-R-Attr.xlsx", "Sheet1", "C1:C1", "3", null)]
     [InlineData("SH203-Cell-C1-D1-E1-Without-R-Attr.xlsx", "Sheet1", "C1:C1", "3", null)]
     [InlineData("SH204-Cell-A1-B1-C1-Without-R-Attr.xlsx", "Sheet1", "A1:A1", "1", null)]
-    
+
     public void CF002(string name, string sheetName, string range, string expected, string expectedColor)
     {
         DirectoryInfo sourceDir = new DirectoryInfo("../../../../TestFiles/");

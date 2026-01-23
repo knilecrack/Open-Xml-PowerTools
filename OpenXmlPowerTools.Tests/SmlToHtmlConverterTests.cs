@@ -113,7 +113,7 @@ public class ShTests
     [InlineData("SH129-FmtNumId-20.xlsx", "Sheet1", "A1:A10")]
     [InlineData("SH130-FmtNumId-21.xlsx", "Sheet1", "A1:A10")]
     [InlineData("SH131-FmtNumId-22.xlsx", "Sheet1", "A1:A10")]
-    
+
     public void SH004_ConvertRange(string name, string sheetName, string range)
     {
         DirectoryInfo sourceDir = new DirectoryInfo("../../../../TestFiles/");
@@ -132,7 +132,7 @@ public class ShTests
             rangeXml.Save(dataXmlFi.FullName);
         }
     }
-    
+
 
     [Theory]
     [InlineData("SH001-Table.xlsx", "MyTable")]
@@ -144,7 +144,7 @@ public class ShTests
     [InlineData("SH007-One-Cell-Table.xlsx", "Table1")]
     [InlineData("SH008-Table-With-Tall-Row.xlsx", "Table1")]
     [InlineData("SH009-Table-With-Wide-Column.xlsx", "Table1")]
-    
+
     public void SH003_ConvertTable(string name, string tableName)
     {
         DirectoryInfo sourceDir = new DirectoryInfo("../../../../TestFiles/");

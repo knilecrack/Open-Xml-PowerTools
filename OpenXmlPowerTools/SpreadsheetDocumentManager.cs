@@ -9,7 +9,7 @@ using DocumentFormat.OpenXml.Packaging;
 namespace OpenXmlPowerTools;
 
 /// <summary>
-/// Manages SpreadsheetDocument content
+/// Manages SpreadsheetDocument content.
 /// </summary>
 public class SpreadsheetDocumentManager
 {
@@ -24,13 +24,12 @@ public class SpreadsheetDocumentManager
     }
 
     /// <summary>
-    /// Creates a spreadsheet document from a value table
+    /// Creates a spreadsheet document from a value table.
     /// </summary>
-    /// <param name="filePath">Path to store the document</param>
-    /// <param name="headerList">Contents of first row (header)</param>
-    /// <param name="valueTable">Contents of data</param>
-    /// <param name="initialRow">Row to start copying data from</param>
-    /// <returns></returns>
+    /// <param name="filePath">Path to store the document.</param>
+    /// <param name="headerList">Contents of first row (header).</param>
+    /// <param name="valueTable">Contents of data.</param>
+    /// <param name="initialRow">Row to start copying data from.</param>
     public static void Create(SpreadsheetDocument document, List<string> headerList, string[][] valueTable, int initialRow)
     {
         headerRow = initialRow;
@@ -40,16 +39,16 @@ public class SpreadsheetDocumentManager
     }
 
     /// <summary>
-    /// Creates a spreadsheet document with a chart from a value table
+    /// Creates a spreadsheet document with a chart from a value table.
     /// </summary>
-    /// <param name="filePath">Path to store the document</param>
-    /// <param name="headerList">Contents of first row (header)</param>
-    /// <param name="valueTable">Contents of data</param>
-    /// <param name="chartType">Chart type</param>
-    /// <param name="categoryColumn">Column to use as category for charting</param>
-    /// <param name="columnsToChart">Columns to use as data series</param>
-    /// <param name="initialRow">Row index to start copying data</param>
-    /// <returns>SpreadsheetDocument</returns>
+    /// <param name="filePath">Path to store the document.</param>
+    /// <param name="headerList">Contents of first row (header).</param>
+    /// <param name="valueTable">Contents of data.</param>
+    /// <param name="chartType">Chart type.</param>
+    /// <param name="categoryColumn">Column to use as category for charting.</param>
+    /// <param name="columnsToChart">Columns to use as data series.</param>
+    /// <param name="initialRow">Row index to start copying data.</param>
+    /// <returns>SpreadsheetDocument.</returns>
     //public static void Create(SpreadsheetDocument document, List<string> headerList, string[][] valueTable, ChartType chartType, string categoryColumn, List<string> columnsToChart, int initialRow)
     //{
     //    headerRow = initialRow;
@@ -87,13 +86,14 @@ public class SpreadsheetDocumentManager
             .Attribute("name").Value;
         return sheetName;
     }
+
     /// <summary>
-    /// Gets the range reference for category
+    /// Gets the range reference for category.
     /// </summary>
-    /// <param name="sheetName">worksheet to take data from</param>
-    /// <param name="headerColumn">name of column used as category</param>
-    /// <param name="headerList">column names from data</param>
-    /// <param name="valueTable">Data values</param>
+    /// <param name="sheetName">worksheet to take data from.</param>
+    /// <param name="headerColumn">name of column used as category.</param>
+    /// <param name="headerList">column names from data.</param>
+    /// <param name="valueTable">Data values.</param>
     /// <returns></returns>
     private static string GetCategoryReference(string sheetName, string headerColumn, List<string> headerList, string[][] valueTable)
     {
@@ -110,13 +110,13 @@ public class SpreadsheetDocumentManager
     }
 
     /// <summary>
-    /// Gets a list of range references for each of the series headers
+    /// Gets a list of range references for each of the series headers.
     /// </summary>
-    /// <param name="sheetName">worksheet to take data from</param>
-    /// <param name="headerColumn">name of column used as category</param>
-    /// <param name="headerList">column names from data</param>
-    /// <param name="valueTable">Data values</param>
-    /// <param name="colsToChart">Columns used as data series</param>
+    /// <param name="sheetName">worksheet to take data from.</param>
+    /// <param name="headerColumn">name of column used as category.</param>
+    /// <param name="headerList">column names from data.</param>
+    /// <param name="valueTable">Data values.</param>
+    /// <param name="colsToChart">Columns used as data series.</param>
     /// <returns></returns>
     private static List<string> GetHeaderReferences(string sheetName, string headerColumn, List<string> headerList, List<string> colsToChart, string[][] valueTable)
     {
@@ -136,13 +136,13 @@ public class SpreadsheetDocumentManager
     }
 
     /// <summary>
-    /// Gets a list of range references for each of the series values
+    /// Gets a list of range references for each of the series values.
     /// </summary>
-    /// <param name="sheetName">worksheet to take data from</param>
-    /// <param name="headerColumn">name of column used as category</param>
-    /// <param name="headerList">column names from data</param>
-    /// <param name="valueTable">Data values</param>
-    /// <param name="colsToChart">Columns used as data series</param>
+    /// <param name="sheetName">worksheet to take data from.</param>
+    /// <param name="headerColumn">name of column used as category.</param>
+    /// <param name="headerList">column names from data.</param>
+    /// <param name="valueTable">Data values.</param>
+    /// <param name="colsToChart">Columns used as data series.</param>
     /// <returns></returns>
     private static List<string> GetValueReferences(string sheetName, string headerColumn, List<string> headerList, List<string> colsToChart, string[][] valueTable)
     {
@@ -166,7 +166,7 @@ public class SpreadsheetDocumentManager
     }
 
     /// <summary>
-    /// Gets a formatted representation of a cell range from a worksheet
+    /// Gets a formatted representation of a cell range from a worksheet.
     /// </summary>
     private static string GetRangeReference(string worksheet, int column, int row)
     {
@@ -174,7 +174,7 @@ public class SpreadsheetDocumentManager
     }
 
     /// <summary>
-    /// Gets a formatted representation of a cell range from a worksheet
+    /// Gets a formatted representation of a cell range from a worksheet.
     /// </summary>
     private static string GetRangeReference(string worksheet, int startColumn, int startRow, int endColumn, int endRow)
     {
@@ -188,7 +188,7 @@ public class SpreadsheetDocumentManager
     }
 
     /// <summary>
-    /// Creates an empty (base) workbook document
+    /// Creates an empty (base) workbook document.
     /// </summary>
     /// <returns></returns>
     private static XDocument CreateEmptyWorkbook()

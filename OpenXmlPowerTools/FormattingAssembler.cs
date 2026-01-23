@@ -1720,7 +1720,7 @@ public static class FormattingAssembler
                 color1 = Convert.ToInt32(color1str, 16);
             }
             // if the above throws ArgumentException, FormatException, or OverflowException, then abort
-            catch (Exception) 
+            catch (Exception)
             {
                 return sideToReplace;
             }
@@ -3158,7 +3158,7 @@ public static class FormattingAssembler
             .toArray();
         */
 
-        var charToExamine = str.FirstOrDefault(c => ! WeakAndNeutralDirectionalCharacters.Contains(c));
+        var charToExamine = str.FirstOrDefault(c => !WeakAndNeutralDirectionalCharacters.Contains(c));
         if (charToExamine == '\0')
             charToExamine = str[0];
 

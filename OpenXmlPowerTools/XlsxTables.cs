@@ -258,7 +258,8 @@ public class Row
         SharedStringTablePart sharedStringTable = doc.WorkbookPart.SharedStringTablePart;
         IEnumerable<XElement> cells = this.RowElement.Elements(S.c);
         var r = cells
-            .Select(cell => {
+            .Select(cell =>
+            {
                 var cellType = (string)cell.Attribute("t");
                 var sharedString = cellType == "s" ?
                     sharedStringTable

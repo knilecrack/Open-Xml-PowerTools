@@ -89,7 +89,7 @@ public class HcTests
     [InlineData("HC051-Shaded-Text-02.docx")]
     [InlineData("HC060-Image-with-Hyperlink.docx")]
     [InlineData("HC061-Hyperlink-in-Field.docx")]
-    
+
     public void HC001(string name)
     {
         DirectoryInfo sourceDir = new DirectoryInfo("../../../../TestFiles/");

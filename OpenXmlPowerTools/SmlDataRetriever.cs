@@ -279,7 +279,7 @@ public class SmlDataRetriever
         // if there are any rows that have all cells with no r attribute, then fix them up
         var invalidRows = shXDoc
             .Descendants(S.row)
-            .Where(r => ! r.Elements(S.c).Any(c => c.Attribute("r") != null))
+            .Where(r => !r.Elements(S.c).Any(c => c.Attribute("r") != null))
             .ToList();
 
         foreach (var row in invalidRows)
@@ -620,7 +620,7 @@ public class SmlDataRetriever
             TransformRemoveNamespace(sheetFormatPr),
             TransformRemoveNamespace(shXDoc.Root.Element(S.cols)),
             mergeCells);
-        
+
         if (!dataProps.HasAttributes && !dataProps.HasElements)
             dataProps = null;
         return dataProps;

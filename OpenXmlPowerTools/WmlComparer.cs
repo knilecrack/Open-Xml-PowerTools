@@ -18,33 +18,34 @@ using DocumentFormat.OpenXml.Packaging;
 using System.Drawing;
 using System.Security.Cryptography;
 using OpenXmlPowerTools;
+using System.Text.RegularExpressions;
 
 // It is possible to optimize DescendantContentAtoms
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Currently, the unid is set at the beginning of the algorithm.  It is used by the code that establishes correlation based on first rejecting
-/// tracked revisions, then correlating paragraphs/tables.  It is requred for this algorithm - after finding a correlated sequence in the document with rejected
-/// revisions, it uses the unid to find the same paragraph in the document without rejected revisions, then sets the correlated sha1 hash in that document.
-/// 
-/// But then when accepting tracked revisions, for certain paragraphs (where there are deleted paragraph marks) it is going to lose the unids.  But this isn't a
-/// problem because when paragraph marks are deleted, the correlation is definitely no longer possible.  Any paragraphs that are in a range of paragraphs that
-/// are coalesced can't be correlated to paragraphs in the other document via their hash.  At that point we no longer care what their unids are.
-/// 
-/// But after that it is only used to reconstruct the tree.  It is also used in the debugging code that
-/// prints the various correlated sequences and comparison units - this is display for debugging purposes only.
+// Currently, the unid is set at the beginning of the algorithm.  It is used by the code that establishes correlation based on first rejecting
+// tracked revisions, then correlating paragraphs/tables.  It is requred for this algorithm - after finding a correlated sequence in the document with rejected
+// revisions, it uses the unid to find the same paragraph in the document without rejected revisions, then sets the correlated sha1 hash in that document.
+// 
+// But then when accepting tracked revisions, for certain paragraphs (where there are deleted paragraph marks) it is going to lose the unids.  But this isn't a
+// problem because when paragraph marks are deleted, the correlation is definitely no longer possible.  Any paragraphs that are in a range of paragraphs that
+// are coalesced can't be correlated to paragraphs in the other document via their hash.  At that point we no longer care what their unids are.
+// 
+// But after that it is only used to reconstruct the tree.  It is also used in the debugging code that
+// prints the various correlated sequences and comparison units - this is display for debugging purposes only.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// The key idea here is that a given paragraph will always have the same ancestors, and it doesn't matter whether the content was deleted from the old document,
-/// inserted into the new document, or set as equal.  At this point, we identify a paragraph as a sequential list of content atoms, terminated by a paragraph mark.
-/// This entire list will for a single paragraph, regardless of whether the paragraph is a child of the body, or if the paragraph is in a cell in a table, or if
-/// the paragraph is in a text box.  The list of ancestors, from the paragraph to the root of the XML tree will be the same for all content atoms in the paragraph.
-/// 
-/// Therefore:
-/// 
-/// Iterate through the list of content atoms backwards.  When the loop sees a paragraph mark, it gets the ancestor unids from the paragraph mark to the top of the
-/// tree, and sets this as the same for all content atoms in the paragraph.  For descendants of the paragraph mark, it doesn't really matter if content is put into
-/// separate runs or what not.  We don't need to be concerned about what the unids are for descendants of the paragraph.
+// The key idea here is that a given paragraph will always have the same ancestors, and it doesn't matter whether the content was deleted from the old document,
+// inserted into the new document, or set as equal.  At this point, we identify a paragraph as a sequential list of content atoms, terminated by a paragraph mark.
+// This entire list will for a single paragraph, regardless of whether the paragraph is a child of the body, or if the paragraph is in a cell in a table, or if
+// the paragraph is in a text box.  The list of ancestors, from the paragraph to the root of the XML tree will be the same for all content atoms in the paragraph.
+// 
+// Therefore:
+// 
+// Iterate through the list of content atoms backwards.  When the loop sees a paragraph mark, it gets the ancestor unids from the paragraph mark to the top of the
+// tree, and sets this as the same for all content atoms in the paragraph.  For descendants of the paragraph mark, it doesn't really matter if content is put into
+// separate runs or what not.  We don't need to be concerned about what the unids are for descendants of the paragraph.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -83,11 +84,14 @@ public class WmlRevisedDocumentInfo
     public Color Color;
 }
 
-public static class WmlComparer
+public static partial class WmlComparer
 {
     public static bool s_False = false;
     public static bool s_True = true;
     public static bool s_SaveIntermediateFilesForDebugging = false;
+
+    [GeneratedRegex(@"[\s.,]")]
+    private static partial Regex RemoveWhiteSpaceDotAndColum { get; }
 
     public static WmlDocument Compare(WmlDocument source1, WmlDocument source2, WmlComparerSettings settings)
     {
@@ -201,45 +205,43 @@ public static class WmlComparer
         }
 
         WmlDocument wmlResult = new WmlDocument(source1);
-        using (MemoryStream ms1 = new MemoryStream())
-        using (MemoryStream ms2 = new MemoryStream())
+        using MemoryStream ms1 = new MemoryStream();
+        using MemoryStream ms2 = new MemoryStream();
+        ms1.Write(source1.DocumentByteArray, 0, source1.DocumentByteArray.Length);
+        ms2.Write(source2.DocumentByteArray, 0, source2.DocumentByteArray.Length);
+        WmlDocument producedDocument;
+        using (WordprocessingDocument wDoc1 = WordprocessingDocument.Open(ms1, true))
+        using (WordprocessingDocument wDoc2 = WordprocessingDocument.Open(ms2, true))
         {
-            ms1.Write(source1.DocumentByteArray, 0, source1.DocumentByteArray.Length);
-            ms2.Write(source2.DocumentByteArray, 0, source2.DocumentByteArray.Length);
-            WmlDocument producedDocument;
-            using (WordprocessingDocument wDoc1 = WordprocessingDocument.Open(ms1, true))
-            using (WordprocessingDocument wDoc2 = WordprocessingDocument.Open(ms2, true))
-            {
-                producedDocument = ProduceDocumentWithTrackedRevisions(settings, wmlResult, wDoc1, wDoc2);
-            }
-
-            if (s_False && settings.DebugTempFileDi != null)
-            {
-                var name1 = "Source1-Step5-AfterProducingDocWithRevTrk.docx";
-                var name2 = "Source2-Step5-AfterProducingDocWithRevTrk.docx";
-                var afterProducingFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
-                var afterProducingWml1 = new WmlDocument("after1.docx", ms1.ToArray());
-                afterProducingWml1.SaveAs(afterProducingFi1.FullName);
-                var afterProducingFi2 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
-                var afterProducingWml2 = new WmlDocument("after2.docx", ms2.ToArray());
-                afterProducingWml2.SaveAs(afterProducingFi2.FullName);
-            }
-
-            if (s_False && settings.DebugTempFileDi != null)
-            {
-                var cleanedSource = CleanPowerToolsAndRsid(source1);
-                var name1 = "Cleaned-Source.docx";
-                var cleanedSourceFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
-                cleanedSource.SaveAs(cleanedSourceFi1.FullName);
-
-                var cleanedProduced = CleanPowerToolsAndRsid(producedDocument);
-                var name2 = "Cleaned-Produced.docx";
-                var cleanedProducedFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
-                cleanedProduced.SaveAs(cleanedProducedFi1.FullName);
-            }
-
-            return producedDocument;
+            producedDocument = ProduceDocumentWithTrackedRevisions(settings, wmlResult, wDoc1, wDoc2);
         }
+
+        if (s_False && settings.DebugTempFileDi != null)
+        {
+            var name1 = "Source1-Step5-AfterProducingDocWithRevTrk.docx";
+            var name2 = "Source2-Step5-AfterProducingDocWithRevTrk.docx";
+            var afterProducingFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+            var afterProducingWml1 = new WmlDocument("after1.docx", ms1.ToArray());
+            afterProducingWml1.SaveAs(afterProducingFi1.FullName);
+            var afterProducingFi2 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
+            var afterProducingWml2 = new WmlDocument("after2.docx", ms2.ToArray());
+            afterProducingWml2.SaveAs(afterProducingFi2.FullName);
+        }
+
+        if (s_False && settings.DebugTempFileDi != null)
+        {
+            var cleanedSource = CleanPowerToolsAndRsid(source1);
+            var name1 = "Cleaned-Source.docx";
+            var cleanedSourceFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+            cleanedSource.SaveAs(cleanedSourceFi1.FullName);
+
+            var cleanedProduced = CleanPowerToolsAndRsid(producedDocument);
+            var name2 = "Cleaned-Produced.docx";
+            var cleanedProducedFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
+            cleanedProduced.SaveAs(cleanedProducedFi1.FullName);
+        }
+
+        return producedDocument;
     }
 
     private static WmlDocument CleanPowerToolsAndRsid(WmlDocument producedDocument)
@@ -800,7 +802,7 @@ public static class WmlComparer
                     // that contains the revisions, then simply replace the paragraph with the one with the revisions.
                     // RC004 documents contain the test data to exercise this.
 
-                    var lciCount = lci.Where(ci => ci.InsertBefore == false).Count();
+                    var lciCount = lci.Count(ci => !ci.InsertBefore);
 
                     if (lciCount > 1 && lciCount == revisedDocumentInfoListCount)
                     {
@@ -808,21 +810,24 @@ public static class WmlComparer
                         // This is the code that determines if revisions should be consolidated into one.
 
                         var uniqueRevisions = lci
-                            .Where(ci => ci.InsertBefore == false)
+                            .Where(ci => !ci.InsertBefore)
                             .GroupBy(ci =>
                             {
                                 // Get a hash after first accepting revisions and compressing the text.
                                 var acceptedRevisionElement = RevisionProcessor.AcceptRevisionsForElement(ci.RevisionElement);
                                 //var sha1Hash = PtUtils.SHA1HashStringForUTF8String(acceptedRevisionElement.Value.Replace(" ", "").Replace(" ", "").Replace(" ", "").Replace("\n", "").Replace(".", "").Replace(",", "").ToUpper());
-                                var sha1Hash = PtUtils.XxHash3FoerUTF8String(acceptedRevisionElement.Value
-                                                      .Replace(" ", "")
-                                                      .Replace(" ", "")
-                                                      .Replace(" ", "")
-                                                      .Replace("\n", "")
-                                                      .Replace(".", "")
-                                                      .Replace(",", "")
-                                                      .ToUpper());
-                                return sha1Hash;
+                                var valueAfterWhiteSpaceRemoval = RemoveWhiteSpaceDotAndColum.Replace(acceptedRevisionElement.Value, "");
+                                //var sha1Hash = PtUtils.XxHash3FoerUTF8String(acceptedRevisionElement.Value
+                                //                      .Replace(" ", "")
+                                //                      .Replace(" ", "")
+                                //                      .Replace(" ", "")
+                                //                      .Replace("\n", "")
+                                //                      .Replace(".", "")
+                                //                      .Replace(",", "")
+                                //                      .ToUpper());
+
+                                var hash = PtUtils.XxHash3FoerUTF8String(valueAfterWhiteSpaceRemoval.ToUpper());
+                                return hash;
                             })
                             .OrderByDescending(g => g.Count())
                             .ToList();
@@ -1013,9 +1018,9 @@ public static class WmlComparer
         if (consolidatedEndnoteXDoc.Root.Elements(W.endnote).Any())
             maxEndnoteId = consolidatedEndnoteXDoc.Root.Elements(W.endnote).Select(e => (int)e.Attribute(W.id)).Max(); ;
 
-        /// At this point, content might contain a footnote or endnote reference.
-        /// Need to add the footnote / endnote into the consolidated document (with the same guid id)
-        /// Because of preprocessing of the documents, all footnote and endnote references will be unique at this point
+        // At this point, content might contain a footnote or endnote reference.
+        // Need to add the footnote / endnote into the consolidated document (with the same guid id)
+        // Because of preprocessing of the documents, all footnote and endnote references will be unique at this point
 
         if (ci.RevisionElement.Descendants(W.footnoteReference).Any())
         {
@@ -1186,9 +1191,9 @@ public static class WmlComparer
                         captionParagraph,
                         groupedCi.Select(ci =>
                         {
-                            /// At this point, content might contain a footnote or endnote reference.
-                            /// Need to add the footnote / endnote into the consolidated document (with the same guid id)
-                            /// Because of preprocessing of the documents, all footnote and endnote references will be unique at this point
+                            // At this point, content might contain a footnote or endnote reference.
+                            // Need to add the footnote / endnote into the consolidated document (with the same guid id)
+                            // Because of preprocessing of the documents, all footnote and endnote references will be unique at this point
 
                             if (ci.RevisionElement.Descendants(W.endnoteReference).Any())
                             {
@@ -1265,7 +1270,7 @@ public static class WmlComparer
                                 table,
                                 emptyParagraph,
                             };
-								
+
             var dummyElement = new XElement("dummy", content);
 
             foreach (var rev in dummyElement.Descendants().Where(d => d.Attribute(W.author) != null))
@@ -1288,9 +1293,9 @@ public static class WmlComparer
                                 paraAfter,
                                 };
 
-                /// At this point, content might contain a footnote or endnote reference.
-                /// Need to add the footnote / endnote into the consolidated document (with the same guid id)
-                /// Because of preprocessing of the documents, all footnote and endnote references will be unique at this point
+                // At this point, content might contain a footnote or endnote reference.
+                // Need to add the footnote / endnote into the consolidated document (with the same guid id)
+                // Because of preprocessing of the documents, all footnote and endnote references will be unique at this point
 
                 if (ci.RevisionElement.Descendants(W.footnoteReference).Any())
                 {
@@ -2846,41 +2851,41 @@ public static class WmlComparer
         }
     }
 
-    /// Here is the crux of the fix to the algorithm.  After assembling the entire list of ComparisonUnitAtoms, we do the following:
-    /// - First, figure out the maximum hierarchy depth, considering only paragraphs, txbx, txbxContent, tables, rows, cells, and content controls.
-    /// - For documents that do not contain tables, nor text boxes, this maximum hierarchy depth will always be 1.
-    /// - For atoms within a table, the depth will be 4.  The first level is the table, the second level is row, third is cell, fourth is paragraph.
-    /// - For atoms within a nested table, the depth will be 7:  Table / Row / Cell / Table / Row / Cell / Paragraph
-    /// - For atoms within a text box, the depth will be 3: Paragraph / txbxContent / Paragraph
-    /// - For atoms within a table in a text box, the depth will be 5:  Paragraph / txbxContent / Table / Row / Cell / Paragraph
-    /// In any case, we figure out the maximum depth.
-    /// 
-    /// Then we iterate through the list of content atoms backwards.  We do this n times, where n is the maximum depth.
-    /// 
-    /// At each level, we find a paragraph mark, and working backwards, we set the guids in the hierarchy so that the content will be assembled together correctly.
-    /// 
-    /// For each iteration, we only set unids at the level that we are working at.
-    /// 
-    /// So first we will set all unids at level 1.  When we find a paragraph mark, we get the unid for that level, and then working backwards, until we find another
-    /// paragraph mark, we set all unids at level 1 to the same unid as level 1 of the paragraph mark.
-    /// 
-    /// Then we set all unids at level 2.  When we find a paragraph mark, we get the unid for that level, and then working backwards, until we find another paragraph
-    /// mark, we set all unids at level 2 to the same unid as level 2 of the paragraph mark.  At some point, we will find a paragraph mark with no level 2.  This is
-    /// not a problem.  We stop setting anything until we find another paragraph mark that has a level 2, at which point we resume setting values at level 2.
-    /// 
-    /// Same process for level 3, and so on, until we have processed to the maximum depth of the hierarchy.
-    /// 
-    /// At the end of this process, we will be able to do the coalsce recurse algorithm, and the content atom list will be put back together into a beautiful tree,
-    /// where every element is correctly positioned in the hierarchy.
-    /// 
-    /// This should also properly assemble the test where just the paragraph marks have been deleted for a range of paragraphs.
-    ///
-    /// There is an interesting thought - it is possible that I have set two runs of text that were initially in the same paragraph, but then after
-    /// processing, they match up to text in different paragraphs.  Therefore this will not work.  We need to actually keep a list of reconstructed ancestor
-    /// Unids, because the same paragraph would get set to two different IDs - two ComparisonUnitAtoms need to be in separate paragraphs in the reconstructed
-    /// document, but their ancestors actually point to the same paragraph.
-    /// 
-    /// Fix this in the algorithm, and also keep the appropriate list in ComparisonUnitAtom class.
+    // Here is the crux of the fix to the algorithm.  After assembling the entire list of ComparisonUnitAtoms, we do the following:
+    // - First, figure out the maximum hierarchy depth, considering only paragraphs, txbx, txbxContent, tables, rows, cells, and content controls.
+    // - For documents that do not contain tables, nor text boxes, this maximum hierarchy depth will always be 1.
+    // - For atoms within a table, the depth will be 4.  The first level is the table, the second level is row, third is cell, fourth is paragraph.
+    // - For atoms within a nested table, the depth will be 7:  Table / Row / Cell / Table / Row / Cell / Paragraph
+    // - For atoms within a text box, the depth will be 3: Paragraph / txbxContent / Paragraph
+    // - For atoms within a table in a text box, the depth will be 5:  Paragraph / txbxContent / Table / Row / Cell / Paragraph
+    // In any case, we figure out the maximum depth.
+    // 
+    // Then we iterate through the list of content atoms backwards.  We do this n times, where n is the maximum depth.
+    // 
+    // At each level, we find a paragraph mark, and working backwards, we set the guids in the hierarchy so that the content will be assembled together correctly.
+    // 
+    // For each iteration, we only set unids at the level that we are working at.
+    // 
+    // So first we will set all unids at level 1.  When we find a paragraph mark, we get the unid for that level, and then working backwards, until we find another
+    // paragraph mark, we set all unids at level 1 to the same unid as level 1 of the paragraph mark.
+    // 
+    // Then we set all unids at level 2.  When we find a paragraph mark, we get the unid for that level, and then working backwards, until we find another paragraph
+    // mark, we set all unids at level 2 to the same unid as level 2 of the paragraph mark.  At some point, we will find a paragraph mark with no level 2.  This is
+    // not a problem.  We stop setting anything until we find another paragraph mark that has a level 2, at which point we resume setting values at level 2.
+    // 
+    // Same process for level 3, and so on, until we have processed to the maximum depth of the hierarchy.
+    // 
+    // At the end of this process, we will be able to do the coalsce recurse algorithm, and the content atom list will be put back together into a beautiful tree,
+    // where every element is correctly positioned in the hierarchy.
+    // 
+    // This should also properly assemble the test where just the paragraph marks have been deleted for a range of paragraphs.
+    //
+    // There is an interesting thought - it is possible that I have set two runs of text that were initially in the same paragraph, but then after
+    // processing, they match up to text in different paragraphs.  Therefore this will not work.  We need to actually keep a list of reconstructed ancestor
+    // Unids, because the same paragraph would get set to two different IDs - two ComparisonUnitAtoms need to be in separate paragraphs in the reconstructed
+    // document, but their ancestors actually point to the same paragraph.
+    // 
+    // Fix this in the algorithm, and also keep the appropriate list in ComparisonUnitAtom class.
 
     private static void AssembleAncestorUnidsInOrderToRebuildXmlTreeProperly(List<ComparisonUnitAtom> comparisonUnitAtomList)
     {
@@ -2962,13 +2967,13 @@ public static class WmlComparer
             }
         }
 
-        /// If the following loop finds a pPr that is in a text box, then continue on, processing the pPr and all of its contents as though it were
-        /// content in the containing text box.  This is going to leave it after this loop where the AncestorUnids for the content in the text box will be
-        /// incomplete.  We then will need to go through the rComparisonUnitAtomList a second time, processing all of the text boxes.
+        // If the following loop finds a pPr that is in a text box, then continue on, processing the pPr and all of its contents as though it were
+        // content in the containing text box.  This is going to leave it after this loop where the AncestorUnids for the content in the text box will be
+        // incomplete.  We then will need to go through the rComparisonUnitAtomList a second time, processing all of the text boxes.
 
-        /// Note that this makes the basic assumption that a text box can't be nested inside of a text box, which, as far as I know, is a good assumption.
+        // Note that this makes the basic assumption that a text box can't be nested inside of a text box, which, as far as I know, is a good assumption.
 
-        /// This also makes the basic assumption that an endnote / footnote can't contain a text box, which I believe is a good assumption.
+        // This also makes the basic assumption that an endnote / footnote can't contain a text box, which I believe is a good assumption.
 
 
         string[] currentAncestorUnids = null;
@@ -5437,7 +5442,7 @@ public static class WmlComparer
                             {
                                 var charValue = dca.ContentElement.Value;
                                 var isWordSplit = ((int)charValue[0] >= 0x4e00 && (int)charValue[0] <= 0x9fff);
-                                if (! isWordSplit)
+                                if (!isWordSplit)
                                     isWordSplit = settings.WordSeparators.Contains(charValue[0]);
                                 if (isWordSplit)
                                     return false;
@@ -7165,7 +7170,7 @@ internal class ComparisonUnitWord : ComparisonUnit
             .Select(c => c.SHA1Hash)
             .StringConcatenate();
 
-       //SHA1Hash = PtUtils.SHA1HashStringForUTF8String(sha1String);
+        //SHA1Hash = PtUtils.SHA1HashStringForUTF8String(sha1String);
         SHA1Hash = PtUtils.XxHash3FoerUTF8String(sha1String);
     }
 

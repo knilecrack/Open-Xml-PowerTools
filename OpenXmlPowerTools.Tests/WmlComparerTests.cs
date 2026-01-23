@@ -837,8 +837,8 @@ public class WcTests
     [InlineData("WCS-1090", "WC/WC002-InsertAtEnd.docx")]
     [InlineData("WCS-1100", "WC/WC002-InsertInMiddle.docx")]
     [InlineData("WCS-1110", "WC/WC002-Unmodified.docx")]
-  //[InlineData("WCS-1120", "WC/WC004-Large.docx")]
-  //[InlineData("WCS-1130", "WC/WC004-Large-Mod.docx")]
+    //[InlineData("WCS-1120", "WC/WC004-Large.docx")]
+    //[InlineData("WCS-1130", "WC/WC004-Large-Mod.docx")]
     [InlineData("WCS-1140", "WC/WC006-Table.docx")]
     [InlineData("WCS-1150", "WC/WC006-Table-Delete-Contests-of-Row.docx")]
     [InlineData("WCS-1160", "WC/WC006-Table-Delete-Row.docx")]
@@ -883,10 +883,10 @@ public class WcTests
     [InlineData("WCS-1550", "WC/WC021-Math-Before-1.docx")]
     [InlineData("WCS-1560", "WC/WC022-Image-Math-Para-After.docx")]
     [InlineData("WCS-1570", "WC/WC022-Image-Math-Para-Before.docx")]
-  //[InlineData("WCS-1580", "", "")]
-  //[InlineData("WCS-1590", "", "")]
-  //[InlineData("WCS-1600", "", "")]
-  //[InlineData("WCS-1610", "", "")]
+    //[InlineData("WCS-1580", "", "")]
+    //[InlineData("WCS-1590", "", "")]
+    //[InlineData("WCS-1600", "", "")]
+    //[InlineData("WCS-1610", "", "")]
 
     public void WC004_Compare_To_Self(string testId, string name)
     {

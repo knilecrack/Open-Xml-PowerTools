@@ -116,13 +116,13 @@ public static class MarkupSimplifier
         XDocument mainXDoc = doc.MainDocumentPart.GetXDocument();
         List<XElement> bookmarkStart = mainXDoc
             .Descendants(W.bookmarkStart)
-            .Where(b => (string) b.Attribute(W.name) == "_GoBack")
+            .Where(b => (string)b.Attribute(W.name) == "_GoBack")
             .ToList();
         foreach (XElement item in bookmarkStart)
         {
             IEnumerable<XElement> bookmarkEnd = mainXDoc
                 .Descendants(W.bookmarkEnd)
-                .Where(be => (int) be.Attribute(W.id) == (int) item.Attribute(W.id));
+                .Where(be => (int)be.Attribute(W.id) == (int)item.Attribute(W.id));
             bookmarkEnd.Remove();
         }
 
@@ -132,12 +132,12 @@ public static class MarkupSimplifier
 
     public static XElement MergeAdjacentSuperfluousRuns(XElement element)
     {
-        return (XElement) MergeAdjacentRunsTransform(element);
+        return (XElement)MergeAdjacentRunsTransform(element);
     }
 
     public static XElement TransformElementToSingleCharacterRuns(XElement element)
     {
-        return (XElement) SingleCharacterRunTransform(element);
+        return (XElement)SingleCharacterRunTransform(element);
     }
 
     public static void TransformPartToSingleCharacterRuns(OpenXmlPart part)
@@ -145,8 +145,8 @@ public static class MarkupSimplifier
         // After transforming to single character runs, Rsid info will be invalid, so
         // remove from the part.
         XDocument xDoc = part.GetXDocument();
-        var newRoot = (XElement) RemoveRsidTransform(xDoc.Root);
-        newRoot = (XElement) SingleCharacterRunTransform(newRoot);
+        var newRoot = (XElement)RemoveRsidTransform(xDoc.Root);
+        newRoot = (XElement)SingleCharacterRunTransform(newRoot);
         xDoc.Elements().First().ReplaceWith(newRoot);
         part.PutXDocument();
     }
@@ -260,12 +260,12 @@ public static class MarkupSimplifier
                     grouped.Select(g =>
                     {
                         if (g.Key == false)
-                            return (object) g;
+                            return (object)g;
 
                         // If .doc files are converted to .docx by the Binary to Open XML Translator,
                         // the w:instrText elements might be empty, in which case newInstrText would
                         // be an empty string.
-                        string newInstrText = g.Select(i => (string) i).StringConcatenate();
+                        string newInstrText = g.Select(i => (string)i).StringConcatenate();
                         if (string.IsNullOrEmpty(newInstrText))
                             return new XElement(W.instrText);
 
@@ -326,8 +326,8 @@ public static class MarkupSimplifier
             return null;
 
         if (settings.RemoveGoBackBookmark &&
-            (((element.Name == W.bookmarkStart) && ((int) element.Attribute(W.id) == parameters.GoBackId)) ||
-             ((element.Name == W.bookmarkEnd) && ((int) element.Attribute(W.id) == parameters.GoBackId))))
+            (((element.Name == W.bookmarkStart) && ((int)element.Attribute(W.id) == parameters.GoBackId)) ||
+             ((element.Name == W.bookmarkEnd) && ((int)element.Attribute(W.id) == parameters.GoBackId))))
             return null;
 
         if (settings.RemoveWebHidden &&
@@ -335,7 +335,7 @@ public static class MarkupSimplifier
             return null;
 
         if (settings.ReplaceTabsWithSpaces &&
-            (element.Name == W.tab) && 
+            (element.Name == W.tab) &&
             (element.Parent != null && element.Parent.Name == W.r))
             return new XElement(W.t, new XAttribute(XNamespace.Xml + "space", "preserve"), " ");
 
@@ -423,24 +423,24 @@ public static class MarkupSimplifier
                 {
                     IXmlSchemaInfo schemaInfo = a.GetSchemaInfo();
                     XmlSchemaType schemaType = schemaInfo != null ? schemaInfo.SchemaType : null;
-                    XmlTypeCode? typeCode = schemaType != null ? schemaType.TypeCode : (XmlTypeCode?) null;
+                    XmlTypeCode? typeCode = schemaType != null ? schemaType.TypeCode : (XmlTypeCode?)null;
 
                     switch (typeCode)
                     {
                         case XmlTypeCode.Boolean:
-                            return new XAttribute(a.Name, (bool) a);
+                            return new XAttribute(a.Name, (bool)a);
                         case XmlTypeCode.DateTime:
-                            return new XAttribute(a.Name, (DateTime) a);
+                            return new XAttribute(a.Name, (DateTime)a);
                         case XmlTypeCode.Decimal:
-                            return new XAttribute(a.Name, (decimal) a);
+                            return new XAttribute(a.Name, (decimal)a);
                         case XmlTypeCode.Double:
-                            return new XAttribute(a.Name, (double) a);
+                            return new XAttribute(a.Name, (double)a);
                         case XmlTypeCode.Float:
-                            return new XAttribute(a.Name, (float) a);
+                            return new XAttribute(a.Name, (float)a);
                         case XmlTypeCode.HexBinary:
                         case XmlTypeCode.Language:
                             return new XAttribute(a.Name,
-                                ((string) a).ToLower());
+                                ((string)a).ToLower());
                     }
                 }
 
@@ -468,35 +468,35 @@ public static class MarkupSimplifier
         {
             IXmlSchemaInfo schemaInfo = element.GetSchemaInfo();
             XmlSchemaType schemaType = schemaInfo != null ? schemaInfo.SchemaType : null;
-            XmlTypeCode? typeCode = schemaType != null ? schemaType.TypeCode : (XmlTypeCode?) null;
+            XmlTypeCode? typeCode = schemaType != null ? schemaType.TypeCode : (XmlTypeCode?)null;
 
             switch (typeCode)
             {
                 case XmlTypeCode.Boolean:
                     return new XElement(element.Name,
                         NormalizeAttributes(element, true),
-                        (bool) element);
+                        (bool)element);
                 case XmlTypeCode.DateTime:
                     return new XElement(element.Name,
                         NormalizeAttributes(element, true),
-                        (DateTime) element);
+                        (DateTime)element);
                 case XmlTypeCode.Decimal:
                     return new XElement(element.Name,
                         NormalizeAttributes(element, true),
-                        (decimal) element);
+                        (decimal)element);
                 case XmlTypeCode.Double:
                     return new XElement(element.Name,
                         NormalizeAttributes(element, true),
-                        (double) element);
+                        (double)element);
                 case XmlTypeCode.Float:
                     return new XElement(element.Name,
                         NormalizeAttributes(element, true),
-                        (float) element);
+                        (float)element);
                 case XmlTypeCode.HexBinary:
                 case XmlTypeCode.Language:
                     return new XElement(element.Name,
                         NormalizeAttributes(element, true),
-                        ((string) element).ToLower());
+                        ((string)element).ToLower());
                 default:
                     return new XElement(element.Name,
                         NormalizeAttributes(element, true),
@@ -514,16 +514,16 @@ public static class MarkupSimplifier
         var parameters = new SimplifyMarkupParameters();
         if (part.ContentType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml")
         {
-            var doc = (WordprocessingDocument) part.OpenXmlPackage;
+            var doc = (WordprocessingDocument)part.OpenXmlPackage;
             if (settings.RemoveGoBackBookmark)
             {
                 XElement goBackBookmark = doc
                     .MainDocumentPart
                     .GetXDocument()
                     .Descendants(W.bookmarkStart)
-                    .FirstOrDefault(bm => (string) bm.Attribute(W.name) == "_GoBack");
+                    .FirstOrDefault(bm => (string)bm.Attribute(W.name) == "_GoBack");
                 if (goBackBookmark != null)
-                    parameters.GoBackId = (int) goBackBookmark.Attribute(W.id);
+                    parameters.GoBackId = (int)goBackBookmark.Attribute(W.id);
             }
         }
 
@@ -532,11 +532,11 @@ public static class MarkupSimplifier
 
         // Need to do this first to enable simplifying hyperlinks.
         if (settings.RemoveContentControls || settings.RemoveSmartTags)
-            newRoot = (XElement) RemoveCustomXmlAndContentControlsTransform(newRoot, settings);
+            newRoot = (XElement)RemoveCustomXmlAndContentControlsTransform(newRoot, settings);
 
         // This may touch many elements, so needs to be its own transform.
         if (settings.RemoveRsidInfo)
-            newRoot = (XElement) RemoveRsidTransform(newRoot);
+            newRoot = (XElement)RemoveRsidTransform(newRoot);
 
         var prevNewRoot = new XDocument(newRoot);
         while (true)
@@ -551,19 +551,19 @@ public static class MarkupSimplifier
                 settings.RemoveWebHidden ||
                 settings.RemoveGoBackBookmark ||
                 settings.RemoveHyperlinks)
-                newRoot = (XElement) SimplifyMarkupTransform(newRoot, settings, parameters);
+                newRoot = (XElement)SimplifyMarkupTransform(newRoot, settings, parameters);
 
             // Remove runs and run properties that have become empty due to previous transforms.
-            newRoot = (XElement) RemoveEmptyRunsAndRunPropertiesTransform(newRoot);
+            newRoot = (XElement)RemoveEmptyRunsAndRunPropertiesTransform(newRoot);
 
             // Merge adjacent runs that have identical run properties.
-            newRoot = (XElement) MergeAdjacentRunsTransform(newRoot);
+            newRoot = (XElement)MergeAdjacentRunsTransform(newRoot);
 
             // Merge adjacent instrText elements.
-            newRoot = (XElement) MergeAdjacentInstrText(newRoot);
+            newRoot = (XElement)MergeAdjacentInstrText(newRoot);
 
             // Separate run children into separate runs
-            newRoot = (XElement) SeparateRunChildrenIntoSeparateRuns(newRoot);
+            newRoot = (XElement)SeparateRunChildrenIntoSeparateRuns(newRoot);
 
             if (XNode.DeepEquals(prevNewRoot.Root, newRoot))
                 break;
@@ -640,7 +640,7 @@ public static class MarkupSimplifier
                 {
                     if (g.Key)
                     {
-                        string s = g.Select(t => (string) t).StringConcatenate();
+                        string s = g.Select(t => (string)t).StringConcatenate();
                         return s.Select(c =>
                             new XElement(W.r,
                                 element.Elements(W.rPr),

@@ -557,7 +557,7 @@ class CssApplier
                     return false;
                 return true;
             },
-            InitialValue = (element, settings) => 
+            InitialValue = (element, settings) =>
                 {
                     if (settings.DefaultBlockContentMargin != null)
                     {
@@ -872,7 +872,7 @@ class CssApplier
                     return false;
                 return true;
             },
-            InitialValue = (element, settings) => 
+            InitialValue = (element, settings) =>
             {
                 if (element.Parent == null)
                 {

@@ -33,27 +33,32 @@ public class CssAttribute
 
     public string Operand
     {
-        get {
+        get
+        {
             return m_operand;
         }
-        set {
+        set
+        {
             m_operand = value;
         }
     }
 
     public CssAttributeOperator? Operator
     {
-        get {
+        get
+        {
             return m_op;
         }
-        set {
+        set
+        {
             m_op = value;
         }
     }
 
     public string CssOperatorString
     {
-        get {
+        get
+        {
             if (this.m_op.HasValue)
             {
                 return this.m_op.Value.ToString();
@@ -63,17 +68,20 @@ public class CssAttribute
                 return null;
             }
         }
-        set {
+        set
+        {
             this.m_op = (CssAttributeOperator)Enum.Parse(typeof(CssAttributeOperator), value);
         }
     }
 
     public string Value
     {
-        get {
+        get
+        {
             return m_val;
         }
-        set {
+        set
+        {
             m_val = value;
         }
     }
@@ -136,20 +144,24 @@ public class CssDocument : ItfRuleSetContainer
 
     public List<CssDirective> Directives
     {
-        get {
+        get
+        {
             return m_dirs;
         }
-        set {
+        set
+        {
             m_dirs = value;
         }
     }
 
     public List<CssRuleSet> RuleSets
     {
-        get {
+        get
+        {
             return m_rulesets;
         }
-        set {
+        set
+        {
             m_rulesets = value;
         }
     }
@@ -182,30 +194,36 @@ public class CssDeclaration
 
     public string Name
     {
-        get {
+        get
+        {
             return m_name;
         }
-        set {
+        set
+        {
             m_name = value;
         }
     }
 
     public bool Important
     {
-        get {
+        get
+        {
             return m_important;
         }
-        set {
+        set
+        {
             m_important = value;
         }
     }
 
     public CssExpression Expression
     {
-        get {
+        get
+        {
             return m_expression;
         }
-        set {
+        set
+        {
             m_expression = value;
         }
     }
@@ -233,70 +251,84 @@ public class CssDirective : ItfDeclarationContainer, ItfRuleSetContainer
 
     public CssDirectiveType Type
     {
-        get {
+        get
+        {
             return this.m_type;
         }
-        set {
+        set
+        {
             this.m_type = value;
         }
     }
 
     public string Name
     {
-        get {
+        get
+        {
             return this.m_name;
         }
-        set {
+        set
+        {
             this.m_name = value;
         }
     }
 
     public CssExpression Expression
     {
-        get {
+        get
+        {
             return this.m_expression;
         }
-        set {
+        set
+        {
             this.m_expression = value;
         }
     }
 
     public List<CssMedium> Mediums
     {
-        get {
+        get
+        {
             return this.m_mediums;
         }
-        set {
+        set
+        {
             this.m_mediums = value;
         }
     }
 
     public List<CssDirective> Directives
     {
-        get {
+        get
+        {
             return this.m_directives;
         }
-        set {
+        set
+        {
             this.m_directives = value;
         }
     }
 
     public List<CssRuleSet> RuleSets
     {
-        get {
+        get
+        {
             return this.m_rulesets;
         }
-        set {
+        set
+        {
             this.m_rulesets = value;
         }
     }
 
     public List<CssDeclaration> Declarations
     {
-        get {
+        get
+        {
             return this.m_declarations;
         }
-        set {
+        set
+        {
             this.m_declarations = value;
         }
     }
@@ -498,9 +530,9 @@ public class CssDirective : ItfDeclarationContainer, ItfRuleSetContainer
 
     private string ToCharSetString(string start)
     {
-        return string.Format("{2}{0} {1}", 
-            m_name, 
-            m_expression.ToString(), 
+        return string.Format("{2}{0} {1}",
+            m_name,
+            m_expression.ToString(),
             start);
     }
 }
@@ -522,10 +554,12 @@ public class CssExpression
 
     public List<CssTerm> Terms
     {
-        get {
+        get
+        {
             return m_terms;
         }
-        set {
+        set
+        {
             m_terms = value;
         }
     }
@@ -574,7 +608,7 @@ public class CssExpression
             }
             else
             {
-                sb.AppendFormat("{0} ", 
+                sb.AppendFormat("{0} ",
                     term.Separator.HasValue ? term.Separator.Value.ToString() : "");
             }
             sb.Append(term.ToString());
@@ -631,20 +665,24 @@ public class CssFunction
 
     public string Name
     {
-        get {
+        get
+        {
             return m_name;
         }
-        set {
+        set
+        {
             m_name = value;
         }
     }
 
     public CssExpression Expression
     {
-        get {
+        get
+        {
             return m_expression;
         }
-        set {
+        set
+        {
             m_expression = value;
         }
     }
@@ -725,30 +763,36 @@ public class CssPropertyValue
 
     public CssValueType Type
     {
-        get {
+        get
+        {
             return this.m_type;
         }
-        set {
+        set
+        {
             this.m_type = value;
         }
     }
 
     public CssUnit Unit
     {
-        get {
+        get
+        {
             return this.m_unit;
         }
-        set {
+        set
+        {
             this.m_unit = value;
         }
     }
 
     public string Value
     {
-        get {
+        get
+        {
             return this.m_value;
         }
-        set {
+        set
+        {
             this.m_value = value;
         }
     }
@@ -770,8 +814,8 @@ public class CssPropertyValue
     {
         get
         {
-            if (((m_type == CssValueType.Hex) 
-                || (m_type == CssValueType.String && m_value.StartsWith("#"))) 
+            if (((m_type == CssValueType.Hex)
+                || (m_type == CssValueType.String && m_value.StartsWith("#")))
                 && (m_value.Length == 6 || (m_value.Length == 7 && m_value.StartsWith("#"))))
             {
                 bool hex = true;
@@ -857,25 +901,25 @@ public class CssPropertyValue
             switch (chunk)
             {
                 case "A":
-                    val = 10; 
+                    val = 10;
                     break;
                 case "B":
-                    val = 11; 
+                    val = 11;
                     break;
                 case "C":
-                    val = 12; 
+                    val = 12;
                     break;
                 case "D":
-                    val = 13; 
+                    val = 13;
                     break;
                 case "E":
-                    val = 14; 
+                    val = 14;
                     break;
                 case "F":
-                    val = 15; 
+                    val = 15;
                     break;
                 default:
-                    val = int.Parse(chunk); 
+                    val = int.Parse(chunk);
                     break;
             }
             if (i == 0)
@@ -898,20 +942,24 @@ public class CssRuleSet : ItfDeclarationContainer
 
     public List<CssSelector> Selectors
     {
-        get {
+        get
+        {
             return m_selectors;
         }
-        set {
+        set
+        {
             m_selectors = value;
         }
     }
 
     public List<CssDeclaration> Declarations
     {
-        get {
+        get
+        {
             return m_declarations;
         }
-        set {
+        set
+        {
             m_declarations = value;
         }
     }
@@ -933,14 +981,14 @@ public class CssRuleSet : ItfDeclarationContainer
         bool first = true;
         foreach (CssSelector sel in m_selectors)
         {
-            if (first) 
-            { 
-                first = false; 
-                sb.Append(start); 
-            } 
-            else 
-            { 
-                sb.Append(", "); 
+            if (first)
+            {
+                first = false;
+                sb.Append(start);
+            }
+            else
+            {
+                sb.Append(", ");
             }
             sb.Append(sel.ToString());
         }
@@ -963,10 +1011,12 @@ public class CssSelector
 
     public List<CssSimpleSelector> SimpleSelectors
     {
-        get {
+        get
+        {
             return m_simpleSelectors;
         }
-        set {
+        set
+        {
             m_simpleSelectors = value;
         }
     }
@@ -1004,16 +1054,19 @@ public class CssSimpleSelector
 
     public CssCombinator? Combinator
     {
-        get {
+        get
+        {
             return m_combinator;
         }
-        set {
+        set
+        {
             m_combinator = value;
         }
     }
     public string CombinatorString
     {
-        get {
+        get
+        {
             if (this.m_combinator.HasValue)
             {
                 return m_combinator.ToString();
@@ -1023,77 +1076,92 @@ public class CssSimpleSelector
                 return null;
             }
         }
-        set {
+        set
+        {
             this.m_combinator = (CssCombinator)Enum.Parse(typeof(CssCombinator), value);
         }
     }
 
     public string ElementName
     {
-        get {
+        get
+        {
             return m_elementname;
         }
-        set {
+        set
+        {
             m_elementname = value;
         }
     }
 
     public string ID
     {
-        get {
+        get
+        {
             return m_id;
         }
-        set {
+        set
+        {
             m_id = value;
         }
     }
 
     public string Class
     {
-        get {
+        get
+        {
             return m_cls;
         }
-        set {
+        set
+        {
             m_cls = value;
         }
     }
 
     public string Pseudo
     {
-        get {
+        get
+        {
             return m_pseudo;
         }
-        set {
+        set
+        {
             m_pseudo = value;
         }
     }
 
     public CssAttribute Attribute
     {
-        get {
+        get
+        {
             return m_attribute;
         }
-        set {
+        set
+        {
             m_attribute = value;
         }
     }
 
     public CssFunction Function
     {
-        get {
+        get
+        {
             return m_function;
         }
-        set {
+        set
+        {
             m_function = value;
         }
     }
 
     public CssSimpleSelector Child
     {
-        get {
+        get
+        {
             return m_child;
         }
-        set {
+        set
+        {
             m_child = value;
         }
     }
@@ -1105,14 +1173,14 @@ public class CssSimpleSelector
         {
             switch (m_combinator.Value)
             {
-                case OpenXmlPowerTools.HtmlToWml.CSS.CssCombinator.PrecededImmediatelyBy: 
-                    sb.Append(" + "); 
+                case OpenXmlPowerTools.HtmlToWml.CSS.CssCombinator.PrecededImmediatelyBy:
+                    sb.Append(" + ");
                     break;
-                case OpenXmlPowerTools.HtmlToWml.CSS.CssCombinator.ChildOf: 
-                    sb.Append(" > "); 
+                case OpenXmlPowerTools.HtmlToWml.CSS.CssCombinator.ChildOf:
+                    sb.Append(" > ");
                     break;
-                case OpenXmlPowerTools.HtmlToWml.CSS.CssCombinator.PrecededBy: 
-                    sb.Append(" ~ "); 
+                case OpenXmlPowerTools.HtmlToWml.CSS.CssCombinator.PrecededBy:
+                    sb.Append(" ~ ");
                     break;
             }
         }
@@ -1165,108 +1233,128 @@ public class CssTag
 
     public CssTagType TagType
     {
-        get {
+        get
+        {
             return m_tagtype;
         }
-        set {
+        set
+        {
             m_tagtype = value;
         }
     }
 
     public bool IsIDSelector
     {
-        get {
+        get
+        {
             return m_id != null;
         }
     }
 
     public bool HasName
     {
-        get {
+        get
+        {
             return m_name != null;
         }
     }
 
     public bool HasClass
     {
-        get {
+        get
+        {
             return m_cls != null;
         }
     }
 
     public bool HasPseudoClass
     {
-        get {
+        get
+        {
             return m_pseudo != null;
         }
     }
 
     public string Name
     {
-        get {
+        get
+        {
             return m_name;
         }
-        set {
+        set
+        {
             m_name = value;
         }
     }
 
     public string Class
     {
-        get {
+        get
+        {
             return m_cls;
         }
-        set {
+        set
+        {
             m_cls = value;
         }
     }
 
     public string Pseudo
     {
-        get {
+        get
+        {
             return m_pseudo;
         }
-        set {
+        set
+        {
             m_pseudo = value;
         }
     }
 
     public string Id
     {
-        get {
+        get
+        {
             return m_id;
         }
-        set {
+        set
+        {
             m_id = value;
         }
     }
 
     public char ParentRelationship
     {
-        get {
+        get
+        {
             return m_parentrel;
         }
-        set {
+        set
+        {
             m_parentrel = value;
         }
     }
 
     public CssTag SubTag
     {
-        get {
+        get
+        {
             return m_subtag;
         }
-        set {
+        set
+        {
             m_subtag = value;
         }
     }
 
     public List<string> Attributes
     {
-        get {
+        get
+        {
             return m_attribs;
         }
-        set {
+        set
+        {
             m_attribs = value;
         }
     }
@@ -1338,74 +1426,89 @@ public class CssTerm
 
     public char? Separator
     {
-        get {
+        get
+        {
             return m_separator;
         }
-        set {
+        set
+        {
             m_separator = value;
         }
     }
     public string SeparatorChar
     {
-        get {
+        get
+        {
             return m_separator.HasValue ? this.m_separator.Value.ToString() : null;
         }
-        set {
+        set
+        {
             m_separator = !string.IsNullOrEmpty(value) ? value[0] : '\0';
         }
     }
 
     public char? Sign
     {
-        get {
+        get
+        {
             return m_sign;
         }
-        set {
+        set
+        {
             m_sign = value;
         }
     }
     public string SignChar
     {
-        get {
+        get
+        {
             return this.m_sign.HasValue ? this.m_sign.Value.ToString() : null;
         }
-        set {
+        set
+        {
             this.m_sign = !string.IsNullOrEmpty(value) ? value[0] : '\0';
         }
     }
 
     public CssTermType Type
     {
-        get {
+        get
+        {
             return m_type;
         }
-        set {
+        set
+        {
             m_type = value;
         }
     }
 
     public string Value
     {
-        get {
+        get
+        {
             return m_val;
         }
-        set {
+        set
+        {
             m_val = value;
         }
     }
 
     public CssUnit? Unit
     {
-        get {
+        get
+        {
             return m_unit;
         }
-        set {
+        set
+        {
             m_unit = value;
         }
     }
     public string UnitString
     {
-        get {
+        get
+        {
             if (this.m_unit.HasValue)
             {
                 return this.m_unit.ToString();
@@ -1415,17 +1518,20 @@ public class CssTerm
                 return null;
             }
         }
-        set {
+        set
+        {
             this.m_unit = (CssUnit)Enum.Parse(typeof(CssUnit), value);
         }
     }
 
     public CssFunction Function
     {
-        get {
+        get
+        {
             return m_function;
         }
-        set {
+        set
+        {
             m_function = value;
         }
     }
@@ -1517,7 +1623,8 @@ public class CssTerm
                         break;
                     }
                 }
-                if (number) {
+                if (number)
+                {
                     return false;
                 }
 
@@ -1534,9 +1641,9 @@ public class CssTerm
                 {
                     for (int i = 0; i < m_function.Expression.Terms.Count; i++)
                     {
-                        if (m_function.Expression.Terms[i].Type != CssTermType.Number) 
-                        { 
-                            return false; 
+                        if (m_function.Expression.Terms[i].Type != CssTermType.Number)
+                        {
+                            return false;
                         }
                     }
                     return true;
@@ -1547,9 +1654,9 @@ public class CssTerm
                 {
                     for (int i = 0; i < m_function.Expression.Terms.Count; i++)
                     {
-                        if (m_function.Expression.Terms[i].Type != CssTermType.Number) 
-                        { 
-                            return false; 
+                        if (m_function.Expression.Terms[i].Type != CssTermType.Number)
+                        {
+                            return false;
                         }
                     }
                     return true;
@@ -1606,17 +1713,20 @@ public class CssTerm
                 int fr = 0, fg = 0, fb = 0;
                 for (int i = 0; i < m_function.Expression.Terms.Count; i++)
                 {
-                    if (m_function.Expression.Terms[i].Type != CssTermType.Number) 
-                    { 
-                        return Color.Black; 
+                    if (m_function.Expression.Terms[i].Type != CssTermType.Number)
+                    {
+                        return Color.Black;
                     }
                     switch (i)
                     {
-                        case 0: fr = GetRGBValue(m_function.Expression.Terms[i]); 
+                        case 0:
+                            fr = GetRGBValue(m_function.Expression.Terms[i]);
                             break;
-                        case 1: fg = GetRGBValue(m_function.Expression.Terms[i]); 
+                        case 1:
+                            fg = GetRGBValue(m_function.Expression.Terms[i]);
                             break;
-                        case 2: fb = GetRGBValue(m_function.Expression.Terms[i]); 
+                        case 2:
+                            fb = GetRGBValue(m_function.Expression.Terms[i]);
                             break;
                     }
                 }
@@ -1632,11 +1742,14 @@ public class CssTerm
                     if (m_function.Expression.Terms[i].Type != CssTermType.Number) { return Color.Black; }
                     switch (i)
                     {
-                        case 0: h = GetHueValue(m_function.Expression.Terms[i]); 
+                        case 0:
+                            h = GetHueValue(m_function.Expression.Terms[i]);
                             break;
-                        case 1: s = GetRGBValue(m_function.Expression.Terms[i]); 
+                        case 1:
+                            s = GetRGBValue(m_function.Expression.Terms[i]);
                             break;
-                        case 2: v = GetRGBValue(m_function.Expression.Terms[i]); 
+                        case 2:
+                            v = GetRGBValue(m_function.Expression.Terms[i]);
                             break;
                     }
                 }
@@ -1675,25 +1788,25 @@ public class CssTerm
             switch (chunk)
             {
                 case "A":
-                    val = 10; 
+                    val = 10;
                     break;
                 case "B":
-                    val = 11; 
+                    val = 11;
                     break;
                 case "C":
-                    val = 12; 
+                    val = 12;
                     break;
                 case "D":
-                    val = 13; 
+                    val = 13;
                     break;
                 case "E":
-                    val = 14; 
+                    val = 14;
                     break;
                 case "F":
-                    val = 15; 
+                    val = 15;
                     break;
                 default:
-                    val = int.Parse(chunk); 
+                    val = int.Parse(chunk);
                     break;
             }
             if (i == 0)
@@ -1840,37 +1953,45 @@ internal struct HueSatVal
     }
     public int Hue
     {
-        get {
+        get
+        {
             return m_hue;
         }
-        set {
+        set
+        {
             m_hue = value;
         }
     }
     public int Saturation
     {
-        get {
+        get
+        {
             return m_sat;
         }
-        set {
+        set
+        {
             m_sat = value;
         }
     }
     public int Value
     {
-        get {
+        get
+        {
             return m_val;
         }
-        set {
+        set
+        {
             m_val = value;
         }
     }
     public Color Color
     {
-        get {
+        get
+        {
             return ConvertToRGB();
         }
-        set {
+        set
+        {
             ConvertFromRGB(value);
         }
     }
@@ -2090,7 +2211,7 @@ public class Parser
 
     void SyntaxErr(int n)
     {
-        if (errDist >= minErrDist) 
+        if (errDist >= minErrDist)
             m_errors.SyntaxError(m_lookaheadToken.m_tokenLine, m_lookaheadToken.m_tokenColumn, n);
         errDist = 0;
     }
@@ -2104,14 +2225,14 @@ public class Parser
 
     void Get()
     {
-        for (;;)
+        for (; ; )
         {
             m_lastRecognizedToken = m_lookaheadToken;
             m_lookaheadToken = m_scanner.Scan();
-            if (m_lookaheadToken.m_tokenKind <= c_maxT) 
-            { 
-                ++errDist; 
-                break; 
+            if (m_lookaheadToken.m_tokenKind <= c_maxT)
+            {
+                ++errDist;
+                break;
             }
 
             m_lookaheadToken = m_lastRecognizedToken;
@@ -2135,12 +2256,12 @@ public class Parser
 
     void ExpectWeak(int n, int follow)
     {
-        if (m_lookaheadToken.m_tokenKind == n) 
+        if (m_lookaheadToken.m_tokenKind == n)
             Get();
         else
         {
             SyntaxErr(n);
-            while (!StartOf(follow)) 
+            while (!StartOf(follow))
                 Get();
         }
     }
@@ -2149,14 +2270,14 @@ public class Parser
     bool WeakSeparator(int n, int syFol, int repFol)
     {
         int kind = m_lookaheadToken.m_tokenKind;
-        if (kind == n) 
-        { 
-            Get(); 
-            return true; 
+        if (kind == n)
+        {
+            Get();
+            return true;
         }
-        else if (StartOf(repFol)) 
-        { 
-            return false; 
+        else if (StartOf(repFol))
+        {
+            return false;
         }
         else
         {
@@ -2268,10 +2389,10 @@ public class Parser
                 {
                     Get();
                 }
-                if (m_lookaheadToken.m_tokenValue.Equals("}")) 
-                { 
-                    Get(); 
-                    return; 
+                if (m_lookaheadToken.m_tokenValue.Equals("}"))
+                {
+                    Get();
+                    return;
                 }
 
                 Declaration(out dec);
@@ -2318,26 +2439,26 @@ public class Parser
         dir.Name += ident;
         switch (dir.Name.ToLower())
         {
-            case "@media": 
-                dir.Type = CssDirectiveType.Media; 
+            case "@media":
+                dir.Type = CssDirectiveType.Media;
                 break;
-            case "@import": 
-                dir.Type = CssDirectiveType.Import; 
+            case "@import":
+                dir.Type = CssDirectiveType.Import;
                 break;
-            case "@charset": 
-                dir.Type = CssDirectiveType.Charset; 
+            case "@charset":
+                dir.Type = CssDirectiveType.Charset;
                 break;
-            case "@page": 
-                dir.Type = CssDirectiveType.Page; 
+            case "@page":
+                dir.Type = CssDirectiveType.Page;
                 break;
-            case "@font-face": 
-                dir.Type = CssDirectiveType.FontFace; 
+            case "@font-face":
+                dir.Type = CssDirectiveType.FontFace;
                 break;
-            case "@namespace": 
-                dir.Type = CssDirectiveType.Namespace; 
+            case "@namespace":
+                dir.Type = CssDirectiveType.Namespace;
                 break;
-            default: 
-                dir.Type = CssDirectiveType.Other; 
+            default:
+                dir.Type = CssDirectiveType.Other;
                 break;
         }
 
@@ -2406,10 +2527,10 @@ public class Parser
                             {
                                 Get();
                             }
-                            if (m_lookaheadToken.m_tokenValue.Equals("}")) 
-                            { 
-                                Get(); 
-                                return; 
+                            if (m_lookaheadToken.m_tokenValue.Equals("}"))
+                            {
+                                Get();
+                                return;
                             }
                             Declaration(out dec);
                             dir.Declarations.Add(dec);
@@ -2474,9 +2595,9 @@ public class Parser
             {
                 Get();
                 qs += m_lastRecognizedToken.m_tokenValue;
-                if (m_lookaheadToken.m_tokenValue.Equals("'") && !m_lastRecognizedToken.m_tokenValue.Equals("\\")) 
-                { 
-                    break; 
+                if (m_lookaheadToken.m_tokenValue.Equals("'") && !m_lastRecognizedToken.m_tokenValue.Equals("\\"))
+                {
+                    break;
                 }
             }
             Expect(7);
@@ -2488,9 +2609,9 @@ public class Parser
             {
                 Get();
                 qs += m_lastRecognizedToken.m_tokenValue;
-                if (m_lookaheadToken.m_tokenValue.Equals("\"") && !m_lastRecognizedToken.m_tokenValue.Equals("\\")) 
-                { 
-                    break; 
+                if (m_lookaheadToken.m_tokenValue.Equals("\"") && !m_lastRecognizedToken.m_tokenValue.Equals("\\"))
+                {
+                    break;
                 }
             }
             Expect(8);
@@ -2525,9 +2646,9 @@ public class Parser
             {
                 Get();
                 url += m_lastRecognizedToken.m_tokenValue;
-                if (m_lookaheadToken.m_tokenValue.Equals(")")) 
-                { 
-                    break; 
+                if (m_lookaheadToken.m_tokenValue.Equals(")"))
+                {
+                    break;
                 }
             }
         }
@@ -2718,9 +2839,9 @@ public class Parser
                 }
             }
             Term(out trm);
-            if (sep.HasValue) 
-            { 
-                trm.Separator = sep.Value; 
+            if (sep.HasValue)
+            {
+                trm.Separator = sep.Value;
             }
             exp.Terms.Add(trm);
             sep = null;
@@ -2813,9 +2934,9 @@ public class Parser
                 Get();
             }
             SimpleSelector(out ss);
-            if (cb.HasValue) 
-            { 
-                ss.Combinator = cb.Value; 
+            if (cb.HasValue)
+            {
+                ss.Combinator = cb.Value;
             }
             sel.SimpleSelectors.Add(ss);
 
@@ -2862,13 +2983,13 @@ public class Parser
                     ss.ID = "-";
                 }
                 Identity(out ident);
-                if (ss.ID == null) 
-                { 
-                    ss.ID = ident; 
-                } 
-                else 
-                { 
-                    ss.ID += ident; 
+                if (ss.ID == null)
+                {
+                    ss.ID = ident;
+                }
+                else
+                {
+                    ss.ID += ident;
                 }
             }
             else if (m_lookaheadToken.m_tokenKind == 34)
@@ -3345,28 +3466,28 @@ public class Parser
     }
 
     static readonly bool[,] set = {
-		    {T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
-		    {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,T, T,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
-		    {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
-		    {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
-		    {x,T,x,T, T,x,x,T, T,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,T,T,T, x,T,x,x, x,T,T,x, x,x,x,x, x,x,x,x, x,x,T,T, T,x,x},
-		    {x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, T,T,T,T, T,T,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
-		    {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,T, T,x,x,x, T,x,x,x, T,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
-		    {x,T,T,T, T,T,T,x, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x},
-		    {x,T,T,T, T,T,T,T, x,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x},
-		    {x,T,T,T, T,T,T,T, T,T,x,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x},
-		    {x,T,T,T, x,T,T,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x},
-		    {x,T,x,T, T,x,x,T, T,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,T,x,x, x,T,x,x, x,T,T,x, x,x,x,x, x,x,x,x, x,x,T,T, T,x,x},
-		    {x,T,x,x, T,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,x,x,x, x,T,T,T, T,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
-		    {x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
-		    {x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, T,T,x,x, x,x,x,x, x,x,x},
-		    {x,T,x,T, T,x,x,T, T,T,x,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x,x, T,T,T,T, x,x,x,x, x,x,x,T, T,x,T,T, T,x,x},
-		    {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
-		    {x,x,x,x, x,x,x,x, x,x,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,x, T,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
-		    {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
-		    {x,T,x,T, T,x,x,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x,x, T,T,T,T, T,x,x,x, x,x,x,T, T,x,T,T, T,x,x},
-		    {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,x,x}
-	    };
+            {T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
+            {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,T, T,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
+            {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
+            {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
+            {x,T,x,T, T,x,x,T, T,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,T,T,T, x,T,x,x, x,T,T,x, x,x,x,x, x,x,x,x, x,x,T,T, T,x,x},
+            {x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, T,T,T,T, T,T,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
+            {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,T, T,x,x,x, T,x,x,x, T,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
+            {x,T,T,T, T,T,T,x, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x},
+            {x,T,T,T, T,T,T,T, x,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x},
+            {x,T,T,T, T,T,T,T, T,T,x,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x},
+            {x,T,T,T, x,T,T,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x},
+            {x,T,x,T, T,x,x,T, T,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,T,x,x, x,T,x,x, x,T,T,x, x,x,x,x, x,x,x,x, x,x,T,T, T,x,x},
+            {x,T,x,x, T,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,x,x,x, x,T,T,T, T,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
+            {x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,T,T,T, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
+            {x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, T,T,x,x, x,x,x,x, x,x,x},
+            {x,T,x,T, T,x,x,T, T,T,x,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x,x, T,T,T,T, x,x,x,x, x,x,x,T, T,x,T,T, T,x,x},
+            {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
+            {x,x,x,x, x,x,x,x, x,x,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,x, T,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
+            {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, x,x,x,x, x,x,x},
+            {x,T,x,T, T,x,x,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,T,T, T,T,x,x, T,T,T,T, T,x,x,x, x,x,x,T, T,x,T,T, T,x,x},
+            {x,T,x,x, x,x,x,x, x,T,x,x, T,T,T,T, T,T,T,T, T,T,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,x,x}
+        };
 }
 
 
@@ -3380,132 +3501,195 @@ public class Errors
         string s;
         switch (n)
         {
-            case 0: s = "EOF expected";
+            case 0:
+                s = "EOF expected";
                 break;
-            case 1: s = "identifier expected";
+            case 1:
+                s = "identifier expected";
                 break;
-            case 2: s = "newline expected";
+            case 2:
+                s = "newline expected";
                 break;
-            case 3: s = "digit expected";
+            case 3:
+                s = "digit expected";
                 break;
-            case 4: s = "whitespace expected";
+            case 4:
+                s = "whitespace expected";
                 break;
-            case 5: s = "\"<!--\" expected";
+            case 5:
+                s = "\"<!--\" expected";
                 break;
-            case 6: s = "\"-->\" expected";
+            case 6:
+                s = "\"-->\" expected";
                 break;
-            case 7: s = "\"\'\" expected";
+            case 7:
+                s = "\"\'\" expected";
                 break;
-            case 8: s = "\"\"\" expected";
+            case 8:
+                s = "\"\"\" expected";
                 break;
-            case 9: s = "\"url\" expected";
+            case 9:
+                s = "\"url\" expected";
                 break;
-            case 10: s = "\"(\" expected";
+            case 10:
+                s = "\"(\" expected";
                 break;
-            case 11: s = "\")\" expected";
+            case 11:
+                s = "\")\" expected";
                 break;
-            case 12: s = "\"all\" expected";
+            case 12:
+                s = "\"all\" expected";
                 break;
-            case 13: s = "\"aural\" expected";
+            case 13:
+                s = "\"aural\" expected";
                 break;
-            case 14: s = "\"braille\" expected";
+            case 14:
+                s = "\"braille\" expected";
                 break;
-            case 15: s = "\"embossed\" expected";
+            case 15:
+                s = "\"embossed\" expected";
                 break;
-            case 16: s = "\"handheld\" expected";
+            case 16:
+                s = "\"handheld\" expected";
                 break;
-            case 17: s = "\"print\" expected";
+            case 17:
+                s = "\"print\" expected";
                 break;
-            case 18: s = "\"projection\" expected";
+            case 18:
+                s = "\"projection\" expected";
                 break;
-            case 19: s = "\"screen\" expected";
+            case 19:
+                s = "\"screen\" expected";
                 break;
-            case 20: s = "\"tty\" expected";
+            case 20:
+                s = "\"tty\" expected";
                 break;
-            case 21: s = "\"tv\" expected";
+            case 21:
+                s = "\"tv\" expected";
                 break;
-            case 22: s = "\"n\" expected";
+            case 22:
+                s = "\"n\" expected";
                 break;
-            case 23: s = "\"@\" expected";
+            case 23:
+                s = "\"@\" expected";
                 break;
-            case 24: s = "\"-\" expected";
+            case 24:
+                s = "\"-\" expected";
                 break;
-            case 25: s = "\",\" expected";
+            case 25:
+                s = "\",\" expected";
                 break;
-            case 26: s = "\"{\" expected";
+            case 26:
+                s = "\"{\" expected";
                 break;
-            case 27: s = "\";\" expected";
+            case 27:
+                s = "\";\" expected";
                 break;
-            case 28: s = "\"}\" expected";
+            case 28:
+                s = "\"}\" expected";
                 break;
-            case 29: s = "\"+\" expected";
+            case 29:
+                s = "\"+\" expected";
                 break;
-            case 30: s = "\">\" expected";
+            case 30:
+                s = "\">\" expected";
                 break;
-            case 31: s = "\"~\" expected";
+            case 31:
+                s = "\"~\" expected";
                 break;
-            case 32: s = "\"*\" expected";
+            case 32:
+                s = "\"*\" expected";
                 break;
-            case 33: s = "\"#\" expected";
+            case 33:
+                s = "\"#\" expected";
                 break;
-            case 34: s = "\".\" expected";
+            case 34:
+                s = "\".\" expected";
                 break;
-            case 35: s = "\"[\" expected";
+            case 35:
+                s = "\"[\" expected";
                 break;
-            case 36: s = "\"=\" expected";
+            case 36:
+                s = "\"=\" expected";
                 break;
-            case 37: s = "\"~=\" expected";
+            case 37:
+                s = "\"~=\" expected";
                 break;
-            case 38: s = "\"|=\" expected";
+            case 38:
+                s = "\"|=\" expected";
                 break;
-            case 39: s = "\"$=\" expected";
+            case 39:
+                s = "\"$=\" expected";
                 break;
-            case 40: s = "\"^=\" expected";
+            case 40:
+                s = "\"^=\" expected";
                 break;
-            case 41: s = "\"*=\" expected";
+            case 41:
+                s = "\"*=\" expected";
                 break;
-            case 42: s = "\"]\" expected";
+            case 42:
+                s = "\"]\" expected";
                 break;
-            case 43: s = "\":\" expected";
+            case 43:
+                s = "\":\" expected";
                 break;
-            case 44: s = "\"!\" expected";
+            case 44:
+                s = "\"!\" expected";
                 break;
-            case 45: s = "\"important\" expected";
+            case 45:
+                s = "\"important\" expected";
                 break;
-            case 46: s = "\"/\" expected";
+            case 46:
+                s = "\"/\" expected";
                 break;
-            case 47: s = "\"U\\\\\" expected";
+            case 47:
+                s = "\"U\\\\\" expected";
                 break;
-            case 48: s = "\"%\" expected";
+            case 48:
+                s = "\"%\" expected";
                 break;
-            case 49: s = "??? expected";
+            case 49:
+                s = "??? expected";
                 break;
-            case 50: s = "invalid directive";
+            case 50:
+                s = "invalid directive";
                 break;
-            case 51: s = "invalid QuotedString";
+            case 51:
+                s = "invalid QuotedString";
                 break;
-            case 52: s = "invalid URI";
+            case 52:
+                s = "invalid URI";
                 break;
-            case 53: s = "invalid medium";
+            case 53:
+                s = "invalid medium";
                 break;
-            case 54: s = "invalid identity";
+            case 54:
+                s = "invalid identity";
                 break;
-            case 55: s = "invalid simpleselector";
+            case 55:
+                s = "invalid simpleselector";
                 break;
-            case 56: s = "invalid attrib";
+            case 56:
+                s = "invalid attrib";
                 break;
-            case 57: s = "invalid term";
+            case 57:
+                s = "invalid term";
                 break;
-            case 58: s = "invalid term";
+            case 58:
+                s = "invalid term";
                 break;
-            case 59: s = "invalid term";
+            case 59:
+                s = "invalid term";
                 break;
-            case 60: s = "invalid term";
+            case 60:
+                s = "invalid term";
                 break;
-            case 61: s = "invalid HexValue";
+            case 61:
+                s = "invalid HexValue";
                 break;
 
-            default: s = "error " + n;
+            default:
+                s = "error " + n;
                 break;
         }
         var errorString = string.Format(errMsgFormat, line, col, s);
@@ -3922,7 +4106,7 @@ public class Scanner
         if (m_currentInputCharacter == '*')
         {
             NextCh();
-            for (;;)
+            for (; ; )
             {
                 if (m_currentInputCharacter == '*')
                 {
@@ -4023,7 +4207,8 @@ public class Scanner
         {
             state = (int)s_start[m_currentInputCharacter];
         }
-        else {
+        else
+        {
             state = 0;
         }
         m_lengthOfCurrentToken = 0;
@@ -4031,10 +4216,11 @@ public class Scanner
 
         switch (state)
         {
-            case -1: {
-                m_currentToken.m_tokenKind = c_eof;
-                break;
-            }
+            case -1:
+                {
+                    m_currentToken.m_tokenKind = c_eof;
+                    break;
+                }
             case 0:
                 {
                     if (recKind != c_noSym)
@@ -4089,7 +4275,8 @@ public class Scanner
                     AddCh();
                     goto case 7;
                 }
-                else {
+                else
+                {
                     goto case 0;
                 }
             case 7:
@@ -4208,7 +4395,8 @@ public class Scanner
                     AddCh();
                     goto case 28;
                 }
-                else {
+                else
+                {
                     goto case 0;
                 }
             case 28:
@@ -4222,7 +4410,8 @@ public class Scanner
                     AddCh();
                     goto case 30;
                 }
-                else {
+                else
+                {
                     goto case 0;
                 }
             case 30:

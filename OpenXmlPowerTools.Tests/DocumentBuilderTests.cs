@@ -171,7 +171,7 @@ public class DbTests
         };
         WmlDocument wmlOut5 = DocumentBuilder.BuildDocument(sources);
         var out5 = new FileInfo(Path.Combine(TestUtil.TempDir.FullName, "DB006-Out5.docx"));
-        
+
         wmlOut5.SaveAs(out5.FullName);  // save it to the file system, but we could just as easily done something
                                         // else with it.
         Validate(out5);
@@ -732,7 +732,7 @@ public class DbTests
         DirectoryInfo sourceDir = new DirectoryInfo("../../../../TestFiles/");
         FileInfo source = new FileInfo(Path.Combine(sourceDir.FullName, "DB015-LatentStyles.docx"));
         List<Source> sources = null;
-        
+
         sources = new List<Source>()
         {
             new Source(new WmlDocument(source.FullName)),
@@ -922,11 +922,11 @@ public class DbTests
             foreach (var item in doc.MainDocumentPart.GetXDocument().Descendants(WP.docPr))
                 Assert.True(docPrIds.Add(item.Attribute(NoNamespace.id).Value));
             foreach (var header in doc.MainDocumentPart.HeaderParts)
-            foreach (var item in header.GetXDocument().Descendants(WP.docPr))
-                Assert.True(docPrIds.Add(item.Attribute(NoNamespace.id).Value));
+                foreach (var item in header.GetXDocument().Descendants(WP.docPr))
+                    Assert.True(docPrIds.Add(item.Attribute(NoNamespace.id).Value));
             foreach (var footer in doc.MainDocumentPart.FooterParts)
-            foreach (var item in footer.GetXDocument().Descendants(WP.docPr))
-                Assert.True(docPrIds.Add(item.Attribute(NoNamespace.id).Value));
+                foreach (var item in footer.GetXDocument().Descendants(WP.docPr))
+                    Assert.True(docPrIds.Add(item.Attribute(NoNamespace.id).Value));
             if (doc.MainDocumentPart.FootnotesPart != null)
                 foreach (var item in doc.MainDocumentPart.FootnotesPart.GetXDocument().Descendants(WP.docPr))
                     Assert.True(docPrIds.Add(item.Attribute(NoNamespace.id).Value));

@@ -69,7 +69,7 @@ public class UnicodeMapper
 
         // For w:t elements, we obviously want the element's value.
         if (element.Name == W.t)
-            return (string) element;
+            return (string)element;
 
         // Turn elements representing special characters into their corresponding
         // unicode characters.
@@ -141,7 +141,7 @@ public class UnicodeMapper
     /// <returns>The Unicode character used to represent the symbol.</returns>
     public static char SymToChar(string fontAttributeValue, char unicodeValue)
     {
-        return SymToChar(fontAttributeValue, (int) unicodeValue);
+        return SymToChar(fontAttributeValue, (int)unicodeValue);
     }
 
     /// <summary>
@@ -233,7 +233,7 @@ public class UnicodeMapper
         // Use the actual Unicode value if it has not yet been used with another font.
         // Otherwise, create a special Unicode value in the private use area to represent
         // the current w:sym element.
-        var unicodeChar = (char) Convert.ToInt32(charAttributeValue, 16);
+        var unicodeChar = (char)Convert.ToInt32(charAttributeValue, 16);
         if (UnicodeCharToSymDictionary.ContainsKey(unicodeChar))
             unicodeChar = ++_lastUnicodeChar;
 
@@ -255,7 +255,7 @@ public class UnicodeMapper
             .Select(CharToRunChild)
             .GroupAdjacent(e => e.Name == W.t)
             .SelectMany(grouping => grouping.Key
-                ? StringToSingleRunList(grouping.Select(t => (string) t).StringConcatenate(), runProperties)
+                ? StringToSingleRunList(grouping.Select(t => (string)t).StringConcatenate(), runProperties)
                 : grouping.Select(e => new XElement(W.r, runProperties, e)))
             .ToList();
     }

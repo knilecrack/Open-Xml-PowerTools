@@ -1674,20 +1674,20 @@ public class RevisionProcessor
         XElement element = node as XElement;
         if (element != null)
         {
-            /// Accept inserted text, inserted paragraph marks, etc.
-            /// Collapse all w:ins elements.
+            // Accept inserted text, inserted paragraph marks, etc.
+            // Collapse all w:ins elements.
 
             if (element.Name == W.ins)
                 return element
                     .Nodes()
                     .Select(n => AcceptAllOtherRevisionsTransform(n));
 
-            /// Remove all of the following elements.  These elements are processed in:
-            ///   AcceptDeletedAndMovedFromContentControls
-            ///   AcceptMoveFromMoveToTransform
-            ///   AcceptDeletedAndMoveFromParagraphMarksTransform
-            ///   AcceptParagraphEndTagsInMoveFromTransform
-            ///   AcceptMoveFromRanges
+            // Remove all of the following elements.  These elements are processed in:
+            //   AcceptDeletedAndMovedFromContentControls
+            //   AcceptMoveFromMoveToTransform
+            //   AcceptDeletedAndMoveFromParagraphMarksTransform
+            //   AcceptParagraphEndTagsInMoveFromTransform
+            //   AcceptMoveFromRanges
 
             if (element.Name == W.customXmlDelRangeStart ||
                 element.Name == W.customXmlDelRangeEnd ||
@@ -1703,18 +1703,18 @@ public class RevisionProcessor
                 element.Name == W.moveToRangeEnd)
                 return null;
 
-            /// Accept revisions in formatting on paragraphs.
-            /// Accept revisions in formatting on runs.
-            /// Accept revisions for applied styles to a table.
-            /// Accept revisions for grid revisions to a table.
-            /// Accept revisions for column properties.
-            /// Accept revisions for row properties.
-            /// Accept revisions for table level property exceptions.
-            /// Accept revisions for section properties.
-            /// Accept numbering revision in fields.
-            /// Accept deleted field code text.
-            /// Accept deleted literal text.
-            /// Accept inserted cell.
+            // Accept revisions in formatting on paragraphs.
+            // Accept revisions in formatting on runs.
+            // Accept revisions for applied styles to a table.
+            // Accept revisions for grid revisions to a table.
+            // Accept revisions for column properties.
+            // Accept revisions for row properties.
+            // Accept revisions for table level property exceptions.
+            // Accept revisions for section properties.
+            // Accept numbering revision in fields.
+            // Accept deleted field code text.
+            // Accept deleted literal text.
+            // Accept inserted cell.
 
             if (element.Name == W.pPrChange ||
                 element.Name == W.rPrChange ||
@@ -1795,18 +1795,18 @@ public class RevisionProcessor
         Other
     };
 
-    /// Accept deleted paragraphs.
-    ///
-    /// Group together all paragraphs that contain w:p/w:pPr/w:rPr/w:del elements.  Make a
-    /// second group for the content element immediately following a paragraph that contains
-    /// a w:del element.  The code uses the approach of dealing with paragraph content at
-    /// 'levels', ignoring paragraph content at other levels.  Form a new paragraph that
-    /// contains the content of the grouped paragraphs with deleted paragraph marks, and the
-    /// content of the paragraph immediately following a paragraph that contains a deleted
-    /// paragraph mark.  Include in the new paragraph the paragraph properties from the
-    /// paragraph following.  When assembling the new paragraph, use a transform that collapses
-    /// the paragraph nodes when adding content, thereby preserving custom XML and content
-    /// controls.
+    // Accept deleted paragraphs.
+    //
+    // Group together all paragraphs that contain w:p/w:pPr/w:rPr/w:del elements.  Make a
+    // second group for the content element immediately following a paragraph that contains
+    // a w:del element.  The code uses the approach of dealing with paragraph content at
+    // 'levels', ignoring paragraph content at other levels.  Form a new paragraph that
+    // contains the content of the grouped paragraphs with deleted paragraph marks, and the
+    // content of the paragraph immediately following a paragraph that contains a deleted
+    // paragraph mark.  Include in the new paragraph the paragraph properties from the
+    // paragraph following.  When assembling the new paragraph, use a transform that collapses
+    // the paragraph nodes when adding content, thereby preserving custom XML and content
+    // controls.
 
     private static void AnnotateBlockContentElements(XElement contentContainer)
     {
@@ -1969,8 +1969,8 @@ public class RevisionProcessor
                     .Any(z => z.Name == W.r &&
                          z.Attribute(PT.UniqueId).Value == runsInNewDocument.Last().Attribute(PT.UniqueId).Value));
 
-            /// If the list of runs for the content control is exactly the list of runs for the paragraph, then
-            /// create the content control surrounding the paragraph, not surrounding the runs.
+            // If the list of runs for the content control is exactly the list of runs for the paragraph, then
+            // create the content control surrounding the paragraph, not surrounding the runs.
 
             if (commonAncestor.Name == W.p &&
                 commonAncestor.Elements()
@@ -2891,341 +2891,341 @@ public static class RevisionAccepterExtensions
 /// Markup that this code processes:
 /// 
 /// delText
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: MovedText.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to w:t element
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: MovedText.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to w:t element
 /// 
 /// del (deleted run content)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements and descendant elements.
-///   Reject:
-///     Transform to w:ins element
-///     Then Accept
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements and descendant elements.
+/// Reject:
+/// Transform to w:ins element
+/// Then Accept
+/// 
 /// ins (inserted run content)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: InsertedParagraphsAndRuns.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Collapse these elements.
-///   Reject:
-///     Transform to w:del element, and child w:t transform to w:delText element
-///     Then Accept
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: InsertedParagraphsAndRuns.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Collapse these elements.
+/// Reject:
+/// Transform to w:del element, and child w:t transform to w:delText element
+/// Then Accept
 /// 
 /// ins (inserted paragraph)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: InsertedParagraphsAndRuns.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to w:del element
-///     Then Accept
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: InsertedParagraphsAndRuns.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to w:del element
+/// Then Accept
+/// 
 /// del (deleted paragraph mark)
-///   Method: AcceptDeletedAndMoveFromParagraphMarksTransform
-///   Sample document: VariousTableRevisions.docx (deleted paragraph mark in paragraph in
-///     content control)
-///   Reviewed: tristan and zeyad ****************************************
-///   Semantics:
-///     Find all adjacent paragraps that have this element.
-///     Group adjacent paragraphs plus the paragraph following paragraph that has this element.
-///     Replace grouped paragraphs with a new paragraph containing the content from all grouped
-///       paragraphs.  Use the paragraph properties from the first paragraph in the group.
-///   Reject:
-///     Transform to w:ins element
-///     Then Accept
+/// Method: AcceptDeletedAndMoveFromParagraphMarksTransform
+/// Sample document: VariousTableRevisions.docx (deleted paragraph mark in paragraph in
+/// content control)
+/// Reviewed: tristan and zeyad ****************************************
+/// Semantics:
+/// Find all adjacent paragraps that have this element.
+/// Group adjacent paragraphs plus the paragraph following paragraph that has this element.
+/// Replace grouped paragraphs with a new paragraph containing the content from all grouped
+/// paragraphs.  Use the paragraph properties from the first paragraph in the group.
+/// Reject:
+/// Transform to w:ins element
+/// Then Accept
 /// 
 /// del (deleted table row)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: VariousTableRevisions.docx 
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Match w:tr/w:trPr/w:del, remove w:tr.
-///   Reject:
-///     Transform to w:ins
-///     Then Accept
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: VariousTableRevisions.docx 
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Match w:tr/w:trPr/w:del, remove w:tr.
+/// Reject:
+/// Transform to w:ins
+/// Then Accept
 /// 
 /// ins (inserted table row)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: VariousTableRevisions.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to w:del
-///     Then Accept
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: VariousTableRevisions.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to w:del
+/// Then Accept
 /// 
 /// del (deleted math control character)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: DeletedMathControlCharacter.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Match m:f/m:fPr/m:ctrlPr/w:del, remove m:f.
-///   Reject:
-///     Transform to w:ins
-///     Then Accept
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: DeletedMathControlCharacter.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Match m:f/m:fPr/m:ctrlPr/w:del, remove m:f.
+/// Reject:
+/// Transform to w:ins
+/// Then Accept
 /// 
 /// ins (inserted math control character)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: InsertedMathControlCharacter.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to w:del
-///     Then Accept
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: InsertedMathControlCharacter.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to w:del
+/// Then Accept
+/// 
 /// moveTo (move destination paragraph mark)
-///   Method: AcceptMoveFromMoveToTransform
-///   Sample document: MovedText.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to moveFrom
-///     Then Accept
-///   
+/// Method: AcceptMoveFromMoveToTransform
+/// Sample document: MovedText.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to moveFrom
+/// Then Accept
+/// 
 /// moveTo (move destination run content)
-///   Method: AcceptMoveFromMoveToTransform
-///   Sample document: MovedText.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Collapse these elements.
-///   Reject:
-///     Transform to moveFrom
-///     Then Accept
+/// Method: AcceptMoveFromMoveToTransform
+/// Sample document: MovedText.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Collapse these elements.
+/// Reject:
+/// Transform to moveFrom
+/// Then Accept
 /// 
 /// moveFrom (move source paragraph mark)
-///   Methods: AcceptDeletedAndMoveFromParagraphMarksTransform, AcceptParagraphEndTagsInMoveFromTransform
-///   Sample document: MovedText.docx
-///   Reviewed: tristan and zeyad ****************************************
-///   Semantics:
-///     Find all adjacent paragraps that have this element or deleted paragraph mark.
-///     Group adjacent paragraphs plus the paragraph following paragraph that has this element.
-///     Replace grouped paragraphs with a new paragraph containing the content from all grouped
-///       paragraphs.
-///     This is handled in the same code that handles del (deleted paragraph mark).
-///   Reject:
-///     Transform to moveTo
-///     Then Accept
+/// Methods: AcceptDeletedAndMoveFromParagraphMarksTransform, AcceptParagraphEndTagsInMoveFromTransform
+/// Sample document: MovedText.docx
+/// Reviewed: tristan and zeyad ****************************************
+/// Semantics:
+/// Find all adjacent paragraps that have this element or deleted paragraph mark.
+/// Group adjacent paragraphs plus the paragraph following paragraph that has this element.
+/// Replace grouped paragraphs with a new paragraph containing the content from all grouped
+/// paragraphs.
+/// This is handled in the same code that handles del (deleted paragraph mark).
+/// Reject:
+/// Transform to moveTo
+/// Then Accept
 /// 
 /// moveFrom (move source run content)
-///   Method: AcceptMoveFromMoveToTransform
-///   Sample document: MovedText.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to moveTo
-///     Then Accept
+/// Method: AcceptMoveFromMoveToTransform
+/// Sample document: MovedText.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to moveTo
+/// Then Accept
 /// 
 /// moveFromRangeStart
 /// moveFromRangeEnd
-///   Method: AcceptMoveFromRanges
-///   Sample document: MovedText.docx
-///   Semantics:
-///     Find pairs of elements.  Remove all elements that have both start and end tags in a
-///       range.
-///   Reject:
-///     Transform to moveToRangeStart, moveToRangeEnd
-///     Then Accept
+/// Method: AcceptMoveFromRanges
+/// Sample document: MovedText.docx
+/// Semantics:
+/// Find pairs of elements.  Remove all elements that have both start and end tags in a
+/// range.
+/// Reject:
+/// Transform to moveToRangeStart, moveToRangeEnd
+/// Then Accept
 /// 
 /// moveToRangeStart
 /// moveToRangeEnd
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: MovedText.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to moveFromRangeStart, moveFromRangeEnd
-///     Then Accept
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: MovedText.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to moveFromRangeStart, moveFromRangeEnd
+/// Then Accept
 /// 
 /// customXmlDelRangeStart
 /// customXmlDelRangeEnd
 /// customXmlMoveFromRangeStart
 /// customXmlMoveFromRangeEnd
-///   Method: AcceptDeletedAndMovedFromContentControls
-///   Reviewed: tristan and zeyad ****************************************
-///   Semantics:
-///     Find pairs of start/end elements, matching id attributes.  Collapse sdt
-///       elements that have both start and end tags in a range.
-///   Reject:
-///     Transform to customXmlInsRangeStart, customXmlInsRangeEnd, customXmlMoveToRangeStart, customXmlMoveToRangeEnd
-///     Then Accept
-///   
+/// Method: AcceptDeletedAndMovedFromContentControls
+/// Reviewed: tristan and zeyad ****************************************
+/// Semantics:
+/// Find pairs of start/end elements, matching id attributes.  Collapse sdt
+/// elements that have both start and end tags in a range.
+/// Reject:
+/// Transform to customXmlInsRangeStart, customXmlInsRangeEnd, customXmlMoveToRangeStart, customXmlMoveToRangeEnd
+/// Then Accept
+/// 
 /// customXmlInsRangeStart
 /// customXmlInsRangeEnd
 /// customXmlMoveToRangeStart
 /// customXmlMoveToRangeEnd
-///   Method: AcceptAllOtherRevisionsTransform
-///   Reviewed: tristan and zeyad ****************************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to customXmlDelRangeStart, customXmlDelRangeEnd, customXmlMoveFromRangeStart, customXmlMoveFromRangeEnd
-///     Then Accept
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Reviewed: tristan and zeyad ****************************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to customXmlDelRangeStart, customXmlDelRangeEnd, customXmlMoveFromRangeStart, customXmlMoveFromRangeEnd
+/// Then Accept
+/// 
 /// delInstrText (deleted field code)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: NumberingParagraphPropertiesChange.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Transform to instrText
-///     Then Accept
-///     Note that instrText must be transformed to delInstrText when in a w:ins, in the same fashion that w:t must be transformed to w:delText when in w:ins
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: NumberingParagraphPropertiesChange.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Transform to instrText
+/// Then Accept
+/// Note that instrText must be transformed to delInstrText when in a w:ins, in the same fashion that w:t must be transformed to w:delText when in w:ins
 /// 
 /// ins (inserted numbering properties)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: InsertedNumberingProperties.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject
-///     Remove the containing w:numPr
-///     
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: InsertedNumberingProperties.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject
+/// Remove the containing w:numPr
+/// 
 /// pPrChange (revision information for paragraph properties)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: ParagraphAndRunPropertyRevisions.docx 
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace pPr with the pPr in pPrChange
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: ParagraphAndRunPropertyRevisions.docx 
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace pPr with the pPr in pPrChange
 /// 
 /// rPrChange (revision information for run properties)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: ParagraphAndRunPropertyRevisions.docx
-///   Sample document: VariousTableRevisions.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace rPr with the rPr in rPrChange
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: ParagraphAndRunPropertyRevisions.docx
+/// Sample document: VariousTableRevisions.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace rPr with the rPr in rPrChange
+/// 
 /// rPrChange (revision information for run properties on the paragraph mark)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: ParagraphAndRunPropertyRevisions.docx 
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace rPr with the rPr in rPrChange.
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: ParagraphAndRunPropertyRevisions.docx 
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace rPr with the rPr in rPrChange.
 /// 
 /// numberingChange (previous numbering field properties)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: NumberingFieldPropertiesChange.docx 
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Remove these elements.
-///     These are there for numbering created via fields, and are not important.
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: NumberingFieldPropertiesChange.docx 
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Remove these elements.
+/// These are there for numbering created via fields, and are not important.
 /// 
 /// numberingChange (previous paragraph numbering properties)
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: NumberingFieldPropertiesChange.docx 
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Remove these elements.
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: NumberingFieldPropertiesChange.docx 
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Remove these elements.
 /// 
 /// sectPrChange
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: SectionPropertiesChange.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace sectPr with the sectPr in sectPrChange
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: SectionPropertiesChange.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace sectPr with the sectPr in sectPrChange
+/// 
 /// tblGridChange
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: TableGridChange.docx
-///   Sample document: VariousTableRevisions.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace tblGrid with the tblGrid in tblGridChange
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: TableGridChange.docx
+/// Sample document: VariousTableRevisions.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace tblGrid with the tblGrid in tblGridChange
 /// 
 /// tblPrChange
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: TableGridChange.docx
-///   Sample document: VariousTableRevisions.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace tblPr with the tblPr in tblPrChange
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: TableGridChange.docx
+/// Sample document: VariousTableRevisions.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace tblPr with the tblPr in tblPrChange
+/// 
 /// tblPrExChange
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: VariousTableRevisions.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace tblPrEx with the tblPrEx in tblPrExChange
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: VariousTableRevisions.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace tblPrEx with the tblPrEx in tblPrExChange
+/// 
 /// tcPrChange
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: TableGridChange.docx
-///   Sample document: VariousTableRevisions.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace tcPr with the tcPr in tcPrChange
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: TableGridChange.docx
+/// Sample document: VariousTableRevisions.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace tcPr with the tcPr in tcPrChange
+/// 
 /// trPrChange
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: VariousTableRevisions.docx
-///   Reviewed: zeyad ***************************
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     Replace trPr with the trPr in trPrChange
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: VariousTableRevisions.docx
+/// Reviewed: zeyad ***************************
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// Replace trPr with the trPr in trPrChange
 /// 
 /// celDel
-///   Method: AcceptDeletedCellsTransform
-///   Sample document: HorizontallyMergedCells.docx
-///   Semantics:
-///     Group consecutive deleted cells, and remove them.
-///     Adjust the cell before deleted cells:
-///       Increase gridSpan by the number of deleted cells that are removed.
-///   Reject:
-///     Remove this element
+/// Method: AcceptDeletedCellsTransform
+/// Sample document: HorizontallyMergedCells.docx
+/// Semantics:
+/// Group consecutive deleted cells, and remove them.
+/// Adjust the cell before deleted cells:
+/// Increase gridSpan by the number of deleted cells that are removed.
+/// Reject:
+/// Remove this element
 /// 
 /// celIns
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: HorizontallyMergedCells11.docx
-///   Semantics:
-///     Remove these elements.
-///   Reject:
-///     If a w:tc contains w:tcPr/w:cellIns, then remove the cell
-///   
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: HorizontallyMergedCells11.docx
+/// Semantics:
+/// Remove these elements.
+/// Reject:
+/// If a w:tc contains w:tcPr/w:cellIns, then remove the cell
+/// 
 /// cellMerge
-///   Method: AcceptAllOtherRevisionsTransform
-///   Sample document: MergedCell.docx
-///   Semantics:
-///     Transform cellMerge with a parent of tcPr, with attribute w:vMerge="rest"
-///       to <w:vMerge w:val="restart"/>.
-///     Transform cellMerge with a parent of tcPr, with attribute w:vMerge="cont"
-///       to <w:vMerge w:val="continue"/>
+/// Method: AcceptAllOtherRevisionsTransform
+/// Sample document: MergedCell.docx
+/// Semantics:
+/// Transform cellMerge with a parent of tcPr, with attribute w:vMerge="rest"
+/// to <w:vMerge w:val="restart"/>.
+/// Transform cellMerge with a parent of tcPr, with attribute w:vMerge="cont"
+/// to <w:vMerge w:val="continue"/>
 /// 
 /// The following items need to be addressed in a future release:
 /// - inserted run inside deleted paragraph - moveTo is same as insert
 /// - must increase w:val attribute of the w:gridSpan element of the
-///   cell immediately preceding the group of deleted cells by the
-///   ***sum*** of the values of the w:val attributes of w:gridSpan
-///   elements of each of the deleted cells.
+/// cell immediately preceding the group of deleted cells by the
+/// ***sum*** of the values of the w:val attributes of w:gridSpan
+/// elements of each of the deleted cells.
 

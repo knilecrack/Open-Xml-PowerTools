@@ -114,7 +114,8 @@ public class FieldRetriever
                                 Id = s.Id + 1,
                                 FiStack = fis,
                             };
-                        };
+                        }
+                        ;
                         if (e.Attribute(w + "fldCharType").Value == "separate")
                         {
                             Stack<FieldElementTypeInfo> fis = new Stack<FieldElementTypeInfo>(s.FiStack.Reverse());
@@ -227,7 +228,7 @@ public class FieldRetriever
         {
             Stack<FieldElementTypeInfo> s = desc.Annotation<Stack<FieldElementTypeInfo>>();
 
-            if (s != null )
+            if (s != null)
             {
                 foreach (var item in s)
                 {

@@ -348,7 +348,7 @@ public class OpenXmlRegexTests
             Assert.Equal("We can also use symbols such as \uF028 or \uF028.", innerText);
 
             Assert.Contains(p.Descendants(W.ins), ins => ins.Descendants(W.sym).Any(
-                    sym => sym.Attribute(W.font).Value == "Wingdings" && 
+                    sym => sym.Attribute(W.font).Value == "Wingdings" &&
                            sym.Attribute(W._char).Value == "F028"));
         }
     }

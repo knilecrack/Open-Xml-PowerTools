@@ -72,7 +72,7 @@ public static class OpenXmlRegex
     ///     Then the callback can return true / false to indicate whether to replace or not
     /// If the callback returns true once, and false on all subsequent calls, then this method replaces only the first found.
     /// If replacement == "" && callback != null)
-    ///     Then the callback can return true / false to indicate whether to delete or not
+    ///     Then the callback can return true / false to indicate whether to delete or not.
     /// </summary>
     public static int Replace(IEnumerable<XElement> content, Regex regex, string replacement,
         Func<XElement, Match, bool> doReplacement)
@@ -102,7 +102,7 @@ public static class OpenXmlRegex
     /// If trackRevisions == true
     ///     Then replacement is done using revision tracking markup, with author as the revision tracking author
     /// If trackRevisions == true for a PPTX
-    ///     Then code throws an exception
+    ///     Then code throws an exception.
     /// </summary>
     public static int Replace(IEnumerable<XElement> content, Regex regex, string replacement,
         Func<XElement, Match, bool> doReplacement, bool trackRevisions, string author)
@@ -131,7 +131,7 @@ public static class OpenXmlRegex
             var replInfo = new ReplaceInternalInfo { Count = 0 };
             foreach (XElement c in contentList)
             {
-                var newC = (XElement) WmlSearchAndReplaceTransform(c, regex, replacement, callback, trackRevisions,
+                var newC = (XElement)WmlSearchAndReplaceTransform(c, regex, replacement, callback, trackRevisions,
                     revisionTrackingAuthor, replInfo, coalesceContent);
                 c.ReplaceNodes(newC.Nodes());
             }
@@ -142,7 +142,7 @@ public static class OpenXmlRegex
                                  .Descendants()
                                  .Where(d => RevTrackMarkupWithId.Contains(d.Name))
                                  .Attributes(W.id)
-                                 .Select(a => (int) a))
+                                 .Select(a => (int)a))
                              .Max() + 1;
             IEnumerable<XElement> revTrackingWithoutId = root
                 .DescendantsAndSelf()
@@ -153,7 +153,7 @@ public static class OpenXmlRegex
             List<IGrouping<int, XElement>> revTrackingWithDuplicateIds = root
                 .DescendantsAndSelf()
                 .Where(d => RevTrackMarkupWithId.Contains(d.Name))
-                .GroupBy(d => (int) d.Attribute(W.id))
+                .GroupBy(d => (int)d.Attribute(W.id))
                 .Where(g => g.Count() > 1)
                 .ToList();
             foreach (IGrouping<int, XElement> group in revTrackingWithDuplicateIds)
@@ -175,7 +175,7 @@ public static class OpenXmlRegex
             var counter = new ReplaceInternalInfo { Count = 0 };
             foreach (XElement c in contentList)
             {
-                var newC = (XElement) PmlSearchAndReplaceTransform(c, regex, replacement, callback, counter);
+                var newC = (XElement)PmlSearchAndReplaceTransform(c, regex, replacement, callback, counter);
                 c.ReplaceNodes(newC.Nodes());
             }
 
@@ -281,7 +281,7 @@ public static class OpenXmlRegex
                                 XElement grandParentParagraph = parentIns.Parent;
                                 if (grandParentParagraph != null)
                                 {
-                                    if ((string) parentIns.Attributes(W.author).FirstOrDefault() ==
+                                    if ((string)parentIns.Attributes(W.author).FirstOrDefault() ==
                                         revisionTrackingAuthor)
                                     {
                                         List<XElement> parentInsSiblings = grandParentParagraph
@@ -389,7 +389,7 @@ public static class OpenXmlRegex
             return element.Elements()
                 .Where(e => e.Name != W.rPr)
                 .Select(e => e.Name == W.t
-                    ? ((string) e).Select(c =>
+                    ? ((string)e).Select(c =>
                         new XElement(W.r,
                             element.Elements(W.rPr),
                             new XElement(W.t, XmlUtil.GetXmlSpaceAttribute(c), c)))
@@ -428,7 +428,7 @@ public static class OpenXmlRegex
         if (element.Name == A.p)
         {
             XElement paragraph = element;
-            string contents = element.Descendants(A.t).Select(t => (string) t).StringConcatenate();
+            string contents = element.Descendants(A.t).Select(t => (string)t).StringConcatenate();
             if (!regex.IsMatch(contents))
                 return new XElement(element.Name, element.Attributes(), element.Nodes());
 
@@ -514,7 +514,7 @@ public static class OpenXmlRegex
                     groupedAdjacentRunsWithIdenticalFormatting.Select(g =>
                     {
                         if (g.Key == DontConsolidate)
-                            return (object) g;
+                            return (object)g;
 
                         string textValue = g.Select(r => r.Element(A.t).Value).StringConcatenate();
                         XAttribute xs = XmlUtil.GetXmlSpaceAttribute(textValue);
@@ -536,11 +536,11 @@ public static class OpenXmlRegex
                 {
                     if (e.Name == A.t)
                     {
-                        var s = (string) e;
+                        var s = (string)e;
                         IEnumerable<XElement> collectionOfSubRuns = s.Select(c => new XElement(A.r,
                             element.Elements(A.rPr),
                             new XElement(A.t, XmlUtil.GetXmlSpaceAttribute(c), c)));
-                        return (object) collectionOfSubRuns;
+                        return (object)collectionOfSubRuns;
                     }
 
                     return new XElement(A.r,

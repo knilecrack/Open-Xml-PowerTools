@@ -419,7 +419,7 @@ public class WorksheetAccessor
         if (element == null)
             throw new ArgumentException("Range name not found: " + rangeName);
         string sheetName = element.Value.Substring(0, element.Value.IndexOf('!'));
-        string range = element.Value.Substring(element.Value.IndexOf('!') + 1).Replace("$","");
+        string range = element.Value.Substring(element.Value.IndexOf('!') + 1).Replace("$", "");
         int colonIndex = range.IndexOf(':');
         GetRowColumn(range.Substring(0, colonIndex), out startRow, out startColumn);
         GetRowColumn(range.Substring(colonIndex + 1), out endRow, out endColumn);
@@ -1981,16 +1981,16 @@ public class WorksheetAccessor
     }
 
     /// <summary>
-    /// Creates a worksheet document and inserts data into it
+    /// Creates a worksheet document and inserts data into it.
     /// </summary>
-    /// <param name="headerList">List of values that will act as the header</param>
-    /// <param name="valueTable">Values for worksheet content</param>
-    /// <param name="headerRow">Header row</param>
+    /// <param name="headerList">List of values that will act as the header.</param>
+    /// <param name="valueTable">Values for worksheet content.</param>
+    /// <param name="headerRow">Header row.</param>
     /// <returns></returns>
     internal static WorksheetPart Create(SpreadsheetDocument document, List<string> headerList, string[][] valueTable, int headerRow)
     {
         XDocument xDocument = CreateEmptyWorksheet();
-        
+
         for (int i = 0; i < headerList.Count; i++)
         {
             AddValue(xDocument, headerRow, i + 1, headerList[i]);
@@ -2010,9 +2010,9 @@ public class WorksheetAccessor
     }
 
     /// <summary>
-    /// Creates element structure needed to describe an empty worksheet
+    /// Creates element structure needed to describe an empty worksheet.
     /// </summary>
-    /// <returns>Document with contents for an empty worksheet</returns>
+    /// <returns>Document with contents for an empty worksheet.</returns>
     private static XDocument CreateEmptyWorksheet()
     {
         XDocument document =
@@ -2027,12 +2027,12 @@ public class WorksheetAccessor
     }
 
     /// <summary>
-    /// Adds a value to a cell inside a worksheet document
+    /// Adds a value to a cell inside a worksheet document.
     /// </summary>
-    /// <param name="worksheet">document to add values</param>
-    /// <param name="row">Row</param>
-    /// <param name="column">Column</param>
-    /// <param name="value">Value to add</param>
+    /// <param name="worksheet">document to add values.</param>
+    /// <param name="row">Row.</param>
+    /// <param name="column">Column.</param>
+    /// <param name="value">Value to add.</param>
     private static void AddValue(XDocument worksheet, int row, int column, string value)
     {
         //Set the cell reference
@@ -2139,10 +2139,10 @@ public class WorksheetAccessor
     }
 
     /// <summary>
-    /// Adds a given worksheet to the document
+    /// Adds a given worksheet to the document.
     /// </summary>
-    /// <param name="worksheet">Worksheet document to add</param>
-    /// <returns>Worksheet part just added</returns>
+    /// <param name="worksheet">Worksheet document to add.</param>
+    /// <returns>Worksheet part just added.</returns>
     public static WorksheetPart Add(SpreadsheetDocument doc, XDocument worksheet)
     {
         // Associates base content to a new worksheet part

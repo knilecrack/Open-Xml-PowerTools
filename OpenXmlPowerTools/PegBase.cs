@@ -35,7 +35,7 @@ public class FileLoader
     {
         src = null;
         if (!IsBinaryFile()) return false;
-        using (BinaryReader brdr = new BinaryReader(File.Open(path_, FileMode.Open,FileAccess.Read)))
+        using (BinaryReader brdr = new BinaryReader(File.Open(path_, FileMode.Open, FileAccess.Read)))
         {
             src = brdr.ReadBytes((int)brdr.BaseStream.Length);
             return true;
@@ -95,7 +95,8 @@ public class FileLoader
             case FileEncoding.ascii: return new ASCIIEncoding();
             case FileEncoding.binary:
             case FileEncoding.uniCodeBOM: return null;
-            default: Debug.Assert(false);
+            default:
+                Debug.Assert(false);
                 return null;
 
         }
@@ -232,7 +233,7 @@ public class PegNode : ICloneable
     }
     public virtual PegNode Clone()
     {
-        PegNode clone= new PegNode(parent_, id_, match_);
+        PegNode clone = new PegNode(parent_, id_, match_);
         CloneSubTrees(clone);
         return clone;
     }
@@ -346,7 +347,7 @@ public class TreePrint : PrintNode
                 PrintDistNext(p, bAlignVertical, ref nOffsetLineBeg, nLevel);
             }
         }
-        PrintNodeEnd(parent, bAlignVertical, ref  nOffsetLineBeg, nLevel);
+        PrintNodeEnd(parent, bAlignVertical, ref nOffsetLineBeg, nLevel);
         treeOut_.Flush();
     }
     int DetermineLineLength(PegNode parent, int nOffsetLineBeg)
@@ -512,7 +513,7 @@ public abstract class PegBaseParser
         }
     }
     #region Constructors
-     public PegBaseParser(TextWriter errOut)
+    public PegBaseParser(TextWriter errOut)
     {
         srcLen_ = pos_ = 0;
         errOut_ = errOut;
@@ -520,286 +521,286 @@ public abstract class PegBaseParser
     }
     #endregion Constructors
     #region Reinitialization, TextWriter access,Tree Access
-     public void Construct(TextWriter Fout)
-     {
-         srcLen_ = pos_ = 0;
-         bMute_ = false;
-         SetErrorDestination(Fout);
-         ResetTree();
-     }
-     public void Rewind() { pos_ = 0; }
-     public void SetErrorDestination(TextWriter errOut)
-     {
-         errOut_ = errOut == null ? new StreamWriter(System.Console.OpenStandardError())
-             : errOut;
-     }
+    public void Construct(TextWriter Fout)
+    {
+        srcLen_ = pos_ = 0;
+        bMute_ = false;
+        SetErrorDestination(Fout);
+        ResetTree();
+    }
+    public void Rewind() { pos_ = 0; }
+    public void SetErrorDestination(TextWriter errOut)
+    {
+        errOut_ = errOut == null ? new StreamWriter(System.Console.OpenStandardError())
+            : errOut;
+    }
     #endregion Reinitialization, TextWriter access,Tree Access
-     #region Tree root access, Tree Node generation/display
-     public PegNode GetRoot() { return tree.root_; }
-     public void ResetTree()
-     {
-         tree.root_ = null;
-         tree.cur_ = null;
-         tree.addPolicy = PegTree.AddPolicy.eAddAsChild;
-     }
-     void AddTreeNode(int nId, PegTree.AddPolicy newAddPolicy, Creator createNode, ECreatorPhase ePhase)
-     {
-         if (bMute_) return;
-         if (tree.root_ == null)
-         {
-             tree.root_ = tree.cur_ = createNode(ePhase, tree.cur_, nId);
-         }
-         else if (tree.addPolicy == PegTree.AddPolicy.eAddAsChild)
-         {
-             tree.cur_ = tree.cur_.child_ = createNode(ePhase, tree.cur_, nId);
-         }
-         else
-         {
-             tree.cur_ = tree.cur_.next_ = createNode(ePhase, tree.cur_.parent_, nId);
-         }
-         tree.addPolicy = newAddPolicy;
-     }
-     void RestoreTree(PegNode prevCur, PegTree.AddPolicy prevPolicy)
-     {
-         if (bMute_) return;
-         if (prevCur == null)
-         {
-             tree.root_ = null;
-         }
-         else if (prevPolicy == PegTree.AddPolicy.eAddAsChild)
-         {
-             prevCur.child_ = null;
-         }
-         else
-         {
-             prevCur.next_ = null;
-         }
-         tree.cur_ = prevCur;
-         tree.addPolicy = prevPolicy;
-     }
-     public bool TreeChars(Matcher toMatch)
-     {
-         return TreeCharsWithId((int)ESpecialNodes.eAnonymousNode, toMatch);
-     }
-     public bool TreeChars(Creator nodeCreator, Matcher toMatch)
-     {
-         return TreeCharsWithId(nodeCreator, (int)ESpecialNodes.eAnonymousNode, toMatch);
-     }
-     public bool TreeCharsWithId(int nId, Matcher toMatch)
-     {
-         return TreeCharsWithId(nodeCreator_, nId, toMatch);
-     }
-     public bool TreeCharsWithId(Creator nodeCreator, int nId, Matcher toMatch)
-     {
-         int pos = pos_;
-         if (toMatch())
-         {
-             if (!bMute_)
-             {
-                 AddTreeNode(nId, PegTree.AddPolicy.eAddAsSibling, nodeCreator, ECreatorPhase.eCreateAndComplete);
-                 tree.cur_.match_.posBeg_ = pos;
-                 tree.cur_.match_.posEnd_ = pos_;
-             }
-             return true;
-         }
-         return false;
-     }
-     public bool TreeNT(int nRuleId, Matcher toMatch)
-     {
-         return TreeNT(nodeCreator_, nRuleId, toMatch);
-     }
-     public bool TreeNT(Creator nodeCreator, int nRuleId, Matcher toMatch)
-     {
-         if (bMute_) return toMatch();
-         PegNode prevCur = tree.cur_, ruleNode;
-         PegTree.AddPolicy prevPolicy = tree.addPolicy;
-         int posBeg = pos_;
-         AddTreeNode(nRuleId, PegTree.AddPolicy.eAddAsChild, nodeCreator, ECreatorPhase.eCreate);
-         ruleNode = tree.cur_;
-         bool bMatches = toMatch();
-         if (!bMatches) RestoreTree(prevCur, prevPolicy);
-         else
-         {
-             ruleNode.match_.posBeg_ = posBeg;
-             ruleNode.match_.posEnd_ = pos_;
-             tree.cur_ = ruleNode;
-             tree.addPolicy = PegTree.AddPolicy.eAddAsSibling;
-             nodeCreator(ECreatorPhase.eCreationComplete, ruleNode, nRuleId);
-         }
-         return bMatches;
-     }
-     public bool TreeAST(int nRuleId, Matcher toMatch)
-     {
-         return TreeAST(nodeCreator_, nRuleId, toMatch);
-     }
-     public bool TreeAST(Creator nodeCreator, int nRuleId, Matcher toMatch)
-     {
-         if (bMute_) return toMatch();
-         bool bMatches = TreeNT(nodeCreator, nRuleId, toMatch);
-         if (bMatches)
-         {
-             if (tree.cur_.child_ != null && tree.cur_.child_.next_ == null && tree.cur_.parent_ != null)
-             {
-                 if (tree.cur_.parent_.child_ == tree.cur_)
-                 {
-                     tree.cur_.parent_.child_ = tree.cur_.child_;
-                     tree.cur_.child_.parent_ = tree.cur_.parent_;
-                     tree.cur_ = tree.cur_.child_;
-                 }
-                 else
-                 {
-                     PegNode prev;
-                     for (prev = tree.cur_.parent_.child_; prev != null && prev.next_ != tree.cur_; prev = prev.next_)
-                     {
-                     }
-                     if (prev != null)
-                     {
-                         prev.next_ = tree.cur_.child_;
-                         tree.cur_.child_.parent_ = tree.cur_.parent_;
-                         tree.cur_ = tree.cur_.child_;
-                     }
-                 }
-             }
-         }
-         return bMatches;
-     }
-     public bool TreeNT(Matcher toMatch)
-     {
-         return TreeNT((int)ESpecialNodes.eAnonymNTNode, toMatch);
-     }
-     public bool TreeNT(Creator nodeCreator, Matcher toMatch)
-     {
-         return TreeNT(nodeCreator, (int)ESpecialNodes.eAnonymNTNode, toMatch);
-     }
-     public bool TreeAST(Matcher toMatch)
-     {
-         return TreeAST((int)ESpecialNodes.eAnonymASTNode, toMatch);
-     }
-     public bool TreeAST(Creator nodeCreator, Matcher toMatch)
-     {
-         return TreeAST(nodeCreator, (int)ESpecialNodes.eAnonymASTNode, toMatch);
-     }
-     public virtual string TreeNodeToString(PegNode node)
-     {
-         return GetRuleNameFromId(node.id_);
-     }
-     public void SetNodeCreator(Creator nodeCreator)
-     {
-         Debug.Assert(nodeCreator != null);
-         nodeCreator_ = nodeCreator;
-     }
-     #endregion Tree Node generation
-     #region PEG  e1 e2 .. ; &e1 ; !e1 ;  e? ; e* ; e+ ; e{a,b} ; .
-     public bool And(Matcher pegSequence)
-     {
-         PegNode prevCur = tree.cur_;
-         PegTree.AddPolicy prevPolicy = tree.addPolicy;
-         int pos0 = pos_;
-         bool bMatches = pegSequence();
-         if (!bMatches)
-         {
-             pos_ = pos0;
-             RestoreTree(prevCur, prevPolicy);
-         }
-         return bMatches;
-     }
-     public bool Peek(Matcher toMatch)
-     {
-         int pos0 = pos_;
-         bool prevMute = bMute_;
-         bMute_ = true;
-         bool bMatches = toMatch();
-         bMute_ = prevMute;
-         pos_ = pos0;
-         return bMatches;
-     }
-     public bool Not(Matcher toMatch)
-     {
-         int pos0 = pos_;
-         bool prevMute = bMute_;
-         bMute_ = true;
-         bool bMatches = toMatch();
-         bMute_ = prevMute;
-         pos_ = pos0;
-         return !bMatches;
-     }
-     public bool PlusRepeat(Matcher toRepeat)
-     {
-         int i;
-         for (i = 0; ; ++i)
-         {
-             int pos0 = pos_;
-             if (!toRepeat())
-             {
-                 pos_ = pos0;
-                 break;
-             }
-         }
-         return i > 0;
-     }
-     public bool OptRepeat(Matcher toRepeat)
-     {
-         for (; ; )
-         {
-             int pos0 = pos_;
-             if (!toRepeat())
-             {
-                 pos_ = pos0;
-                 return true;
-             }
-         }
-     }
-     public bool Option(Matcher toMatch)
-     {
-         int pos0 = pos_;
-         if (!toMatch()) pos_ = pos0;
-         return true;
-     }
-     public bool ForRepeat(int count, Matcher toRepeat)
-     {
-         PegNode prevCur = tree.cur_;
-         PegTree.AddPolicy prevPolicy = tree.addPolicy;
-         int pos0 = pos_;
-         int i;
-         for (i = 0; i < count; ++i)
-         {
-             if (!toRepeat())
-             {
-                 pos_ = pos0;
-                 RestoreTree(prevCur, prevPolicy);
-                 return false;
-             }
-         }
-         return true;
-     }
-     public bool ForRepeat(int lower, int upper, Matcher toRepeat)
-     {
-         PegNode prevCur = tree.cur_;
-         PegTree.AddPolicy prevPolicy = tree.addPolicy;
-         int pos0 = pos_;
-         int i;
-         for (i = 0; i < upper; ++i)
-         {
-             if (!toRepeat()) break;
-         }
-         if (i < lower)
-         {
-             pos_ = pos0;
-             RestoreTree(prevCur, prevPolicy);
-             return false;
-         }
-         return true;
-     }
-     public bool Any()
-     {
-         if (pos_ < srcLen_)
-         {
-             ++pos_;
-             return true;
-         }
-         return false;
-     }
-     #endregion PEG  e1 e2 .. ; &e1 ; !e1 ;  e? ; e* ; e+ ; e{a,b} ; .
+    #region Tree root access, Tree Node generation/display
+    public PegNode GetRoot() { return tree.root_; }
+    public void ResetTree()
+    {
+        tree.root_ = null;
+        tree.cur_ = null;
+        tree.addPolicy = PegTree.AddPolicy.eAddAsChild;
+    }
+    void AddTreeNode(int nId, PegTree.AddPolicy newAddPolicy, Creator createNode, ECreatorPhase ePhase)
+    {
+        if (bMute_) return;
+        if (tree.root_ == null)
+        {
+            tree.root_ = tree.cur_ = createNode(ePhase, tree.cur_, nId);
+        }
+        else if (tree.addPolicy == PegTree.AddPolicy.eAddAsChild)
+        {
+            tree.cur_ = tree.cur_.child_ = createNode(ePhase, tree.cur_, nId);
+        }
+        else
+        {
+            tree.cur_ = tree.cur_.next_ = createNode(ePhase, tree.cur_.parent_, nId);
+        }
+        tree.addPolicy = newAddPolicy;
+    }
+    void RestoreTree(PegNode prevCur, PegTree.AddPolicy prevPolicy)
+    {
+        if (bMute_) return;
+        if (prevCur == null)
+        {
+            tree.root_ = null;
+        }
+        else if (prevPolicy == PegTree.AddPolicy.eAddAsChild)
+        {
+            prevCur.child_ = null;
+        }
+        else
+        {
+            prevCur.next_ = null;
+        }
+        tree.cur_ = prevCur;
+        tree.addPolicy = prevPolicy;
+    }
+    public bool TreeChars(Matcher toMatch)
+    {
+        return TreeCharsWithId((int)ESpecialNodes.eAnonymousNode, toMatch);
+    }
+    public bool TreeChars(Creator nodeCreator, Matcher toMatch)
+    {
+        return TreeCharsWithId(nodeCreator, (int)ESpecialNodes.eAnonymousNode, toMatch);
+    }
+    public bool TreeCharsWithId(int nId, Matcher toMatch)
+    {
+        return TreeCharsWithId(nodeCreator_, nId, toMatch);
+    }
+    public bool TreeCharsWithId(Creator nodeCreator, int nId, Matcher toMatch)
+    {
+        int pos = pos_;
+        if (toMatch())
+        {
+            if (!bMute_)
+            {
+                AddTreeNode(nId, PegTree.AddPolicy.eAddAsSibling, nodeCreator, ECreatorPhase.eCreateAndComplete);
+                tree.cur_.match_.posBeg_ = pos;
+                tree.cur_.match_.posEnd_ = pos_;
+            }
+            return true;
+        }
+        return false;
+    }
+    public bool TreeNT(int nRuleId, Matcher toMatch)
+    {
+        return TreeNT(nodeCreator_, nRuleId, toMatch);
+    }
+    public bool TreeNT(Creator nodeCreator, int nRuleId, Matcher toMatch)
+    {
+        if (bMute_) return toMatch();
+        PegNode prevCur = tree.cur_, ruleNode;
+        PegTree.AddPolicy prevPolicy = tree.addPolicy;
+        int posBeg = pos_;
+        AddTreeNode(nRuleId, PegTree.AddPolicy.eAddAsChild, nodeCreator, ECreatorPhase.eCreate);
+        ruleNode = tree.cur_;
+        bool bMatches = toMatch();
+        if (!bMatches) RestoreTree(prevCur, prevPolicy);
+        else
+        {
+            ruleNode.match_.posBeg_ = posBeg;
+            ruleNode.match_.posEnd_ = pos_;
+            tree.cur_ = ruleNode;
+            tree.addPolicy = PegTree.AddPolicy.eAddAsSibling;
+            nodeCreator(ECreatorPhase.eCreationComplete, ruleNode, nRuleId);
+        }
+        return bMatches;
+    }
+    public bool TreeAST(int nRuleId, Matcher toMatch)
+    {
+        return TreeAST(nodeCreator_, nRuleId, toMatch);
+    }
+    public bool TreeAST(Creator nodeCreator, int nRuleId, Matcher toMatch)
+    {
+        if (bMute_) return toMatch();
+        bool bMatches = TreeNT(nodeCreator, nRuleId, toMatch);
+        if (bMatches)
+        {
+            if (tree.cur_.child_ != null && tree.cur_.child_.next_ == null && tree.cur_.parent_ != null)
+            {
+                if (tree.cur_.parent_.child_ == tree.cur_)
+                {
+                    tree.cur_.parent_.child_ = tree.cur_.child_;
+                    tree.cur_.child_.parent_ = tree.cur_.parent_;
+                    tree.cur_ = tree.cur_.child_;
+                }
+                else
+                {
+                    PegNode prev;
+                    for (prev = tree.cur_.parent_.child_; prev != null && prev.next_ != tree.cur_; prev = prev.next_)
+                    {
+                    }
+                    if (prev != null)
+                    {
+                        prev.next_ = tree.cur_.child_;
+                        tree.cur_.child_.parent_ = tree.cur_.parent_;
+                        tree.cur_ = tree.cur_.child_;
+                    }
+                }
+            }
+        }
+        return bMatches;
+    }
+    public bool TreeNT(Matcher toMatch)
+    {
+        return TreeNT((int)ESpecialNodes.eAnonymNTNode, toMatch);
+    }
+    public bool TreeNT(Creator nodeCreator, Matcher toMatch)
+    {
+        return TreeNT(nodeCreator, (int)ESpecialNodes.eAnonymNTNode, toMatch);
+    }
+    public bool TreeAST(Matcher toMatch)
+    {
+        return TreeAST((int)ESpecialNodes.eAnonymASTNode, toMatch);
+    }
+    public bool TreeAST(Creator nodeCreator, Matcher toMatch)
+    {
+        return TreeAST(nodeCreator, (int)ESpecialNodes.eAnonymASTNode, toMatch);
+    }
+    public virtual string TreeNodeToString(PegNode node)
+    {
+        return GetRuleNameFromId(node.id_);
+    }
+    public void SetNodeCreator(Creator nodeCreator)
+    {
+        Debug.Assert(nodeCreator != null);
+        nodeCreator_ = nodeCreator;
+    }
+    #endregion Tree Node generation
+    #region PEG  e1 e2 .. ; &e1 ; !e1 ;  e? ; e* ; e+ ; e{a,b} ; .
+    public bool And(Matcher pegSequence)
+    {
+        PegNode prevCur = tree.cur_;
+        PegTree.AddPolicy prevPolicy = tree.addPolicy;
+        int pos0 = pos_;
+        bool bMatches = pegSequence();
+        if (!bMatches)
+        {
+            pos_ = pos0;
+            RestoreTree(prevCur, prevPolicy);
+        }
+        return bMatches;
+    }
+    public bool Peek(Matcher toMatch)
+    {
+        int pos0 = pos_;
+        bool prevMute = bMute_;
+        bMute_ = true;
+        bool bMatches = toMatch();
+        bMute_ = prevMute;
+        pos_ = pos0;
+        return bMatches;
+    }
+    public bool Not(Matcher toMatch)
+    {
+        int pos0 = pos_;
+        bool prevMute = bMute_;
+        bMute_ = true;
+        bool bMatches = toMatch();
+        bMute_ = prevMute;
+        pos_ = pos0;
+        return !bMatches;
+    }
+    public bool PlusRepeat(Matcher toRepeat)
+    {
+        int i;
+        for (i = 0; ; ++i)
+        {
+            int pos0 = pos_;
+            if (!toRepeat())
+            {
+                pos_ = pos0;
+                break;
+            }
+        }
+        return i > 0;
+    }
+    public bool OptRepeat(Matcher toRepeat)
+    {
+        for (; ; )
+        {
+            int pos0 = pos_;
+            if (!toRepeat())
+            {
+                pos_ = pos0;
+                return true;
+            }
+        }
+    }
+    public bool Option(Matcher toMatch)
+    {
+        int pos0 = pos_;
+        if (!toMatch()) pos_ = pos0;
+        return true;
+    }
+    public bool ForRepeat(int count, Matcher toRepeat)
+    {
+        PegNode prevCur = tree.cur_;
+        PegTree.AddPolicy prevPolicy = tree.addPolicy;
+        int pos0 = pos_;
+        int i;
+        for (i = 0; i < count; ++i)
+        {
+            if (!toRepeat())
+            {
+                pos_ = pos0;
+                RestoreTree(prevCur, prevPolicy);
+                return false;
+            }
+        }
+        return true;
+    }
+    public bool ForRepeat(int lower, int upper, Matcher toRepeat)
+    {
+        PegNode prevCur = tree.cur_;
+        PegTree.AddPolicy prevPolicy = tree.addPolicy;
+        int pos0 = pos_;
+        int i;
+        for (i = 0; i < upper; ++i)
+        {
+            if (!toRepeat()) break;
+        }
+        if (i < lower)
+        {
+            pos_ = pos0;
+            RestoreTree(prevCur, prevPolicy);
+            return false;
+        }
+        return true;
+    }
+    public bool Any()
+    {
+        if (pos_ < srcLen_)
+        {
+            ++pos_;
+            return true;
+        }
+        return false;
+    }
+    #endregion PEG  e1 e2 .. ; &e1 ; !e1 ;  e? ; e* ; e+ ; e{a,b} ; .
 }
 public class PegByteParser : PegBaseParser
 {
@@ -807,9 +808,9 @@ public class PegByteParser : PegBaseParser
     protected byte[] src_;
     PegError errors;
     #endregion Data members
-    
+
     #region PEG optimizations
-    public sealed class BytesetData     
+    public sealed class BytesetData
     {
         public struct Range
         {
@@ -911,11 +912,11 @@ public class PegByteParser : PegBaseParser
         : this(null)
     {
     }
-    public PegByteParser(byte[] src):base(null)
+    public PegByteParser(byte[] src) : base(null)
     {
         SetSource(src);
     }
-    public PegByteParser(byte[] src, TextWriter errOut):base(errOut)
+    public PegByteParser(byte[] src, TextWriter errOut) : base(errOut)
     {
         SetSource(src);
     }
@@ -934,18 +935,19 @@ public class PegByteParser : PegBaseParser
         errors.lineStarts[0] = 1;
     }
     public byte[] GetSource() { return src_; }
-    
+
     #endregion Reinitialization, Source Code access, TextWriter access,Tree Access
     #region Setting host variables
-    public bool Into(Matcher toMatch,out byte[] into)
+    public bool Into(Matcher toMatch, out byte[] into)
     {
         int pos = pos_;
         if (toMatch())
         {
             int nLen = pos_ - pos;
-            into= new byte[nLen];
-            for(int i=0;i<nLen;++i){
-                into[i] = src_[i+pos];
+            into = new byte[nLen];
+            for (int i = 0; i < nLen; ++i)
+            {
+                into[i] = src_[i + pos];
             }
             return true;
         }
@@ -955,18 +957,18 @@ public class PegByteParser : PegBaseParser
             return false;
         }
     }
-    public bool Into(Matcher toMatch,out PegBegEnd begEnd)
+    public bool Into(Matcher toMatch, out PegBegEnd begEnd)
     {
         begEnd.posBeg_ = pos_;
         bool bMatches = toMatch();
         begEnd.posEnd_ = pos_;
         return bMatches;
     }
-    public bool Into(Matcher toMatch,out int into)
+    public bool Into(Matcher toMatch, out int into)
     {
         byte[] s;
         into = 0;
-        if (!Into(toMatch,out s)) return false;
+        if (!Into(toMatch, out s)) return false;
         into = 0;
         for (int i = 0; i < s.Length; ++i)
         {
@@ -975,17 +977,17 @@ public class PegByteParser : PegBaseParser
         }
         return true;
     }
-    public bool Into(Matcher toMatch,out double into)
+    public bool Into(Matcher toMatch, out double into)
     {
         byte[] s;
         into = 0.0;
-        if (!Into(toMatch,out s)) return false;
+        if (!Into(toMatch, out s)) return false;
         System.Text.Encoding encoding = System.Text.Encoding.UTF8;
         string sAsString = encoding.GetString(s);
         if (!System.Double.TryParse(sAsString, out into)) return false;
         return true;
     }
-    public bool BitsInto(int lowBitNo, int highBitNo,out int into)
+    public bool BitsInto(int lowBitNo, int highBitNo, out int into)
     {
         if (pos_ < srcLen_)
         {
@@ -1027,7 +1029,7 @@ public class PegByteParser : PegBaseParser
         return true;
     }
     #endregion Error handling
-   #region PEG Bit level equivalents for PEG e1 ; &e1 ; !e1; e1:into ; 
+    #region PEG Bit level equivalents for PEG e1 ; &e1 ; !e1; e1:into ; 
     public bool Bits(int lowBitNo, int highBitNo, byte toMatch)
     {
         if (pos_ < srcLen_ && ((src_[pos_] >> (lowBitNo - 1)) & ((1 << highBitNo) - 1)) == toMatch)
@@ -1037,11 +1039,11 @@ public class PegByteParser : PegBaseParser
         }
         return false;
     }
-    public bool Bits(int lowBitNo, int highBitNo,BytesetData toMatch)
+    public bool Bits(int lowBitNo, int highBitNo, BytesetData toMatch)
     {
-        if( pos_ < srcLen_ )
+        if (pos_ < srcLen_)
         {
-            byte value= (byte)((src_[pos_] >> (lowBitNo - 1)) & ((1 << highBitNo) - 1));
+            byte value = (byte)((src_[pos_] >> (lowBitNo - 1)) & ((1 << highBitNo) - 1));
             ++pos_;
             return toMatch.Matches(value);
         }
@@ -1055,17 +1057,18 @@ public class PegByteParser : PegBaseParser
     {
         return !(pos_ < srcLen_ && ((src_[pos_] >> (lowBitNo - 1)) & ((1 << highBitNo) - 1)) == toMatch);
     }
-    public bool IntoBits(int lowBitNo,int highBitNo,out int val)
+    public bool IntoBits(int lowBitNo, int highBitNo, out int val)
     {
-        return BitsInto(lowBitNo,highBitNo,out val);
+        return BitsInto(lowBitNo, highBitNo, out val);
     }
     public bool IntoBits(int lowBitNo, int highBitNo, BytesetData toMatch, out int val)
     {
         return BitsInto(lowBitNo, highBitNo, out val);
     }
-    public bool Bit(int bitNo,byte toMatch)
+    public bool Bit(int bitNo, byte toMatch)
     {
-        if (pos_ < srcLen_ && ((src_[pos_]>>(bitNo-1))&1)==toMatch){
+        if (pos_ < srcLen_ && ((src_[pos_] >> (bitNo - 1)) & 1) == toMatch)
+        {
             ++pos_;
             return true;
         }
@@ -1337,7 +1340,7 @@ public class PegByteParser : PegBaseParser
             byte c = src_[pos_];
             for (int i = 0; i < s.Length - 1; i += 2)
             {
-                if ( c >= s[i] && c <= s[i + 1] ) return false;
+                if (c >= s[i] && c <= s[i + 1]) return false;
             }
             ++pos_;
             return true;
@@ -1459,7 +1462,7 @@ public class PegByteParser : PegBaseParser
     }
     public bool OneOf(BytesetData bset)
     {
-        if(pos_ < srcLen_ && bset.Matches(src_[pos_]))
+        if (pos_ < srcLen_ && bset.Matches(src_[pos_]))
         {
             ++pos_; return true;
         }
@@ -1529,16 +1532,16 @@ public class PegCharParser : PegBaseParser
     {
         internal class Trie
         {
-            internal Trie(char cThis,int nIndex, string[] literals)
+            internal Trie(char cThis, int nIndex, string[] literals)
             {
                 cThis_ = cThis;
                 char cMax = char.MinValue;
                 cMin_ = char.MaxValue;
                 HashSet<char> followChars = new HashSet<char>();
-                
+
                 foreach (string literal in literals)
                 {
-                    if (literal==null ||  nIndex > literal.Length ) continue;
+                    if (literal == null || nIndex > literal.Length) continue;
                     if (nIndex == literal.Length)
                     {
                         bLitEnd_ = true;
@@ -1546,8 +1549,8 @@ public class PegCharParser : PegBaseParser
                     }
                     char c = literal[nIndex];
                     followChars.Add(c);
-                    if ( c < cMin_) cMin_ = c;
-                    if ( c > cMax) cMax = c;
+                    if (c < cMin_) cMin_ = c;
+                    if (c > cMax) cMax = c;
                 }
                 if (followChars.Count == 0)
                 {
@@ -1561,7 +1564,7 @@ public class PegCharParser : PegBaseParser
                         List<string> subLiterals = new List<string>();
                         foreach (string s in literals)
                         {
-                            if ( nIndex >= s.Length ) continue;
+                            if (nIndex >= s.Length) continue;
                             if (c == s[nIndex])
                             {
                                 subLiterals.Add(s);
@@ -1586,16 +1589,16 @@ public class PegCharParser : PegBaseParser
     }
     #endregion  PEG optimizations
     #region Constructors
-    public PegCharParser():this("")
+    public PegCharParser() : this("")
     {
-       
+
 
     }
-    public PegCharParser(string src):base(null)
+    public PegCharParser(string src) : base(null)
     {
         SetSource(src);
     }
-    public PegCharParser(string src, TextWriter errOut):base(errOut)
+    public PegCharParser(string src, TextWriter errOut) : base(errOut)
     {
         SetSource(src);
         nodeCreator_ = DefaultNodeCreator;
@@ -1630,7 +1633,7 @@ public class PegCharParser : PegBaseParser
     public string GetSource() { return src_; }
     #endregion Reinitialization, Source Code access, TextWriter access,Tree Access
     #region Setting host variables
-    public bool Into(Matcher toMatch,out string into)
+    public bool Into(Matcher toMatch, out string into)
     {
         int pos = pos_;
         if (toMatch())
@@ -1644,26 +1647,26 @@ public class PegCharParser : PegBaseParser
             return false;
         }
     }
-    public bool Into(Matcher toMatch,out PegBegEnd begEnd)
+    public bool Into(Matcher toMatch, out PegBegEnd begEnd)
     {
         begEnd.posBeg_ = pos_;
         bool bMatches = toMatch();
         begEnd.posEnd_ = pos_;
         return bMatches;
     }
-    public bool Into(Matcher toMatch,out int into)
+    public bool Into(Matcher toMatch, out int into)
     {
         string s;
         into = 0;
-        if (!Into(toMatch,out s)) return false;
+        if (!Into(toMatch, out s)) return false;
         if (!System.Int32.TryParse(s, out into)) return false;
         return true;
     }
-    public bool Into(Matcher toMatch,out double into)
+    public bool Into(Matcher toMatch, out double into)
     {
         string s;
         into = 0.0;
-        if (!Into(toMatch,out s)) return false;
+        if (!Into(toMatch, out s)) return false;
         if (!System.Double.TryParse(s, out into)) return false;
         return true;
     }
@@ -1954,7 +1957,7 @@ public class PegCharParser : PegBaseParser
             char c = src_[pos_];
             for (int i = 0; i < s.Length - 1; i += 2)
             {
-                if ( c >= s[i] && c <= s[i + 1]) return false;
+                if (c >= s[i] && c <= s[i + 1]) return false;
             }
             ++pos_;
             return true;
@@ -2084,13 +2087,13 @@ public class PegCharParser : PegBaseParser
     public bool OneOfLiterals(OptimizedLiterals litAlt)
     {
         OptimizedLiterals.Trie node = litAlt.literalsRoot;
-        int matchPos = pos_-1;
-        for (int pos = pos_; pos < srcLen_ ; ++pos)
+        int matchPos = pos_ - 1;
+        for (int pos = pos_; pos < srcLen_; ++pos)
         {
             char c = src_[pos];
-            if (    node.children_==null 
-                ||  c < node.cMin_ || c > node.cMin_ + node.children_.Length - 1
-                ||  node.children_[c - node.cMin_] == null)
+            if (node.children_ == null
+                || c < node.cMin_ || c > node.cMin_ + node.children_.Length - 1
+                || node.children_[c - node.cMin_] == null)
             {
                 break;
             }
@@ -2099,7 +2102,7 @@ public class PegCharParser : PegBaseParser
         }
         if (matchPos >= pos_)
         {
-            pos_= matchPos;
+            pos_ = matchPos;
             return true;
         }
         else return false;
