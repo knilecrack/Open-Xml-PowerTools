@@ -27,7 +27,8 @@ public class PtMainDocumentPart : XElement
                 WordprocessingCommentsPart commentsPart = wDoc.MainDocumentPart.WordprocessingCommentsPart;
                 if (commentsPart == null)
                     return null;
-                XElement partElement = commentsPart.GetXDocument().Root;
+                // Clone the root element to avoid mutating the cached XDocument
+                XElement partElement = new XElement(commentsPart.GetXDocument().Root);
                 var childNodes = partElement.Nodes().ToList();
                 foreach (var item in childNodes)
                     item.Remove();
@@ -71,7 +72,8 @@ public partial class WmlDocument
             using (MemoryStream ms = new MemoryStream(this.DocumentByteArray))
             using (WordprocessingDocument wDoc = WordprocessingDocument.Open(ms, false))
             {
-                XElement partElement = wDoc.MainDocumentPart.GetXDocument().Root;
+                // Clone the root element to avoid mutating the cached XDocument
+                XElement partElement = new XElement(wDoc.MainDocumentPart.GetXDocument().Root);
                 var childNodes = partElement.Nodes().ToList();
                 foreach (var item in childNodes)
                     item.Remove();

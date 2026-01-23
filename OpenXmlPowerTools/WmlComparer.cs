@@ -4771,6 +4771,30 @@ public static class WmlComparer
 
                 if (targetUri != null)
                 {
+                    // Check if this is a singleton relationship type that should be reused if it already exists
+                    var isSingletonRelationship =
+                        relationshipForDeletedPart.RelationshipType == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable" ||
+                        relationshipForDeletedPart.RelationshipType == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" ||
+                        relationshipForDeletedPart.RelationshipType == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/stylesWithEffects" ||
+                        relationshipForDeletedPart.RelationshipType == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering" ||
+                        relationshipForDeletedPart.RelationshipType == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" ||
+                        relationshipForDeletedPart.RelationshipType == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings" ||
+                        relationshipForDeletedPart.RelationshipType == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme";
+
+                    // For singleton relationships, check if one already exists and reuse it
+                    if (isSingletonRelationship)
+                    {
+                        var existingRelationship = partInNewDocument
+                            .GetRelationships()
+                            .FirstOrDefault(r => r.RelationshipType == relationshipForDeletedPart.RelationshipType);
+
+                        if (existingRelationship != null)
+                        {
+                            // Reuse the existing relationship ID
+                            att.Value = existingRelationship.Id;
+                            continue;
+                        }
+                    }
 
                     var relatedPackagePart = partOfDeletedContent.Package.GetPart(targetUri);
                     var uriSplit = relatedPackagePart.Uri.ToString().Split('/');
