@@ -582,6 +582,49 @@ public static class PtExtensions
             sb => sb.ToString());
     }
 
+    /// <summary>
+    /// Efficiently removes specified characters from a string using Span&lt;char&gt;.
+    /// This avoids creating intermediate string allocations that occur with multiple Replace() calls.
+    /// </summary>
+    /// <param name="input">The input string to process</param>
+    /// <param name="charsToRemove">Characters to remove from the string</param>
+    /// <returns>A new string with specified characters removed</returns>
+    public static string RemoveChars(this string input, ReadOnlySpan<char> charsToRemove)
+    {
+        if (string.IsNullOrEmpty(input))
+            return input;
+
+        // Use stack allocation for small strings, heap for large ones
+        Span<char> buffer = input.Length <= 256
+            ? stackalloc char[input.Length]
+            : new char[input.Length];
+
+        int writeIndex = 0;
+        ReadOnlySpan<char> inputSpan = input.AsSpan();
+
+        for (int i = 0; i < inputSpan.Length; i++)
+        {
+            char c = inputSpan[i];
+            bool shouldRemove = false;
+
+            for (int j = 0; j < charsToRemove.Length; j++)
+            {
+                if (c == charsToRemove[j])
+                {
+                    shouldRemove = true;
+                    break;
+                }
+            }
+
+            if (!shouldRemove)
+            {
+                buffer[writeIndex++] = c;
+            }
+        }
+
+        return new string(buffer.Slice(0, writeIndex));
+    }
+
     public static IEnumerable<TResult> PtZip<TFirst, TSecond, TResult>(
         this IEnumerable<TFirst> first,
         IEnumerable<TSecond> second,
