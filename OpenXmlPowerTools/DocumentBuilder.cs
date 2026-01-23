@@ -324,8 +324,7 @@ public static class DocumentBuilder
                         mainXDoc.Root.Element(W.body).Add(lastElement.Descendants(W.sectPr).Last());
                         lastElement.Descendants(W.sectPr).Remove();
                         if (!lastElement.Elements()
-                            .Where(e => e.Name != W.pPr)
-                            .Any())
+                            .Any(e => e.Name != W.pPr))
                             lastElement.Remove();
                         document.MainDocumentPart.PutXDocument();
                     }

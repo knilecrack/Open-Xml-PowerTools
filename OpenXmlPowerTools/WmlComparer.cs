@@ -814,7 +814,14 @@ public static class WmlComparer
                                 // Get a hash after first accepting revisions and compressing the text.
                                 var acceptedRevisionElement = RevisionProcessor.AcceptRevisionsForElement(ci.RevisionElement);
                                 //var sha1Hash = PtUtils.SHA1HashStringForUTF8String(acceptedRevisionElement.Value.Replace(" ", "").Replace(" ", "").Replace(" ", "").Replace("\n", "").Replace(".", "").Replace(",", "").ToUpper());
-                                var sha1Hash = PtUtils.XxHash3FoerUTF8String(acceptedRevisionElement.Value.Replace(" ", "").Replace(" ", "").Replace(" ", "").Replace("\n", "").Replace(".", "").Replace(",", "").ToUpper());
+                                var sha1Hash = PtUtils.XxHash3FoerUTF8String(acceptedRevisionElement.Value
+                                                      .Replace(" ", "")
+                                                      .Replace(" ", "")
+                                                      .Replace(" ", "")
+                                                      .Replace("\n", "")
+                                                      .Replace(".", "")
+                                                      .Replace(",", "")
+                                                      .ToUpper());
                                 return sha1Hash;
                             })
                             .OrderByDescending(g => g.Count())

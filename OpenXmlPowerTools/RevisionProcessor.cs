@@ -1387,8 +1387,8 @@ public class RevisionProcessor
                         {
                             if (i == 0 || i == gLen - 1)
                                 return g.Select(gc => FixUpDeletedOrInsertedFieldCodesTransform(gc.Ele));
-                            if (grouped[i-1].Key == 2 &&
-                                grouped[i+1].Key == 2)
+                            if (grouped[i - 1].Key == 2 &&
+                                grouped[i + 1].Key == 2)
                             {
                                 return new XElement(W.del,
                                     g.Select(gc => TransformInstrTextToDelInstrText(gc.Ele)));
@@ -1490,7 +1490,7 @@ public class RevisionProcessor
 
                     if (gridSpan == null)
                         gridSpan = 1;
-                    
+
                     var z = Math.Min(gridLines.Length - 1, lastUsed + (int)gridSpan);
                     int w = gridLines.Where((g, i) => i > lastUsed && i <= z).Sum();
                     tcW.Value = w.ToString();
@@ -2109,7 +2109,8 @@ public class RevisionProcessor
                                 state = 1;
                                 currentKey += 1;
                                 deletedParagraphGroupingInfo.Add(
-                                    new GroupingInfo() {
+                                    new GroupingInfo()
+                                    {
                                         GroupingType = GroupingType.DeletedRange,
                                         GroupingKey = currentKey,
                                     });
@@ -2415,7 +2416,7 @@ public class RevisionProcessor
         EmptyElement
     }
 
-    private class Tag
+    private sealed class Tag
     {
         public XElement Element;
         public TagTypeEnum TagType;
@@ -2472,12 +2473,10 @@ public class RevisionProcessor
             if (tag.Element.Name == W.customXmlDelRangeEnd)
             {
                 string id = tag.Element.Attribute(W.id).Value;
-                if (potentialDeletedElements.ContainsKey(id))
+                if (potentialDeletedElements.TryGetValue(id, out PotentialInRangeElements value))
                 {
-                    startElementTagsInDeleteRange.AddRange(
-                        potentialDeletedElements[id].PotentialStartElementTagsInRange);
-                    endElementTagsInDeleteRange.AddRange(
-                        potentialDeletedElements[id].PotentialEndElementTagsInRange);
+                    startElementTagsInDeleteRange.AddRange(value.PotentialStartElementTagsInRange);
+                    endElementTagsInDeleteRange.AddRange(value.PotentialEndElementTagsInRange);
                     potentialDeletedElements.Remove(id);
                 }
                 continue;
@@ -2571,8 +2570,8 @@ public class RevisionProcessor
         var elementsToDeleteBecauseMovedFrom = startElementTagsInMoveFromRange
             .Intersect(endElementTagsInMoveFromRange)
             .ToArray();
-        if (contentControlElementsToCollapse.Length > 0 ||
-            elementsToDeleteBecauseMovedFrom.Length > 0)
+
+        if (contentControlElementsToCollapse.Length > 0 || elementsToDeleteBecauseMovedFrom.Length > 0)
         {
             var newDoc = AcceptDeletedAndMovedFromContentControlsTransform(documentRootElement,
                 contentControlElementsToCollapse, elementsToDeleteBecauseMovedFrom);
@@ -2793,13 +2792,9 @@ public class RevisionProcessor
 
     public static bool HasTrackedRevisions(WmlDocument document)
     {
-        using (OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(document))
-        {
-            using (WordprocessingDocument wdoc = streamDoc.GetWordprocessingDocument())
-            {
-                return RevisionAccepter.HasTrackedRevisions(wdoc);
-            }
-        }
+        using OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(document);
+        using WordprocessingDocument wdoc = streamDoc.GetWordprocessingDocument();
+        return RevisionAccepter.HasTrackedRevisions(wdoc);
     }
 
     public static bool HasTrackedRevisions(WordprocessingDocument doc)
