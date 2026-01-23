@@ -51,13 +51,13 @@ public enum ChartDataType
 
 public class ChartData
 {
-    public string[] SeriesNames;
+    public string[] SeriesNames =[];
 
     public ChartDataType CategoryDataType;
     public int CategoryFormatCode;
-    public string[] CategoryNames;
+    public string[] CategoryNames =[];
 
-    public double[][] Values;
+    public double[][] Values =[];
 }
 
 public class ChartUpdater
@@ -65,12 +65,13 @@ public class ChartUpdater
     public static bool UpdateChart(WordprocessingDocument wDoc, string contentControlTag, ChartData chartData)
     {
         var mainDocumentPart = wDoc.MainDocumentPart;
+        ArgumentNullException.ThrowIfNull(mainDocumentPart);
         var mdXDoc = mainDocumentPart.GetXDocument();
         var cc = mdXDoc.Descendants(W.sdt)
             .FirstOrDefault(sdt => (string)sdt.Elements(W.sdtPr).Elements(W.tag).Attributes(W.val).FirstOrDefault() == contentControlTag);
         if (cc != null)
         {
-            var chartRid = (string)cc.Descendants(C.chart).Attributes(R.id).FirstOrDefault();
+            var chartRid = (string?)cc.Descendants(C.chart).Attributes(R.id).FirstOrDefault();
             if (chartRid != null)
             {
                 ChartPart chartPart = (ChartPart)mainDocumentPart.GetPartById(chartRid);
@@ -97,7 +98,7 @@ public class ChartUpdater
         UpdateSeries(chartPart, chartData);
     }
 
-    private static Dictionary<int, string> FormatCodes = new Dictionary<int, string>()
+    private static readonly Dictionary<int, string> _formatCodes = new()
     {
         { 0, "general" },
         { 1, "0" },
@@ -182,7 +183,7 @@ public class ChartUpdater
                             new XElement(C.numRef,
                                 newFormula,
                                 new XElement(C.numCache,
-                                    new XElement(C.formatCode, FormatCodes[chartData.CategoryFormatCode]),
+                                    new XElement(C.formatCode, _formatCodes[chartData.CategoryFormatCode]),
                                     new XElement(C.ptCount, new XAttribute("val", chartData.CategoryNames.Length)),
                                     chartData.CategoryNames.Select((string cn, int ci) =>
                                     {

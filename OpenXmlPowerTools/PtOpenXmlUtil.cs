@@ -26,21 +26,19 @@ public static class PtOpenXmlExtensions
     {
         if (part == null) throw new ArgumentNullException("part");
 
-        XDocument partXDocument = part.Annotation<XDocument>();
+        XDocument? partXDocument = part.Annotation<XDocument>();
         if (partXDocument != null) return partXDocument;
 
-        using (Stream partStream = part.GetStream())
+        using Stream partStream = part.GetStream();
+        if (partStream.Length == 0)
         {
-            if (partStream.Length == 0)
-            {
-                partXDocument = new XDocument();
-                partXDocument.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
-            }
-            else
-            {
-                using (XmlReader partXmlReader = XmlReader.Create(partStream))
-                    partXDocument = XDocument.Load(partXmlReader);
-            }
+            partXDocument = new XDocument();
+            partXDocument.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
+        }
+        else
+        {
+            using XmlReader partXmlReader = XmlReader.Create(partStream);
+            partXDocument = XDocument.Load(partXmlReader);
         }
 
         part.AddAnnotation(partXDocument);

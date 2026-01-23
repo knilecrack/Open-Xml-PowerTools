@@ -4,6 +4,7 @@
     <LangVersion>preview</LangVersion>
     <NoWarn>CA1416;CA2022;CA2200</NoWarn>
     <Version>1.0.2</Version>
+	  <Nullable>enable</Nullable>
     <Authors>OpenXmlDev</Authors>
     <Description>Open XML PowerTools is a set of productivity tools for creating and manipulating Open XML documents.</Description>
     <RepositoryUrl>https://github.com/OpenXmlDev/Open-Xml-PowerTools</RepositoryUrl>
