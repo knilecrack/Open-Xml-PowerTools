@@ -912,9 +912,13 @@ public static partial class WmlComparer
                                 var ciz = ci;
 
                                 var acceptedRevisionElement = RevisionProcessor.AcceptRevisionsForElement(ci.RevisionElement);
-                                var text = RemoveWhiteSpace.Replace(acceptedRevisionElement.Value, "");
+                                var text = acceptedRevisionElement.Value
+                                    .Replace(" ", "")
+                                    .Replace(" ", "")
+                                    .Replace(" ", "")
+                                    .Replace("\n", "");
                                 var sha1Hash = PtUtils.SHA1HashStringForUTF8String(text);
-                                return string.Concat(ci.InsertBefore.ToString(), sha1Hash);
+                                return ci.InsertBefore.ToString() + sha1Hash;
                             })
                             .OrderByDescending(g => g.Count())
                             .ToList();

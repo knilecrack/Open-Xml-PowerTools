@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
 
@@ -305,33 +306,41 @@ public static class DocumentBuilder
 
     private static WmlDocument AdjustSectionBreak(WmlDocument doc)
     {
-        using (OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(doc))
+        using OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(doc);
+        using (WordprocessingDocument document = streamDoc.GetWordprocessingDocument())
         {
-            using (WordprocessingDocument document = streamDoc.GetWordprocessingDocument())
+
+            XDocument? mainXDoc = document.MainDocumentPart?.GetXDocument();
+
+            if (mainXDoc is null)
             {
-                XDocument mainXDoc = document.MainDocumentPart.GetXDocument();
-                XElement lastElement = mainXDoc.Root
-                    .Element(W.body)
-                    .Elements()
-                    .LastOrDefault();
-                if (lastElement != null)
+                throw new NotSupportedException("Bad docx file");
+            }
+
+            XElement? lastElement = mainXDoc.Root?
+                .Element(W.body)?
+                .Elements()
+                .LastOrDefault();
+
+            if (lastElement != null)
+            {
+                if (lastElement.Name != W.sectPr &&
+                    lastElement.Descendants(W.sectPr).Any())
                 {
-                    if (lastElement.Name != W.sectPr &&
-                        lastElement.Descendants(W.sectPr).Any())
+                    // Move the LAST w:sectPr to the body to preserve correct section structure
+                    // when multiple sectPr elements exist (e.g., in tables with multiple sections)
+                    mainXDoc.Root?.Element(W.body)?.Add(lastElement.Descendants(W.sectPr).Last());
+                    lastElement.Descendants(W.sectPr).Remove();
+                    if (!lastElement.Elements().Any(e => e.Name != W.pPr))
                     {
-                        // Move the LAST w:sectPr to the body to preserve correct section structure
-                        // when multiple sectPr elements exist (e.g., in tables with multiple sections)
-                        mainXDoc.Root.Element(W.body).Add(lastElement.Descendants(W.sectPr).Last());
-                        lastElement.Descendants(W.sectPr).Remove();
-                        if (!lastElement.Elements()
-                            .Any(e => e.Name != W.pPr))
-                            lastElement.Remove();
-                        document.MainDocumentPart.PutXDocument();
+                        lastElement.Remove();
                     }
+
+                    document.MainDocumentPart!.PutXDocument();
                 }
             }
-            return streamDoc.GetModifiedWmlDocument();
         }
+        return streamDoc.GetModifiedWmlDocument();
     }
 
     private static void BuildDocument(List<Source> sources, WordprocessingDocument output, DocumentBuilderSettings settings)
@@ -341,11 +350,15 @@ public static class DocumentBuilder
         if (RelationshipMarkup == null)
             InitRelationshipMarkup();
 
+        //do guard checks
+
         // This list is used to eliminate duplicate images
         List<ImageData> images = new List<ImageData>();
-        XDocument mainPart = output.MainDocumentPart.GetXDocument();
-        mainPart.Declaration.Standalone = Yes;
-        mainPart.Declaration.Encoding = Utf8;
+        XDocument? mainPart = output.MainDocumentPart?.GetXDocument();
+        if (mainPart is null) return;
+        mainPart.Declaration?.Standalone = Yes;
+        mainPart.Declaration?.Encoding = Utf8;
+
         mainPart.Root.ReplaceWith(
             new XElement(W.document, NamespaceAttributes,
                 new XElement(W.body)));

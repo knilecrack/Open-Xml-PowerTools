@@ -52,23 +52,59 @@ using System.Linq;
 using System.Xml.Linq;
 using System.IO.Packaging;
 using DocumentFormat.OpenXml.Packaging;
+using System.Threading.Tasks;
+using System.Collections.Frozen;
 
 namespace OpenXmlPowerTools;
 
 public class PowerToolsDocumentException : Exception
 {
     public PowerToolsDocumentException(string message) : base(message) { }
+
+    public PowerToolsDocumentException() : base()
+    {
+    }
+
+    public PowerToolsDocumentException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
 }
 public class PowerToolsInvalidDataException : Exception
 {
     public PowerToolsInvalidDataException(string message) : base(message) { }
+
+    public PowerToolsInvalidDataException() : base()
+    {
+    }
+
+    public PowerToolsInvalidDataException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
 }
 
 public class OpenXmlPowerToolsDocument
 {
-    public string FileName { get; set; }
-    public byte[] DocumentByteArray { get; set; }
+    private string? _fileName;
 
+    public string FileName
+    {
+        get => _fileName ?? string.Empty;
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                //random filename with docx extension
+                _fileName = Path.ChangeExtension(Path.GetRandomFileName(), ".docx");
+            }
+            else
+            {
+                _fileName = value;
+            }
+        }
+    }
+
+    public byte[] DocumentByteArray { get; set; } = [];
+    public Memory<byte>? Document { get; set; }
     public static OpenXmlPowerToolsDocument FromFileName(string fileName)
     {
         byte[] bytes = File.ReadAllBytes(fileName);
@@ -96,6 +132,34 @@ public class OpenXmlPowerToolsDocument
         throw new PowerToolsDocumentException("Not an Open XML document.");
     }
 
+    public static async Task<OpenXmlPowerToolsDocument> FromFileNameAsync(string fileName)
+    {
+        byte[] bytes = await File.ReadAllBytesAsync(fileName);
+        Type type;
+        try
+        {
+            type = GetDocumentType(bytes);
+        }
+        catch (FileFormatException)
+        {
+            throw new PowerToolsDocumentException("Not an Open XML document.");
+        }
+        if (type == typeof(WordprocessingDocument))
+            return new WmlDocument(fileName, bytes);
+        if (type == typeof(SpreadsheetDocument))
+            return new SmlDocument(fileName, bytes);
+        if (type == typeof(PresentationDocument))
+            return new PmlDocument(fileName, bytes);
+        if (type == typeof(Package))
+        {
+            OpenXmlPowerToolsDocument pkg = new OpenXmlPowerToolsDocument(bytes);
+            pkg.FileName = fileName;
+            return pkg;
+        }
+        throw new PowerToolsDocumentException("Not an Open XML document.");
+
+    }
+
     public static OpenXmlPowerToolsDocument FromDocument(OpenXmlPowerToolsDocument doc)
     {
         Type type = doc.GetDocumentType();
@@ -105,18 +169,21 @@ public class OpenXmlPowerToolsDocument
             return new SmlDocument(doc);
         if (type == typeof(PresentationDocument))
             return new PmlDocument(doc);
-        return null;    // This should not be possible from a valid OpenXmlPowerToolsDocument object
+
+        // This should not be possible from a valid OpenXmlPowerToolsDocument object
+        throw new NotSupportedException("This should not be possible from a valid OpenXmlPowerToolsDocument object");
     }
 
-    public OpenXmlPowerToolsDocument(OpenXmlPowerToolsDocument original)
+    public OpenXmlPowerToolsDocument(OpenXmlPowerToolsDocument? original)
     {
-        DocumentByteArray = new byte[original.DocumentByteArray.Length];
-        Array.Copy(original.DocumentByteArray, DocumentByteArray, original.DocumentByteArray.Length);
+        ArgumentNullException.ThrowIfNull(original);
+        DocumentByteArray = original.DocumentByteArray.ToArray();
         FileName = original.FileName;
     }
 
     public OpenXmlPowerToolsDocument(OpenXmlPowerToolsDocument original, bool convertToTransitional)
     {
+        ArgumentNullException.ThrowIfNull(original.FileName);
         if (convertToTransitional)
         {
             ConvertToTransitional(original.FileName, original.DocumentByteArray);
@@ -131,6 +198,7 @@ public class OpenXmlPowerToolsDocument
 
     public OpenXmlPowerToolsDocument(string fileName)
     {
+        ArgumentNullException.ThrowIfNull(fileName);
         this.FileName = fileName;
         DocumentByteArray = File.ReadAllBytes(fileName);
     }
@@ -230,8 +298,9 @@ public class OpenXmlPowerToolsDocument
 
     public OpenXmlPowerToolsDocument(byte[] byteArray)
     {
-        DocumentByteArray = new byte[byteArray.Length];
-        Array.Copy(byteArray, DocumentByteArray, byteArray.Length);
+        //DocumentByteArray = new byte[byteArray.Length];
+        //Array.Copy(byteArray, DocumentByteArray, byteArray.Length);
+        DocumentByteArray = byteArray.ToArray();
         this.FileName = null;
     }
 
@@ -281,6 +350,11 @@ public class OpenXmlPowerToolsDocument
     public void SaveAs(string fileName)
     {
         File.WriteAllBytes(fileName, DocumentByteArray);
+    }
+
+    public async Task SaveAsAsync(string fileName)
+    {
+        await File.WriteAllBytesAsync(fileName, DocumentByteArray);
     }
 
     public void Save()
@@ -523,243 +597,382 @@ public partial class PmlDocument : OpenXmlPowerToolsDocument
 
 public class OpenXmlMemoryStreamDocument : IDisposable
 {
-    private OpenXmlPowerToolsDocument Document;
-    private MemoryStream DocMemoryStream;
-    private Package DocPackage;
+    private static readonly FrozenSet<string> _wordprocessingContentTypes = FrozenSet.ToFrozenSet<string>(
+    [
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+        "application/vnd.ms-word.document.macroEnabled.main+xml",
+        "application/vnd.ms-word.template.macroEnabledTemplate.main+xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml"
+    ]);
+
+    private static readonly FrozenSet<string> _spreadsheetContentTypes = FrozenSet.ToFrozenSet<string>(
+    [
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
+        "application/vnd.ms-excel.sheet.macroEnabled.main+xml",
+        "application/vnd.ms-excel.template.macroEnabled.main+xml",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml"
+    ]);
+
+    private static readonly FrozenSet<string> _presentationContentTypes = FrozenSet.ToFrozenSet<string>(
+    [
+        "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+        "application/vnd.ms-powerpoint.template.macroEnabled.main+xml",
+        "application/vnd.ms-powerpoint.addin.macroEnabled.main+xml",
+        "application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml",
+        "application/vnd.ms-powerpoint.presentation.macroEnabled.main+xml"
+    ]);
+
+    private static readonly string[] _officeDocumentRelationshipTypes =
+    [
+        "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
+        "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument"
+    ];
+
+    private readonly OpenXmlPowerToolsDocument? _document;
+    private MemoryStream? _docMemoryStream;
+    private Package? _docPackage;
+    private bool _disposed;
 
     public OpenXmlMemoryStreamDocument(OpenXmlPowerToolsDocument doc)
     {
-        Document = doc;
-        DocMemoryStream = new MemoryStream();
-        DocMemoryStream.Write(doc.DocumentByteArray, 0, doc.DocumentByteArray.Length);
-        try
-        {
-            DocPackage = Package.Open(DocMemoryStream, FileMode.Open);
-        }
-        catch (Exception e)
-        {
-            throw new PowerToolsDocumentException(e.Message);
-        }
+        ArgumentNullException.ThrowIfNull(doc);
+
+        _document = doc;
+        _docMemoryStream = new MemoryStream(doc.DocumentByteArray);
+        _docPackage = OpenPackageSafe(_docMemoryStream);
     }
 
     internal OpenXmlMemoryStreamDocument(MemoryStream stream)
     {
-        DocMemoryStream = stream;
-        try
-        {
-            DocPackage = Package.Open(DocMemoryStream, FileMode.Open);
-        }
-        catch (Exception e)
-        {
-            throw new PowerToolsDocumentException(e.Message);
-        }
+        ArgumentNullException.ThrowIfNull(stream);
+
+        _docMemoryStream = stream;
+        _docPackage = OpenPackageSafe(_docMemoryStream);
     }
 
     public static OpenXmlMemoryStreamDocument CreateWordprocessingDocument()
     {
-        MemoryStream stream = new MemoryStream();
-        using (WordprocessingDocument doc = WordprocessingDocument.Create(stream, DocumentFormat.OpenXml.WordprocessingDocumentType.Document))
-        {
-            doc.AddMainDocumentPart();
-            doc.MainDocumentPart.PutXDocument(new XDocument(
-                new XElement(W.document,
-                    new XAttribute(XNamespace.Xmlns + "w", W.w),
-                    new XAttribute(XNamespace.Xmlns + "r", R.r),
-                    new XElement(W.body))));
-            doc.Dispose();
-            return new OpenXmlMemoryStreamDocument(stream);
-        }
+        var stream = new MemoryStream();
+        using var doc = WordprocessingDocument.Create(stream, DocumentFormat.OpenXml.WordprocessingDocumentType.Document);
+
+        doc.AddMainDocumentPart();
+        doc.MainDocumentPart!.PutXDocument(new XDocument(
+            new XElement(W.document,
+                new XAttribute(XNamespace.Xmlns + "w", W.w),
+                new XAttribute(XNamespace.Xmlns + "r", R.r),
+                new XElement(W.body))));
+
+        return new OpenXmlMemoryStreamDocument(stream);
     }
+
     public static OpenXmlMemoryStreamDocument CreateSpreadsheetDocument()
     {
-        MemoryStream stream = new MemoryStream();
-        using (SpreadsheetDocument doc = SpreadsheetDocument.Create(stream, DocumentFormat.OpenXml.SpreadsheetDocumentType.Workbook))
-        {
-            doc.AddWorkbookPart();
-            XNamespace ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
-            XNamespace relationshipsns = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
-            doc.WorkbookPart.PutXDocument(new XDocument(
-                new XElement(ns + "workbook",
-                    new XAttribute("xmlns", ns),
-                    new XAttribute(XNamespace.Xmlns + "r", relationshipsns),
-                    new XElement(ns + "sheets"))));
-            doc.Dispose();
-            return new OpenXmlMemoryStreamDocument(stream);
-        }
+        var stream = new MemoryStream();
+        using var doc = SpreadsheetDocument.Create(stream, DocumentFormat.OpenXml.SpreadsheetDocumentType.Workbook);
+
+        doc.AddWorkbookPart();
+        XNamespace ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+        XNamespace relationshipsNs = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+
+        doc.WorkbookPart!.PutXDocument(new XDocument(
+            new XElement(ns + "workbook",
+                new XAttribute("xmlns", ns),
+                new XAttribute(XNamespace.Xmlns + "r", relationshipsNs),
+                new XElement(ns + "sheets"))));
+
+        return new OpenXmlMemoryStreamDocument(stream);
     }
+
     public static OpenXmlMemoryStreamDocument CreatePresentationDocument()
     {
-        MemoryStream stream = new MemoryStream();
-        using (PresentationDocument doc = PresentationDocument.Create(stream, DocumentFormat.OpenXml.PresentationDocumentType.Presentation))
-        {
-            doc.AddPresentationPart();
-            XNamespace ns = "http://schemas.openxmlformats.org/presentationml/2006/main";
-            XNamespace relationshipsns = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
-            XNamespace drawingns = "http://schemas.openxmlformats.org/drawingml/2006/main";
-            doc.PresentationPart.PutXDocument(new XDocument(
-                new XElement(ns + "presentation",
-                    new XAttribute(XNamespace.Xmlns + "a", drawingns),
-                    new XAttribute(XNamespace.Xmlns + "r", relationshipsns),
-                    new XAttribute(XNamespace.Xmlns + "p", ns),
-                    new XElement(ns + "sldMasterIdLst"),
-                    new XElement(ns + "sldIdLst"),
-                    new XElement(ns + "notesSz", new XAttribute("cx", "6858000"), new XAttribute("cy", "9144000")))));
-            doc.Dispose();
-            return new OpenXmlMemoryStreamDocument(stream);
-        }
+        var stream = new MemoryStream();
+        using var doc = PresentationDocument.Create(stream, DocumentFormat.OpenXml.PresentationDocumentType.Presentation);
+
+        doc.AddPresentationPart();
+        XNamespace ns = "http://schemas.openxmlformats.org/presentationml/2006/main";
+        XNamespace relationshipsNs = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+        XNamespace drawingNs = "http://schemas.openxmlformats.org/drawingml/2006/main";
+
+        doc.PresentationPart!.PutXDocument(new XDocument(
+            new XElement(ns + "presentation",
+                new XAttribute(XNamespace.Xmlns + "a", drawingNs),
+                new XAttribute(XNamespace.Xmlns + "r", relationshipsNs),
+                new XAttribute(XNamespace.Xmlns + "p", ns),
+                new XElement(ns + "sldMasterIdLst"),
+                new XElement(ns + "sldIdLst"),
+                new XElement(ns + "notesSz",
+                    new XAttribute("cx", "6858000"),
+                    new XAttribute("cy", "9144000")))));
+
+        return new OpenXmlMemoryStreamDocument(stream);
     }
 
     public static OpenXmlMemoryStreamDocument CreatePackage()
     {
-        MemoryStream stream = new MemoryStream();
-        Package package = Package.Open(stream, FileMode.Create);
-        package.Close();
+        var stream = new MemoryStream();
+        using var package = Package.Open(stream, FileMode.Create);
         return new OpenXmlMemoryStreamDocument(stream);
     }
 
     public Package GetPackage()
     {
-        return DocPackage;
+        ThrowIfDisposed();
+        return _docPackage!;
     }
 
-    public WordprocessingDocument GetWordprocessingDocument()
-    {
-        try
-        {
-            if (GetDocumentType() != typeof(WordprocessingDocument))
-                throw new PowerToolsDocumentException("Not a Wordprocessing document.");
-            return WordprocessingDocument.Open(DocMemoryStream, true);
-        }
-        catch (Exception e)
-        {
-            throw new PowerToolsDocumentException(e.Message);
-        }
-    }
-    public SpreadsheetDocument GetSpreadsheetDocument()
-    {
-        try
-        {
-            if (GetDocumentType() != typeof(SpreadsheetDocument))
-                throw new PowerToolsDocumentException("Not a Spreadsheet document.");
-            return SpreadsheetDocument.Open(DocMemoryStream, true);
-        }
-        catch (Exception e)
-        {
-            throw new PowerToolsDocumentException(e.Message);
-        }
-    }
+    public WordprocessingDocument GetWordprocessingDocument() =>
+        GetTypedDocument<WordprocessingDocument>(
+            () => WordprocessingDocument.Open(_docMemoryStream!, true),
+            "Wordprocessing");
 
-    public PresentationDocument GetPresentationDocument()
+    public SpreadsheetDocument GetSpreadsheetDocument() =>
+        GetTypedDocument<SpreadsheetDocument>(
+            () => SpreadsheetDocument.Open(_docMemoryStream!, true),
+            "Spreadsheet");
+
+    public PresentationDocument GetPresentationDocument() =>
+        GetTypedDocument<PresentationDocument>(
+            () => PresentationDocument.Open(_docMemoryStream!, true),
+            "Presentation");
+
+    private TDocument GetTypedDocument<TDocument>(Func<TDocument> opener, string documentTypeName)
+        where TDocument : OpenXmlPackage
     {
+        ThrowIfDisposed();
+
+        if (GetDocumentType() != typeof(TDocument))
+            throw new PowerToolsDocumentException($"Not a {documentTypeName} document.");
+
         try
         {
-            if (GetDocumentType() != typeof(PresentationDocument))
-                throw new PowerToolsDocumentException("Not a Presentation document.");
-            return PresentationDocument.Open(DocMemoryStream, true);
+            return opener();
         }
         catch (Exception e)
         {
-            throw new PowerToolsDocumentException(e.Message);
+            throw new PowerToolsDocumentException($"Failed to open {documentTypeName} document.", e);
         }
     }
 
     public Type GetDocumentType()
     {
-        PackageRelationship relationship = DocPackage.GetRelationshipsByType("http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument").FirstOrDefault();
-        if (relationship == null)
-            relationship = DocPackage.GetRelationshipsByType("http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument").FirstOrDefault();
-        if (relationship == null)
-            throw new PowerToolsDocumentException("Not an Open XML Document.");
-        PackagePart part = DocPackage.GetPart(PackUriHelper.ResolvePartUri(relationship.SourceUri, relationship.TargetUri));
-        switch (part.ContentType)
+        ThrowIfDisposed();
+
+        var relationship = _officeDocumentRelationshipTypes
+            .Select(type => _docPackage!.GetRelationshipsByType(type).FirstOrDefault())
+            .FirstOrDefault(r => r is not null)
+            ?? throw new PowerToolsDocumentException("Not an Open XML Document.");
+
+        var partUri = PackUriHelper.ResolvePartUri(relationship.SourceUri, relationship.TargetUri);
+        var part = _docPackage!.GetPart(partUri);
+
+        return part.ContentType switch
         {
-            case "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml":
-            case "application/vnd.ms-word.document.macroEnabled.main+xml":
-            case "application/vnd.ms-word.template.macroEnabledTemplate.main+xml":
-            case "application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml":
-                return typeof(WordprocessingDocument);
-            case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml":
-            case "application/vnd.ms-excel.sheet.macroEnabled.main+xml":
-            case "application/vnd.ms-excel.template.macroEnabled.main+xml":
-            case "application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml":
-                return typeof(SpreadsheetDocument);
-            case "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml":
-            case "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml":
-            case "application/vnd.ms-powerpoint.template.macroEnabled.main+xml":
-            case "application/vnd.ms-powerpoint.addin.macroEnabled.main+xml":
-            case "application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml":
-            case "application/vnd.ms-powerpoint.presentation.macroEnabled.main+xml":
-                return typeof(PresentationDocument);
-        }
-        return null;
+            var ct when _wordprocessingContentTypes.Contains(ct) => typeof(WordprocessingDocument),
+            var ct when _spreadsheetContentTypes.Contains(ct) => typeof(SpreadsheetDocument),
+            var ct when _presentationContentTypes.Contains(ct) => typeof(PresentationDocument),
+            var ct => throw new PowerToolsDocumentException($"Unknown content type: {ct}")
+        };
     }
 
     public OpenXmlPowerToolsDocument GetModifiedDocument()
     {
-        // DocPackage.Dispose();
-        // DocPackage = null;
-        return new OpenXmlPowerToolsDocument((Document == null) ? null : Document.FileName, DocMemoryStream);
+        ThrowIfDisposed();
+        FlushPackage();
+        return new OpenXmlPowerToolsDocument(_document?.FileName, _docMemoryStream!);
     }
 
     public WmlDocument GetModifiedWmlDocument()
     {
-        // DocPackage.Dispose();
-        // DocPackage = null;
-        return new WmlDocument((Document == null) ? null : Document.FileName, DocMemoryStream);
+        ThrowIfDisposed();
+        FlushPackage();
+        return new WmlDocument(_document?.FileName, _docMemoryStream!);
     }
 
     public SmlDocument GetModifiedSmlDocument()
     {
-        // DocPackage.Dispose();
-        // DocPackage = null;
-        return new SmlDocument((Document == null) ? null : Document.FileName, DocMemoryStream);
+        ThrowIfDisposed();
+        FlushPackage();
+        return new SmlDocument(_document?.FileName, _docMemoryStream!);
     }
 
     public PmlDocument GetModifiedPmlDocument()
     {
-        // DocPackage.Dispose();
-        // DocPackage = null;
-        return new PmlDocument((Document == null) ? null : Document.FileName, DocMemoryStream);
+        ThrowIfDisposed();
+        FlushPackage();
+        return new PmlDocument(_document?.FileName, _docMemoryStream!);
     }
 
-    public void Close()
+    private void FlushPackage()
     {
-        Dispose(true);
+        _docPackage?.Flush();
+        _docMemoryStream!.Position = 0;
     }
+
+    public void Close() => Dispose();
 
     public void Dispose()
     {
         Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
-    ~OpenXmlMemoryStreamDocument()
-    {
-        Dispose(false);
-    }
+    ~OpenXmlMemoryStreamDocument() => Dispose(false);
 
     private void Dispose(bool disposing)
     {
+        if (_disposed) return;
+
         if (disposing)
         {
-            // In .NET 10, closing the Package after modifications can cause
-            // EndOfStreamException errors in ZipArchive. The Package is managed
-            // by the OpenXmlDocument and will be disposed when needed.
-            // if (DocPackage != null)
-            // {
-            //     DocPackage.Close();
-            // }
-            if (DocMemoryStream != null)
+            // Note: In .NET 10, there may be ZipArchive issues when closing
+            // Package after modifications. Consider if this needs special handling.
+            try
             {
-                DocMemoryStream.Dispose();
+                _docPackage?.Close();
             }
+            catch (EndOfStreamException)
+            {
+                // Known issue in .NET 10 with ZipArchive
+            }
+
+            _docMemoryStream?.Dispose();
         }
-        if (DocPackage == null && DocMemoryStream == null)
+
+        _docPackage = null;
+        _docMemoryStream = null;
+        _disposed = true;
+    }
+
+    private void ThrowIfDisposed()
+    {
+        ObjectDisposedException.ThrowIf(_disposed, this);
+    }
+
+    private static Package OpenPackageSafe(MemoryStream stream)
+    {
+        try
         {
-            return;
+            return Package.Open(stream, FileMode.Open);
         }
-        DocPackage = null;
-        DocMemoryStream = null;
-        GC.SuppressFinalize(this);
+        catch (Exception e)
+        {
+            throw new PowerToolsDocumentException("Failed to open document package.", e);
+        }
     }
 }
 
+/*
+public class OpenXmlPowerToolsDocument : IDisposable
+{
+    public string? FileName { get; set; }
+    
+    // Make this private - force callers to use Memory/Span
+    private byte[]? DocumentByteArray { get; set; }
+    
+    // New: Expose as Memory<byte> for zero-copy access
+    public Memory<byte> DocumentMemory => DocumentByteArray?.AsMemory(0, DocumentByteArray.Length) ?? Memory<byte>.Empty;
+
+    // Threshold for LOH avoidance
+    private const int PooledThreshold = 85_000;
+    private bool _isPooled;
+
+    // Factory method for loop processing - eliminates double-copy
+    public static OpenXmlPowerToolsDocument FromFileForProcessing(string fileName)
+    {
+        var fileInfo = new FileInfo(fileName);
+        int fileSize = (int)fileInfo.Length;
+        
+        byte[] buffer;
+        bool isPooled = false;
+        
+        // Use pooling for large files to avoid LOH
+        if (fileSize >= PooledThreshold)
+        {
+            buffer = ArrayPool<byte>.Shared.Rent(fileSize);
+            isPooled = true;
+        }
+        else
+        {
+            buffer = new byte[fileSize];
+        }
+        
+        // Read directly into buffer (single copy only)
+        using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+        {
+            fs.ReadExactly(buffer, 0, fileSize);
+        }
+        
+        // Create instance and assign buffer directly
+        var doc = new OpenXmlPowerToolsDocument(buffer, isPooled)
+        {
+            FileName = fileName
+        };
+        
+        // Validate document type
+        if (doc.GetDocumentType() == null)
+        {
+            if (isPooled) ArrayPool<byte>.Shared.Return(buffer);
+            throw new PowerToolsDocumentException("Not an Open XML document.");
+        }
+        
+        return doc;
+    }
+
+    // Private constructor that accepts pooled arrays
+    private OpenXmlPowerToolsDocument(byte[] buffer, bool isPooled)
+    {
+        DocumentByteArray = buffer;
+        _isPooled = isPooled;
+    }
+
+    // Existing constructors - keep for backward compatibility
+    public OpenXmlPowerToolsDocument(OpenXmlPowerToolsDocument? original)
+    {
+        ArgumentNullException.ThrowIfNull(original);
+        DocumentByteArray = original.DocumentByteArray?.ToArray();
+        FileName = original.FileName;
+    }
+
+    public OpenXmlPowerToolsDocument(byte[] byteArray)
+    {
+        // For small arrays: copy is acceptable
+        // For large arrays: caller should use FromFileForProcessing
+        DocumentByteArray = byteArray.Length < PooledThreshold 
+            ? byteArray.ToArray() 
+            : RentAndCopy(byteArray);
+    }
+
+    private byte[] RentAndCopy(byte[] source)
+    {
+        var pooled = ArrayPool<byte>.Shared.Rent(source.Length);
+        Array.Copy(source, pooled, source.Length);
+        _isPooled = true;
+        return pooled;
+    }
+
+    // CRITICAL: Add disposal to return pooled arrays
+    public void Dispose()
+    {
+        if (_isPooled && DocumentByteArray != null)
+        {
+            ArrayPool<byte>.Shared.Return(DocumentByteArray);
+            DocumentByteArray = null;
+        }
+    }
+
+    // Keep all other methods unchanged...
+    public void SaveAs(string fileName)
+    {
+        File.WriteAllBytes(fileName, DocumentByteArray);
+    }
+
+    // Modify OpenXmlMemoryStreamDocument to use MemoryStream wrapper
+    public OpenXmlMemoryStreamDocument CreateStreamDocument()
+    {
+        // Wrap existing buffer in MemoryStream without copy
+        var stream = new MemoryStream(DocumentByteArray, 0, DocumentByteArray.Length, true, true);
+        return new OpenXmlMemoryStreamDocument(stream);
+    }
+}
+ */
