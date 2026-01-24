@@ -38,6 +38,10 @@ dotnet test --filter "Name=TestMethodName"
 - StyleCop analyzers are enabled via `Directory.Build.targets` and configured through `stylecop.json` and `rules.ruleset`
 - Target framework: .NET 10.0 (net10.0)
 - Suppressed warnings: CA1416, CA2022, CA2200
+- **Nullable reference types**: Enabled project-wide (`<Nullable>enable</Nullable>`)
+  - All reference types must be explicitly marked as nullable (`?`) if they can be null
+  - Use `#nullable disable` at file-level for legacy code with many nullable warnings (e.g., WmlComparer.cs has 900+ warnings)
+  - For new code, follow nullable best practices: mark nullable parameters/fields with `?`, use null checks, avoid null-forgiving operator (`!`) unless certain
 
 ## Code Architecture
 
@@ -178,10 +182,13 @@ namespace OpenXmlPowerTools
 
 - **DocumentFormat.OpenXml** (3.4.1) - The Microsoft Open XML SDK. This is the foundational library that PowerTools is built upon. All document manipulation ultimately uses SDK classes like `WordprocessingDocument`, `SpreadsheetDocument`, `PresentationDocument`, and the various element types.
 - **System.IO.Packaging** (10.0.2) - Low-level package manipulation (used by Open XML SDK)
+- **System.IO.Hashing** (10.0.2) - Hashing algorithms for content comparison
 - **System.Drawing.Common** (10.0.0) - Graphics/color operations (Windows-specific APIs)
 - **xunit** (2.9.2) - Testing framework
 
 Note: Some APIs (System.Drawing.Common) are Windows-specific, which is why CA1416 warnings are suppressed.
+
+**Package Info**: Custom build published as `FHPowerTools` package (version 1.0.2) - a fork of the original OpenXmlDev/Open-Xml-PowerTools.
 
 ## Important Implementation Details
 
@@ -197,3 +204,23 @@ Several modules use preprocessor directives:
 ### Localization
 List item text retrieval supports multiple languages via separate `GetListItemText_*.cs` files:
 - Default, French (fr_FR), Russian (ru_RU), Swedish (sv_SE), Turkish (tr_TR), Chinese (zh_CN)
+
+## Working with Nullable Reference Types
+
+The project has nullable reference types enabled. When fixing nullable warnings:
+
+1. **For files with many warnings** (like `WmlComparer.cs` with 900+ warnings): Add `#nullable disable` at the top of the file as a pragmatic solution for legacy code.
+
+2. **For new code or targeted fixes**:
+   - Change return types to nullable when methods can return null: `object` → `object?`
+   - Make parameters nullable if they accept null: `string param` → `string? param`
+   - Make fields/properties nullable: `XElement field` → `XElement? field`
+   - Add null checks before dereferencing: `element.Value` → `element?.Value` or add explicit `if (element != null)`
+   - Use null-forgiving operator (`!`) sparingly, only when you're certain the value is non-null but the compiler can't infer it
+
+3. **Common patterns**:
+   - `CS8603` (Possible null reference return): Make return type nullable
+   - `CS8600` (Converting null to non-nullable): Make target variable/parameter nullable
+   - `CS8625` (Cannot convert null literal): Make the parameter/field type nullable
+   - `CS8602` (Dereference of possibly null): Add null check or use `?.` operator
+   - `CS8618` (Non-nullable field not initialized): Add `= null!;` or make nullable or initialize in constructor
