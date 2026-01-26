@@ -68,7 +68,7 @@ public class ChartUpdater
         ArgumentNullException.ThrowIfNull(mainDocumentPart);
         var mdXDoc = mainDocumentPart.GetXDocument();
         var cc = mdXDoc.Descendants(W.sdt)
-            .FirstOrDefault(sdt => (string)sdt.Elements(W.sdtPr).Elements(W.tag).Attributes(W.val).FirstOrDefault() == contentControlTag);
+            .FirstOrDefault(sdt => (string?)sdt.Elements(W.sdtPr).Elements(W.tag).Attributes(W.val).FirstOrDefault() == contentControlTag);
         if (cc != null)
         {
             var chartRid = (string?)cc.Descendants(C.chart).Attributes(R.id).FirstOrDefault();

@@ -19,18 +19,18 @@ namespace OpenXmlPowerTools;
 
 public class HtmlToWmlConverterSettings
 {
-    public string MajorLatinFont;
-    public string MinorLatinFont;
+    public string MajorLatinFont = null!;
+    public string MinorLatinFont = null!;
     public double DefaultFontSize;
-    public XElement DefaultSpacingElement;
-    public XElement DefaultSpacingElementForParagraphsInTables;
-    public XElement SectPr;
-    public string DefaultBlockContentMargin;
-    public string BaseUriForImages;
+    public XElement DefaultSpacingElement = null!;
+    public XElement DefaultSpacingElementForParagraphsInTables = null!;
+    public XElement SectPr = null!;
+    public string DefaultBlockContentMargin = null!;
+    public string BaseUriForImages = null!;
 
-    public Twip PageWidthTwips { get { return (long)SectPr.Elements(W.pgSz).Attributes(W._w).FirstOrDefault(); } }
-    public Twip PageMarginLeftTwips { get { return (long)SectPr.Elements(W.pgMar).Attributes(W.left).FirstOrDefault(); } }
-    public Twip PageMarginRightTwips { get { return (long)SectPr.Elements(W.pgMar).Attributes(W.right).FirstOrDefault(); } }
+    public Twip PageWidthTwips { get { return (long)SectPr.Elements(W.pgSz).Attributes(W._w).FirstOrDefault()!; } }
+    public Twip PageMarginLeftTwips { get { return (long)SectPr.Elements(W.pgMar).Attributes(W.left).FirstOrDefault()!; } }
+    public Twip PageMarginRightTwips { get { return (long)SectPr.Elements(W.pgMar).Attributes(W.right).FirstOrDefault()!; } }
     public Emu PageWidthEmus { get { return Emu.TwipsToEmus(PageWidthTwips); } }
     public Emu PageMarginLeftEmus { get { return Emu.TwipsToEmus(PageMarginLeftTwips); } }
     public Emu PageMarginRightEmus { get { return Emu.TwipsToEmus(PageMarginRightTwips); } }
@@ -45,7 +45,7 @@ public class HtmlToWmlConverter
         XElement xhtml,
         HtmlToWmlConverterSettings settings)
     {
-        return HtmlToWmlConverterCore.ConvertHtmlToWml(defaultCss, authorCss, userCss, xhtml, settings, null, null);
+        return HtmlToWmlConverterCore.ConvertHtmlToWml(defaultCss, authorCss, userCss, xhtml, settings, null!, null!);
     }
 
     public static WmlDocument ConvertHtmlToWml(

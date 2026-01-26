@@ -110,8 +110,8 @@ public static class OpenXmlRegex
         return ReplaceInternal(content, regex, replacement, doReplacement, trackRevisions, author, true);
     }
 
-    private static int ReplaceInternal(IEnumerable<XElement> content, Regex regex, string replacement,
-        Func<XElement, Match, bool> callback, bool trackRevisions, string revisionTrackingAuthor,
+    private static int ReplaceInternal(IEnumerable<XElement> content, Regex regex, string? replacement,
+        Func<XElement, Match, bool>? callback, bool trackRevisions, string? revisionTrackingAuthor,
         bool coalesceContent)
     {
         if (content == null) throw new ArgumentNullException("content");

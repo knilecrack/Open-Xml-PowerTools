@@ -12,8 +12,8 @@ namespace OpenXmlPowerTools;
 
 public class ListItemRetrieverSettings
 {
-    public static Dictionary<string, Func<string, int, string, string>> DefaultListItemTextImplementations =
-        new Dictionary<string, Func<string, int, string, string>>()
+    public static Dictionary<string, Func<string, int, string, string?>> DefaultListItemTextImplementations =
+        new Dictionary<string, Func<string, int, string, string?>>()
         {
             {"fr-FR", ListItemTextGetter_fr_FR.GetListItemText},
             {"tr-TR", ListItemTextGetter_tr_TR.GetListItemText},
@@ -21,7 +21,7 @@ public class ListItemRetrieverSettings
             {"sv-SE", ListItemTextGetter_sv_SE.GetListItemText},
             {"zh-CN", ListItemTextGetter_zh_CN.GetListItemText},
         };
-    public Dictionary<string, Func<string, int, string, string>> ListItemTextImplementations;
+    public Dictionary<string, Func<string, int, string, string?>> ListItemTextImplementations = null!;
     public ListItemRetrieverSettings()
     {
         ListItemTextImplementations = DefaultListItemTextImplementations;
@@ -33,9 +33,9 @@ public class ListItemRetriever
     public class ListItemSourceSet
     {
         public int NumId;                          // numId from the paragraph or style
-        public XElement Num;                       // num element from the numbering part
+        public XElement? Num;                      // num element from the numbering part
         public int AbstractNumId;                  // abstract numId
-        public XElement AbstractNum;               // abstractNum element
+        public XElement? AbstractNum;              // abstractNum element
 
         public ListItemSourceSet(XDocument numXDoc, XDocument styleXDoc, int numId)
         {
@@ -99,9 +99,9 @@ public class ListItemRetriever
 
     public class ListItemSource
     {
-        public ListItemSourceSet Main;
-        public string NumStyleLinkName;
-        public ListItemSourceSet NumStyleLink;
+        public ListItemSourceSet Main = null!;
+        public string? NumStyleLinkName;
+        public ListItemSourceSet? NumStyleLink;
         public int Style_ilvl;
 
         // for list item sources that use numStyleLink, there are two abstractId values.
@@ -363,7 +363,7 @@ public class ListItemRetriever
     {
         // The following is an optimization - only determine ListItemInfo once for a
         // paragraph.
-        ListItemInfo listItemInfo = paragraph.Annotation<ListItemInfo>();
+        ListItemInfo? listItemInfo = paragraph.Annotation<ListItemInfo>();
         if (listItemInfo != null)
             return listItemInfo;
         throw new OpenXmlPowerToolsException("Attempting to retrieve ListItemInfo before initialization");

@@ -91,11 +91,13 @@ public partial class WmlDocument
             {
                 foreach (var replacementPart in replacementParts)
                 {
-                    XAttribute uriAttribute = replacementPart.Attribute(PtOpenXml.Uri);
+                    XAttribute? uriAttribute = replacementPart.Attribute(PtOpenXml.Uri);
                     if (uriAttribute == null)
                         throw new OpenXmlPowerToolsException("Replacement part does not contain a Uri as an attribute");
                     String uri = uriAttribute.Value;
                     var part = package.GetParts().FirstOrDefault(p => p.Uri.ToString() == uri);
+                    if (part == null)
+                        throw new OpenXmlPowerToolsException($"Part with Uri '{uri}' not found in package");
                     using (Stream partStream = part.GetStream(FileMode.Create, FileAccess.Write))
                     using (XmlWriter partXmlWriter = XmlWriter.Create(partStream))
                         replacementPart.Save(partXmlWriter);

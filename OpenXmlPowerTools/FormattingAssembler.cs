@@ -136,7 +136,7 @@ public static class FormattingAssembler
         }
     }
 
-    private static object CleanupTransform(XNode node)
+    private static object? CleanupTransform(XNode node)
     {
         XElement element = node as XElement;
         if (element != null)

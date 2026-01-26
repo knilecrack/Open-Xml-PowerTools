@@ -43,13 +43,16 @@ public static class OpenXmlPackageExtensions
     static OpenXmlPackageExtensions()
     {
         // Use reflection to get the internal Package property
-        s_packageProperty = typeof(OpenXmlPackage).GetProperty("Package", BindingFlags.NonPublic | BindingFlags.Instance);
-        s_packagePartProperty = typeof(OpenXmlPart).GetProperty("PackagePart", BindingFlags.NonPublic | BindingFlags.Instance);
+        PropertyInfo? packageProp = typeof(OpenXmlPackage).GetProperty("Package", BindingFlags.NonPublic | BindingFlags.Instance);
+        PropertyInfo? packagePartProp = typeof(OpenXmlPart).GetProperty("PackagePart", BindingFlags.NonPublic | BindingFlags.Instance);
 
-        if (s_packageProperty == null)
+        if (packageProp == null)
             throw new InvalidOperationException("Unable to find Package property on OpenXmlPackage. The Open XML SDK API may have changed.");
-        if (s_packagePartProperty == null)
+        if (packagePartProp == null)
             throw new InvalidOperationException("Unable to find PackagePart property on OpenXmlPart. The Open XML SDK API may have changed.");
+
+        s_packageProperty = packageProp;
+        s_packagePartProperty = packagePartProp;
     }
 
     /// <summary>

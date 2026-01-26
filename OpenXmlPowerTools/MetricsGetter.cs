@@ -32,7 +32,7 @@ public class MetricsGetter
         return System.Drawing.Graphics.FromImage(image);
     });
 
-    public static XElement GetMetrics(string fileName, MetricsGetterSettings settings)
+    public static XElement? GetMetrics(string fileName, MetricsGetterSettings settings)
     {
         FileInfo fi = new FileInfo(fileName);
         if (!fi.Exists)

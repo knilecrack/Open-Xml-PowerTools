@@ -6,6 +6,8 @@
 // TODO Take care of this after the conference
 // TODO use xXhash instead of sha1Hash where appropriate
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -3700,7 +3702,8 @@ public static partial class WmlComparer
                                             {
                                                 ba = br.ReadBytes((int)str.Length);
                                             }
-                                            var sha1 = PtUtils.SHA1HashStringForByteArray(ba);
+                                            //var sha1 = PtUtils.SHA1HashStringForByteArray(ba);
+                                            var sha1 = PtUtils.XXHash3ForByteArray(ba);
                                             oxp.AddAnnotation(new PartSHA1HashAnnotation(sha1));
                                             return new XAttribute(a.Name, sha1);
                                         }
@@ -4559,7 +4562,7 @@ public static partial class WmlComparer
                         })
                         .ToList();
 
-                    XElement rPr = ancestorBeingConstructed.Element(W.rPr);
+                    XElement rPr =ancestorBeingConstructed.Element(W.rPr);
                     var newRun = new XElement(W.r,
                         ancestorBeingConstructed.Attributes().Where(a => a.Name.Namespace != PtOpenXml.pt),
                         rPr,
@@ -4842,10 +4845,10 @@ public static partial class WmlComparer
                         using (var stream = newPart.GetStream())
                         {
                             newPartXDoc = XDocument.Load(stream);
-                            MoveRelatedPartsToDestination(relatedPackagePart, newPart, newPartXDoc.Root);
+                            MoveRelatedPartsToDestination(relatedPackagePart, newPart, newPartXDoc.Root!);
                         }
                         using (var stream = newPart.GetStream())
-                            newPartXDoc.Save(stream);
+                            newPartXDoc!.Save(stream);
                     }
                 }
             }
@@ -6277,9 +6280,9 @@ public static partial class WmlComparer
         // if we have a table with the same number of rows, and all rows have equal CorrelatedSHA1Hash, then we can flatten and compare every corresponding row.
         // This is true regardless of whether there are horizontally or vertically merged cells, since that characteristic is incorporated into the CorrespondingSHA1Hash.
         // This is probably not very common, but it will never do any harm.
-        var tblGroup1 = unknown.ComparisonUnitArray1.First() as ComparisonUnitGroup;
-        var tblGroup2 = unknown.ComparisonUnitArray2.First() as ComparisonUnitGroup;
-        if (tblGroup1.Contents.Count() == tblGroup2.Contents.Count()) // if there are the same number of rows
+        var tblGroup1 = unknown.ComparisonUnitArray1!.First() as ComparisonUnitGroup;
+        var tblGroup2 = unknown.ComparisonUnitArray2!.First() as ComparisonUnitGroup;
+        if (tblGroup1!.Contents.Count() == tblGroup2!.Contents.Count()) // if there are the same number of rows
         {
             var zipped = tblGroup1.Contents.Zip(tblGroup2.Contents, (r1, r2) => new
             {
@@ -6287,7 +6290,7 @@ public static partial class WmlComparer
                 Row2 = r2 as ComparisonUnitGroup,
             });
             var canCollapse = true;
-            if (zipped.Any(z => z.Row1.CorrelatedSHA1Hash != z.Row2.CorrelatedSHA1Hash))
+            if (zipped.Any(z => z.Row1?.CorrelatedSHA1Hash != z.Row2!.CorrelatedSHA1Hash))
                 canCollapse = false;
             if (canCollapse)
             {
@@ -6295,8 +6298,8 @@ public static partial class WmlComparer
                     .Select(z =>
                     {
                         var unknownCorrelatedSequence = new CorrelatedSequence();
-                        unknownCorrelatedSequence.ComparisonUnitArray1 = new[] { z.Row1 };
-                        unknownCorrelatedSequence.ComparisonUnitArray2 = new[] { z.Row2 };
+                        unknownCorrelatedSequence.ComparisonUnitArray1 = new[] { z.Row1! };
+                        unknownCorrelatedSequence.ComparisonUnitArray2 = new[] { z.Row2! };
                         unknownCorrelatedSequence.CorrelationStatus = CorrelationStatus.Unknown;
                         return unknownCorrelatedSequence;
                     })
@@ -6320,6 +6323,9 @@ public static partial class WmlComparer
             .AncestorElements
             .Reverse()
             .FirstOrDefault(a => a.Name == W.tbl);
+
+        if (tblElement1 == null || tblElement2 == null)
+            return [];
 
         var leftContainsMerged = tblElement1
             .Descendants()
@@ -6346,8 +6352,8 @@ public static partial class WmlComparer
                     .Select(z =>
                     {
                         var unknownCorrelatedSequence = new CorrelatedSequence();
-                        unknownCorrelatedSequence.ComparisonUnitArray1 = new[] { z.Row1 };
-                        unknownCorrelatedSequence.ComparisonUnitArray2 = new[] { z.Row2 };
+                        unknownCorrelatedSequence.ComparisonUnitArray1 = new[] { z.Row1! };
+                        unknownCorrelatedSequence.ComparisonUnitArray2 = new[] { z.Row2! };
                         unknownCorrelatedSequence.CorrelationStatus = CorrelationStatus.Unknown;
                         return unknownCorrelatedSequence;
                     })
@@ -6427,7 +6433,7 @@ public static partial class WmlComparer
         var groupingKey = comparisonUnitAtomList
             .Rollup(seed, (sr, prevAtgbw, i) =>
             {
-                int? key = null;
+                int key = 0;
                 var nextIndex = prevAtgbw.NextIndex;
                 if (sr.ContentElement.Name == W.t)
                 {
@@ -6495,7 +6501,7 @@ public static partial class WmlComparer
             foreach (var item in groupingKey)
             {
                 sb.Append(item.Key + Environment.NewLine);
-                sb.Append("    " + item.ComparisonUnitAtomMember.ToString(0) + Environment.NewLine);
+                sb.Append("    " + item.ComparisonUnitAtomMember!.ToString(0) + Environment.NewLine);
             }
             var sbs = sb.ToString();
             DocxComparerUtil.NotePad(sbs);
@@ -6512,7 +6518,7 @@ public static partial class WmlComparer
                 sb.Append("Group ===== " + group.Key + Environment.NewLine);
                 foreach (var gc in group)
                 {
-                    sb.Append("    " + gc.ComparisonUnitAtomMember.ToString(0) + Environment.NewLine);
+                    sb.Append("    " + gc.ComparisonUnitAtomMember!.ToString(0) + Environment.NewLine);
                 }
             }
             var sbs = sb.ToString();
@@ -6524,15 +6530,15 @@ public static partial class WmlComparer
            {
                var hierarchicalGroupingArray = g
                     .First()
-                    .ComparisonUnitAtomMember
+                    .ComparisonUnitAtomMember!
                     .AncestorElements
                     .Where(a => ComparisonGroupingElements.Contains(a.Name))
-                    .Select(a => a.Name.LocalName + ":" + (string)a.Attribute(PtOpenXml.Unid))
+                    .Select(a => a.Name.LocalName + ":" + (string)a.Attribute(PtOpenXml.Unid)!)
                     .ToArray();
 
                return new WithHierarchicalGroupingKey()
                {
-                   ComparisonUnitWord = new ComparisonUnitWord(g.Select(gc => gc.ComparisonUnitAtomMember)),
+                   ComparisonUnitWord = new ComparisonUnitWord(g.Select(gc => gc.ComparisonUnitAtomMember!)),
                    HierarchicalGroupingArray = hierarchicalGroupingArray,
                };
            }
@@ -6583,7 +6589,7 @@ public static partial class WmlComparer
                 }
                 else
                 {
-                    ComparisonUnitGroupType? group = null;
+                    ComparisonUnitGroupType group = ComparisonUnitGroupType.Paragraph;
                     var spl = gc.Key.Split(':');
                     if (spl[0] == "p")
                         group = ComparisonUnitGroupType.Paragraph;
@@ -6596,7 +6602,7 @@ public static partial class WmlComparer
                     else if (spl[0] == "txbxContent")
                         group = ComparisonUnitGroupType.Textbox;
                     var childHierarchicalComparisonUnits = GetHierarchicalComparisonUnits(gc, level + 1);
-                    var newCompUnitGroup = new ComparisonUnitGroup(childHierarchicalComparisonUnits, (ComparisonUnitGroupType)group, level);
+                    var newCompUnitGroup = new ComparisonUnitGroup(childHierarchicalComparisonUnits, group, level);
                     return new[] { newCompUnitGroup };
                 }
             })
@@ -6679,7 +6685,7 @@ public static partial class WmlComparer
         W.subDoc,
     };
 
-    private class RecursionInfo
+    private sealed class RecursionInfo
     {
         public XName ElementName;
         public XName[] ChildElementPropertyNames;
@@ -6827,8 +6833,8 @@ public static partial class WmlComparer
 
         // little bit of cleanup
         MoveLastSectPrToChildOfBody(newXDoc);
-        XElement newXDoc2Root = (XElement)WordprocessingMLUtil.WmlOrderElementsPerStandard(newXDoc.Root);
-        newXDoc.Root.ReplaceWith(newXDoc2Root);
+        XElement newXDoc2Root = (XElement)WordprocessingMLUtil.WmlOrderElementsPerStandard(newXDoc.Root!);
+        newXDoc.Root!.ReplaceWith(newXDoc2Root);
         return newXDoc;
     }
 
@@ -6845,7 +6851,7 @@ public static partial class WmlComparer
                 if (level >= sr.AncestorElements.Length)
                     throw new OpenXmlPowerToolsException("Internal error 4 - why do we have ComparisonUnitAtom objects with fewer ancestors than its siblings?");
 
-                var unid = (string)sr.AncestorElements[level].Attribute(PtOpenXml.Unid);
+                var unid = (string)sr.AncestorElements[level].Attribute(PtOpenXml.Unid)!;
                 return unid;
             });
 
@@ -6955,7 +6961,7 @@ public static partial class WmlComparer
             var lastParagraph = contentParent.Elements(W.p).LastOrDefault();
             if (lastParagraph == null)
                 lastParagraph = contentParent.Descendants(W.p).LastOrDefault();
-            var pPr = lastParagraph.Element(W.pPr);
+            var pPr = lastParagraph!.Element(W.pPr);
             if (pPr == null)
             {
                 pPr = new XElement(W.pPr);

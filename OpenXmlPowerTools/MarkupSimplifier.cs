@@ -75,17 +75,17 @@ public static class MarkupSimplifier
 
         if (settings.RemoveComments)
         {
-            WordprocessingCommentsPart commentsPart = doc.MainDocumentPart.WordprocessingCommentsPart;
+            WordprocessingCommentsPart? commentsPart = doc.MainDocumentPart.WordprocessingCommentsPart;
             if (commentsPart != null) doc.MainDocumentPart.DeletePart(commentsPart);
 
-            WordprocessingCommentsExPart commentsExPart = doc.MainDocumentPart.WordprocessingCommentsExPart;
+            WordprocessingCommentsExPart? commentsExPart = doc.MainDocumentPart.WordprocessingCommentsExPart;
             if (commentsExPart != null) doc.MainDocumentPart.DeletePart(commentsExPart);
         }
     }
 
     private static void RemoveRsidInfoInSettings(WordprocessingDocument doc)
     {
-        DocumentSettingsPart part = doc.MainDocumentPart.DocumentSettingsPart;
+        DocumentSettingsPart? part = doc.MainDocumentPart.DocumentSettingsPart;
         if (part == null) return;
 
         XDocument settingsXDoc = part.GetXDocument();

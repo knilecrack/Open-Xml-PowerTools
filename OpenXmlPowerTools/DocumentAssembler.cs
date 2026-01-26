@@ -89,7 +89,7 @@ public class DocumentAssembler
 
     private static object ForceBlockLevelAsAppropriate(XNode node, TemplateError te)
     {
-        XElement element = node as XElement;
+        XElement? element = node as XElement;
         if (element != null)
         {
             if (element.Name == W.p)

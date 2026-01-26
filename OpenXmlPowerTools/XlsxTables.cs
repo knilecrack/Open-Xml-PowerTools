@@ -8,6 +8,7 @@ using System.Text;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace OpenXmlPowerTools;
 
@@ -16,7 +17,7 @@ public class Table
     public int Id { get; set; }
     public string TableName { get; set; }
     public string DisplayName { get; set; }
-    public XElement TableStyleInfo { get; set; }
+    public XElement? TableStyleInfo { get; set; }
     public string Ref { get; set; }
     public int LeftColumn { get; set; }
     public int RightColumn { get; set; }
@@ -24,7 +25,7 @@ public class Table
     public int BottomRow { get; set; }
     public int? HeaderRowCount { get; set; }
     public int? TotalsRowCount { get; set; }
-    public string TableType { get; set; }  // external data query, data in worksheet, or XML data
+    public string? TableType { get; set; }  // external data query, data in worksheet, or XML data
     public TableDefinitionPart TableDefinitionPart { get; set; }
     public WorksheetPart Parent { get; set; }
     public Table(WorksheetPart parent) { Parent = parent; }
@@ -127,13 +128,13 @@ public class TableCell : IEquatable<TableCell>
     {
         return Value;
     }
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
-        return this.Value == ((TableCell)obj).Value;
+        return obj is TableCell cell && this.Value == cell.Value;
     }
-    bool IEquatable<TableCell>.Equals(TableCell other)
+    bool IEquatable<TableCell>.Equals(TableCell? other)
     {
-        return this.Value == other.Value;
+        return other is not null && this.Value == other.Value;
     }
     public override int GetHashCode()
     {
@@ -149,87 +150,87 @@ public class TableCell : IEquatable<TableCell>
         if ((object)left != (object)right) return false;
         return left.Value != right.Value;
     }
-    public static explicit operator string(TableCell cell)
+    public static explicit operator string?(TableCell? cell)
     {
         if (cell == null) return null;
         return cell.Value;
     }
-    public static explicit operator bool(TableCell cell)
+    public static explicit operator bool(TableCell? cell)
     {
         if (cell == null) throw new ArgumentNullException("TableCell");
         return cell.Value == "1";
     }
-    public static explicit operator bool?(TableCell cell)
+    public static explicit operator bool?(TableCell? cell)
     {
         if (cell == null) return null;
         return cell.Value == "1";
     }
-    public static explicit operator int(TableCell cell)
+    public static explicit operator int(TableCell? cell)
     {
         if (cell == null) throw new ArgumentNullException("TableCell");
         return Int32.Parse(cell.Value);
     }
-    public static explicit operator int?(TableCell cell)
+    public static explicit operator int?(TableCell? cell)
     {
         if (cell == null) return null;
         return Int32.Parse(cell.Value);
     }
-    public static explicit operator uint(TableCell cell)
+    public static explicit operator uint(TableCell? cell)
     {
         if (cell == null) throw new ArgumentNullException("TableCell");
         return UInt32.Parse(cell.Value);
     }
-    public static explicit operator uint?(TableCell cell)
+    public static explicit operator uint?(TableCell? cell)
     {
         if (cell == null) return null;
         return UInt32.Parse(cell.Value);
     }
-    public static explicit operator long(TableCell cell)
+    public static explicit operator long(TableCell? cell)
     {
         if (cell == null) throw new ArgumentNullException("TableCell");
         return Int64.Parse(cell.Value);
     }
-    public static explicit operator long?(TableCell cell)
+    public static explicit operator long?(TableCell? cell)
     {
         if (cell == null) return null;
         return Int64.Parse(cell.Value);
     }
-    public static explicit operator ulong(TableCell cell)
+    public static explicit operator ulong(TableCell? cell)
     {
         if (cell == null) throw new ArgumentNullException("TableCell");
         return UInt64.Parse(cell.Value);
     }
-    public static explicit operator ulong?(TableCell cell)
+    public static explicit operator ulong?(TableCell? cell)
     {
         if (cell == null) return null;
         return UInt64.Parse(cell.Value);
     }
-    public static explicit operator float(TableCell cell)
+    public static explicit operator float(TableCell? cell)
     {
         if (cell == null) throw new ArgumentNullException("TableCell");
         return Single.Parse(cell.Value);
     }
-    public static explicit operator float?(TableCell cell)
+    public static explicit operator float?(TableCell? cell)
     {
         if (cell == null) return null;
         return Single.Parse(cell.Value);
     }
-    public static explicit operator double(TableCell cell)
+    public static explicit operator double(TableCell? cell)
     {
         if (cell == null) throw new ArgumentNullException("TableCell");
         return Double.Parse(cell.Value);
     }
-    public static explicit operator double?(TableCell cell)
+    public static explicit operator double?(TableCell? cell)
     {
         if (cell == null) return null;
         return Double.Parse(cell.Value);
     }
-    public static explicit operator decimal(TableCell cell)
+    public static explicit operator decimal(TableCell? cell)
     {
         if (cell == null) throw new ArgumentNullException("TableCell");
         return Decimal.Parse(cell.Value);
     }
-    public static explicit operator decimal?(TableCell cell)
+    public static explicit operator decimal?(TableCell? cell)
     {
         if (cell == null) return null;
         return Decimal.Parse(cell.Value);
@@ -248,9 +249,9 @@ public class TableCell : IEquatable<TableCell>
 
 public class Row
 {
-    public XElement RowElement { get; set; }
-    public string RowId { get; set; }
-    public string Spans { get; set; }
+    public XElement RowElement { get; set; } = null!;
+    public string RowId { get; set; } = "";
+    public string Spans { get; set; } = "";
     public List<Cell> Cells()
     {
         XNamespace s = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
@@ -277,14 +278,14 @@ public class Row
                 var newCell = new Cell(this)
                 {
                     CellElement = cell,
-                    Row = (string)RowElement.Attribute("r"),
+                    Row = (string?)RowElement.Attribute("r") ?? "",
                     Column = column,
                     ColumnAddress = columnAddress,
                     ColumnIndex = columnIndex,
                     Type = cellType,
-                    Formula = (string)cell.Element(S.f),
+                    Formula = (string?)cell.Element(S.f) ?? "",
                     Style = (int?)cell.Attribute("s"),
-                    Value = (string)cell.Element(S.v),
+                    Value = (string?)cell.Element(S.v) ?? "",
                     SharedString = sharedString
                 };
                 return newCell;
@@ -298,16 +299,16 @@ public class Row
 
 public class Cell
 {
-    public XElement CellElement { get; set; }
-    public string Row { get; set; }
-    public string Column { get; set; }
-    public string ColumnAddress { get; set; }
+    public XElement CellElement { get; set; } = null!;
+    public string Row { get; set; } = "";
+    public string Column { get; set; } = "";
+    public string ColumnAddress { get; set; } = "";
     public int ColumnIndex { get; set; }
-    public string Type { get; set; }
-    public string Value { get; set; }
-    public string Formula { get; set; }
+    public string Type { get; set; } = "";
+    public string Value { get; set; } = "";
+    public string Formula { get; set; } = "";
     public int? Style { get; set; }
-    public string SharedString { get; set; }
+    public string SharedString { get; set; } = "";
     public Row Parent { get; set; }
     public Cell(Row parent) { Parent = parent; }
 }
@@ -316,30 +317,39 @@ public static class XlsxTables
 {
     public static IEnumerable<Table> Tables(this SpreadsheetDocument spreadsheet)
     {
+        if (spreadsheet.WorkbookPart is null)
+            yield break;
+
         foreach (var worksheetPart in spreadsheet.WorkbookPart.WorksheetParts)
             foreach (var table in worksheetPart.TableDefinitionParts)
             {
                 XDocument tableDefDoc = table.GetXDocument();
+                var root = tableDefDoc.Root;
+                if (root is null)
+                    continue;
 
                 Table t = new Table(worksheetPart)
                 {
-                    Id = (int)tableDefDoc.Root.Attribute("id"),
-                    TableName = (string)tableDefDoc.Root.Attribute("name"),
-                    DisplayName = (string)tableDefDoc.Root.Attribute("displayName"),
-                    TableStyleInfo = tableDefDoc.Root.Element(S.tableStyleInfo),
-                    Ref = (string)tableDefDoc.Root.Attribute("ref"),
-                    TotalsRowCount = (int?)tableDefDoc.Root.Attribute("totalsRowCount"),
-                    //HeaderRowCount = (int?)tableDefDoc.Root.Attribute("headerRowCount"),
+                    Id = (int?)root.Attribute("id") ?? 0,
+                    TableName = (string?)root.Attribute("name") ?? "",
+                    DisplayName = (string?)root.Attribute("displayName") ?? "",
+                    TableStyleInfo = root.Element(S.tableStyleInfo),
+                    Ref = (string?)root.Attribute("ref") ?? "",
+                    TotalsRowCount = (int?)root.Attribute("totalsRowCount"),
+                    //HeaderRowCount = (int?)root.Attribute("headerRowCount"),
                     HeaderRowCount = 1,  // currently there always is a header row
-                    TableType = (string)tableDefDoc.Root.Attribute("tableType"),
+                    TableType = (string?)root.Attribute("tableType"),
                     TableDefinitionPart = table
                 };
                 int leftColumn, topRow, rightColumn, bottomRow;
-                ParseRange(t.Ref, out leftColumn, out topRow, out rightColumn, out bottomRow);
-                t.LeftColumn = leftColumn;
-                t.TopRow = topRow;
-                t.RightColumn = rightColumn;
-                t.BottomRow = bottomRow;
+                if (!string.IsNullOrEmpty(t.Ref))
+                {
+                    ParseRange(t.Ref, out leftColumn, out topRow, out rightColumn, out bottomRow);
+                    t.LeftColumn = leftColumn;
+                    t.TopRow = topRow;
+                    t.RightColumn = rightColumn;
+                    t.BottomRow = bottomRow;
+                }
                 yield return t;
             }
     }
@@ -359,7 +369,7 @@ public static class XlsxTables
         bottomRow = Int32.Parse(refEndSplit[1]);
     }
 
-    public static Table Table(this SpreadsheetDocument spreadsheet,
+    public static Table? Table(this SpreadsheetDocument spreadsheet,
         string tableName)
     {
         return spreadsheet.Tables().Where(t => string.Equals(t.TableName, tableName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
@@ -368,9 +378,11 @@ public static class XlsxTables
     public static IEnumerable<Row> Rows(this WorksheetPart worksheetPart)
     {
         XNamespace s = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
-        var rows = worksheetPart
-            .GetXDocument()
-            .Root
+        var root = worksheetPart.GetXDocument().Root;
+        if (root is null)
+            yield break;
+
+        var rows = root
             .Elements(S.sheetData)
             .Elements(S.row)
             .Select(r =>
@@ -378,12 +390,15 @@ public static class XlsxTables
                 var row = new Row(worksheetPart)
                 {
                     RowElement = r,
-                    RowId = (string)r.Attribute("r"),
-                    Spans = (string)r.Attribute("spans")
+                    RowId = (string?)r.Attribute("r") ?? "",
+                    Spans = (string?)r.Attribute("spans") ?? ""
                 };
                 return row;
             });
-        return rows;
+
+        if(rows is null) yield break;
+        foreach (var row in rows)
+            yield return row;
     }
 
     public static string[] SplitAddress(string address)
@@ -394,10 +409,10 @@ public static class XlsxTables
                 break;
         if (i == address.Length)
             throw new FileFormatException("Invalid spreadsheet.  Bad cell address.");
-        return new[] {
+        return [
             address.Substring(0, i),
             address.Substring(i)
-        };
+        ];
     }
 
     public static string IndexToColumnAddress(int index)
