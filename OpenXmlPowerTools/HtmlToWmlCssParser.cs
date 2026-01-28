@@ -27,9 +27,9 @@ namespace OpenXmlPowerTools.HtmlToWml.CSS;
 
 public class CssAttribute
 {
-    private string m_operand;
+    private string m_operand = null!;
     private CssAttributeOperator? m_op = null;
-    private string m_val;
+    private string m_val = null!;
 
     public string Operand
     {
@@ -188,8 +188,8 @@ public class CssDocument : ItfRuleSetContainer
 
 public class CssDeclaration
 {
-    private string m_name;
-    private CssExpression m_expression;
+    private string m_name = null!;
+    private CssExpression m_expression = null!;
     private bool m_important;
 
     public string Name
@@ -660,8 +660,8 @@ public class CssExpression
 
 public class CssFunction
 {
-    private string m_name;
-    private CssExpression m_expression;
+    private string m_name = null!;
+    private CssExpression m_expression = null!;
 
     public string Name
     {
@@ -2123,9 +2123,9 @@ internal struct HueSatVal
         return (left.Hue == right.Hue && left.Value == right.Value && left.Saturation == right.Saturation);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
-        return this == (HueSatVal)obj;
+        return obj is HueSatVal other && this == other;
     }
 
     public override int GetHashCode()
@@ -3945,7 +3945,7 @@ public class Scanner
 
     public CssBuffer m_scannerBuffer;
 
-    CssToken m_currentToken;
+    CssToken m_currentToken = null!;
     int m_currentInputCharacter;
     int m_currentCharacterBytePosition;
     int m_unicodeCharacterPosition;
@@ -3954,8 +3954,8 @@ public class Scanner
     int m_eolInComment;
     static readonly Hashtable s_start;
 
-    CssToken m_tokensAlreadyPeeked;
-    CssToken m_currentPeekToken;
+    CssToken m_tokensAlreadyPeeked = null!;
+    CssToken m_currentPeekToken = null!;
 
     char[] m_textOfCurrentToken = new char[c_maxTokenLength];
     int m_lengthOfCurrentToken;

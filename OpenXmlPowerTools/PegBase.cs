@@ -31,7 +31,7 @@ public class FileLoader
     {
         return encoding_ == FileEncoding.binary;
     }
-    public bool LoadFile(out byte[] src)
+    public bool LoadFile(out byte[]? src)
     {
         src = null;
         if (!IsBinaryFile()) return false;
@@ -41,10 +41,10 @@ public class FileLoader
             return true;
         }
     }
-    public bool LoadFile(out string src)
+    public bool LoadFile(out string? src)
     {
         src = null;
-        Encoding textEncoding = FileEncodingToTextEncoding();
+        Encoding? textEncoding = FileEncodingToTextEncoding();
         if (textEncoding == null)
         {
             if (encoding_ == FileEncoding.binary) return false;
@@ -82,7 +82,7 @@ public class FileLoader
         }
 
     }
-    Encoding FileEncodingToTextEncoding()
+    Encoding? FileEncodingToTextEncoding()
     {
         switch (encoding_)
         {
@@ -209,19 +209,19 @@ public struct PegBegEnd//indices into the source string
 public class PegNode : ICloneable
 {
     #region Constructors
-    public PegNode(PegNode parent, int id, PegBegEnd match, PegNode child, PegNode next)
+    public PegNode(PegNode? parent, int id, PegBegEnd match, PegNode? child, PegNode? next)
     {
         parent_ = parent; id_ = id; child_ = child; next_ = next;
         match_ = match;
     }
-    public PegNode(PegNode parent, int id, PegBegEnd match, PegNode child)
+    public PegNode(PegNode? parent, int id, PegBegEnd match, PegNode? child)
         : this(parent, id, match, child, null)
     {
     }
-    public PegNode(PegNode parent, int id, PegBegEnd match)
+    public PegNode(PegNode? parent, int id, PegBegEnd match)
         : this(parent, id, match, null, null)
     { }
-    public PegNode(PegNode parent, int id)
+    public PegNode(PegNode? parent, int id)
         : this(parent, id, new PegBegEnd(), null, null)
     {
     }
@@ -241,7 +241,7 @@ public class PegNode : ICloneable
     #region Protected Members
     protected void CloneSubTrees(PegNode clone)
     {
-        PegNode child = null, next = null;
+        PegNode? child = null, next = null;
         if (child_ != null)
         {
             child = child_.Clone();
@@ -258,7 +258,7 @@ public class PegNode : ICloneable
     #endregion Protected Members
     #region Data Members
     public int id_;
-    public PegNode parent_, child_, next_;
+    public PegNode? parent_, child_, next_;
     public PegBegEnd match_;
     #endregion Data Members
 
@@ -274,8 +274,8 @@ public class PegNode : ICloneable
 internal struct PegTree
 {
     internal enum AddPolicy { eAddAsChild, eAddAsSibling };
-    internal PegNode root_;
-    internal PegNode cur_;
+    internal PegNode? root_;
+    internal PegNode? cur_;
     internal AddPolicy addPolicy;
 }
 public abstract class PrintNode
@@ -353,7 +353,7 @@ public class TreePrint : PrintNode
     int DetermineLineLength(PegNode parent, int nOffsetLineBeg)
     {
         int nLen = LenNodeBeg(parent);
-        PegNode p;
+        PegNode? p;
         for (p = parent.child_; p != null; p = p.next_)
         {
             if (IsSkip(p)) continue;
@@ -370,7 +370,7 @@ public class TreePrint : PrintNode
                 return nLen + nOffsetLineBeg;
             }
         }
-        nLen += LenNodeEnd(p);
+        nLen += LenNodeEnd(parent);
         return nLen;
     }
     public override int LenMaxLine() { return nMaxLineLen_; }
@@ -470,7 +470,7 @@ public abstract class PegBaseParser
 {
     #region Data Types
     public delegate bool Matcher();
-    public delegate PegNode Creator(ECreatorPhase ePhase, PegNode parentOrCreated, int id);
+    public delegate PegNode? Creator(ECreatorPhase ePhase, PegNode? parentOrCreated, int id);
     #endregion Data Types
     #region Data members
     protected int srcLen_;
@@ -501,27 +501,27 @@ public abstract class PegBaseParser
     {
         return maxpos_;
     }
-    protected PegNode DefaultNodeCreator(ECreatorPhase phase, PegNode parentOrCreated, int id)
+    protected PegNode? DefaultNodeCreator(ECreatorPhase phase, PegNode? parentOrCreated, int id)
     {
         if (phase == ECreatorPhase.eCreate || phase == ECreatorPhase.eCreateAndComplete)
             return new PegNode(parentOrCreated, id);
         else
         {
-            if (parentOrCreated.match_.posEnd_ > maxpos_)
+            if (parentOrCreated is not null && parentOrCreated.match_.posEnd_ > maxpos_)
                 maxpos_ = parentOrCreated.match_.posEnd_;
             return null;
         }
     }
     #region Constructors
-    public PegBaseParser(TextWriter errOut)
+    public PegBaseParser(TextWriter? errOut)
     {
         srcLen_ = pos_ = 0;
-        errOut_ = errOut;
+        errOut_ = errOut ?? new StreamWriter(System.Console.OpenStandardError());
         nodeCreator_ = DefaultNodeCreator;
     }
     #endregion Constructors
     #region Reinitialization, TextWriter access,Tree Access
-    public void Construct(TextWriter Fout)
+    public void Construct(TextWriter? Fout)
     {
         srcLen_ = pos_ = 0;
         bMute_ = false;
@@ -529,14 +529,13 @@ public abstract class PegBaseParser
         ResetTree();
     }
     public void Rewind() { pos_ = 0; }
-    public void SetErrorDestination(TextWriter errOut)
+    public void SetErrorDestination(TextWriter? errOut)
     {
-        errOut_ = errOut == null ? new StreamWriter(System.Console.OpenStandardError())
-            : errOut;
+        errOut_ = errOut ?? new StreamWriter(System.Console.OpenStandardError());
     }
     #endregion Reinitialization, TextWriter access,Tree Access
     #region Tree root access, Tree Node generation/display
-    public PegNode GetRoot() { return tree.root_; }
+    public PegNode? GetRoot() { return tree.root_; }
     public void ResetTree()
     {
         tree.root_ = null;
@@ -550,17 +549,17 @@ public abstract class PegBaseParser
         {
             tree.root_ = tree.cur_ = createNode(ePhase, tree.cur_, nId);
         }
-        else if (tree.addPolicy == PegTree.AddPolicy.eAddAsChild)
+        else if (tree.addPolicy == PegTree.AddPolicy.eAddAsChild && tree.cur_ is not null)
         {
             tree.cur_ = tree.cur_.child_ = createNode(ePhase, tree.cur_, nId);
         }
-        else
+        else if (tree.cur_ is not null)
         {
             tree.cur_ = tree.cur_.next_ = createNode(ePhase, tree.cur_.parent_, nId);
         }
         tree.addPolicy = newAddPolicy;
     }
-    void RestoreTree(PegNode prevCur, PegTree.AddPolicy prevPolicy)
+    void RestoreTree(PegNode? prevCur, PegTree.AddPolicy prevPolicy)
     {
         if (bMute_) return;
         if (prevCur == null)
@@ -598,8 +597,11 @@ public abstract class PegBaseParser
             if (!bMute_)
             {
                 AddTreeNode(nId, PegTree.AddPolicy.eAddAsSibling, nodeCreator, ECreatorPhase.eCreateAndComplete);
-                tree.cur_.match_.posBeg_ = pos;
-                tree.cur_.match_.posEnd_ = pos_;
+                if (tree.cur_ is not null)
+                {
+                    tree.cur_.match_.posBeg_ = pos;
+                    tree.cur_.match_.posEnd_ = pos_;
+                }
             }
             return true;
         }
@@ -612,14 +614,14 @@ public abstract class PegBaseParser
     public bool TreeNT(Creator nodeCreator, int nRuleId, Matcher toMatch)
     {
         if (bMute_) return toMatch();
-        PegNode prevCur = tree.cur_, ruleNode;
+        PegNode? prevCur = tree.cur_, ruleNode;
         PegTree.AddPolicy prevPolicy = tree.addPolicy;
         int posBeg = pos_;
         AddTreeNode(nRuleId, PegTree.AddPolicy.eAddAsChild, nodeCreator, ECreatorPhase.eCreate);
         ruleNode = tree.cur_;
         bool bMatches = toMatch();
         if (!bMatches) RestoreTree(prevCur, prevPolicy);
-        else
+        else if (ruleNode is not null)
         {
             ruleNode.match_.posBeg_ = posBeg;
             ruleNode.match_.posEnd_ = pos_;
@@ -637,7 +639,7 @@ public abstract class PegBaseParser
     {
         if (bMute_) return toMatch();
         bool bMatches = TreeNT(nodeCreator, nRuleId, toMatch);
-        if (bMatches)
+        if (bMatches && tree.cur_ is not null)
         {
             if (tree.cur_.child_ != null && tree.cur_.child_.next_ == null && tree.cur_.parent_ != null)
             {
@@ -649,7 +651,7 @@ public abstract class PegBaseParser
                 }
                 else
                 {
-                    PegNode prev;
+                    PegNode? prev;
                     for (prev = tree.cur_.parent_.child_; prev != null && prev.next_ != tree.cur_; prev = prev.next_)
                     {
                     }
@@ -805,7 +807,7 @@ public abstract class PegBaseParser
 public class PegByteParser : PegBaseParser
 {
     #region Data members
-    protected byte[] src_;
+    protected byte[] src_ = Array.Empty<byte>();
     PegError errors;
     #endregion Data members
 
@@ -912,22 +914,22 @@ public class PegByteParser : PegBaseParser
         : this(null)
     {
     }
-    public PegByteParser(byte[] src) : base(null)
+    public PegByteParser(byte[]? src) : base(null)
     {
         SetSource(src);
     }
-    public PegByteParser(byte[] src, TextWriter errOut) : base(errOut)
+    public PegByteParser(byte[]? src, TextWriter? errOut) : base(errOut)
     {
         SetSource(src);
     }
     #endregion Constructors
     #region Reinitialization, Source Code access, TextWriter access,Tree Access
-    public void Construct(byte[] src, TextWriter Fout)
+    public void Construct(byte[]? src, TextWriter? Fout)
     {
         base.Construct(Fout);
         SetSource(src);
     }
-    public void SetSource(byte[] src)
+    public void SetSource(byte[]? src)
     {
         if (src == null) src = new byte[0];
         src_ = src; srcLen_ = src.Length;
@@ -938,7 +940,7 @@ public class PegByteParser : PegBaseParser
 
     #endregion Reinitialization, Source Code access, TextWriter access,Tree Access
     #region Setting host variables
-    public bool Into(Matcher toMatch, out byte[] into)
+    public bool Into(Matcher toMatch, out byte[]? into)
     {
         int pos = pos_;
         if (toMatch())
@@ -1473,7 +1475,7 @@ public class PegByteParser : PegBaseParser
 public class PegCharParser : PegBaseParser
 {
     #region Data members
-    protected string src_;
+    protected string src_ = "";
     PegError errors;
     #endregion Data members
     #region PEG optimizations
@@ -1579,7 +1581,7 @@ public class PegCharParser : PegBaseParser
             internal bool bLitEnd_;         //end of literal
 
             internal char cMin_;            //first valid character in children
-            internal Trie[] children_;      //contains the successor node of cThis_;
+            internal Trie[]? children_;     //contains the successor node of cThis_;
         }
         internal Trie literalsRoot;
         public OptimizedLiterals(string[] litAlternatives)
@@ -1594,11 +1596,11 @@ public class PegCharParser : PegBaseParser
 
 
     }
-    public PegCharParser(string src) : base(null)
+    public PegCharParser(string? src) : base(null)
     {
         SetSource(src);
     }
-    public PegCharParser(string src, TextWriter errOut) : base(errOut)
+    public PegCharParser(string? src, TextWriter? errOut) : base(errOut)
     {
         SetSource(src);
         nodeCreator_ = DefaultNodeCreator;
@@ -1618,12 +1620,12 @@ public class PegCharParser : PegBaseParser
     }
     #endregion Overrides
     #region Reinitialization, Source Code access, TextWriter access,Tree Access
-    public void Construct(string src, TextWriter Fout)
+    public void Construct(string? src, TextWriter? Fout)
     {
         base.Construct(Fout);
         SetSource(src);
     }
-    public void SetSource(string src)
+    public void SetSource(string? src)
     {
         if (src == null) src = "";
         src_ = src; srcLen_ = src.Length; pos_ = 0;

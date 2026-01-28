@@ -2919,10 +2919,13 @@ else
             UserHigh = 10,
         };
 
-        int System.IComparable<Property>.CompareTo(Property other)
+        int System.IComparable<Property>.CompareTo(Property? other)
         {
             // if this is less than other, return -1
             // if this is greater than other, return 1
+
+            if (other is null)
+                return 1;
 
             int gt = 1;
             int lt = -1;

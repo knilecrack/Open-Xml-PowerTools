@@ -114,15 +114,15 @@ namespace OpenXmlPowerTools.HtmlToWml;
 
 public class ElementToStyleMap
 {
-    public string ElementName;
-    public string StyleName;
+    public string ElementName = null!;
+    public string StyleName = null!;
 }
 
 public static class LocalExtensions
 {
-    public static CssExpression GetProp(this XElement element, string propertyName)
+    public static CssExpression? GetProp(this XElement element, string propertyName)
     {
-        Dictionary<string, CssExpression> d = element.Annotation<Dictionary<string, CssExpression>>();
+        Dictionary<string, CssExpression>? d = element.Annotation<Dictionary<string, CssExpression>>();
         if (d != null)
         {
             if (d.ContainsKey(propertyName))

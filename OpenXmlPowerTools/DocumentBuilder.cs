@@ -29,7 +29,7 @@ public class Source
     public int Count { get; set; }
     public bool KeepSections { get; set; }
     public bool DiscardHeadersAndFootersInKeptSections { get; set; }
-    public string InsertId { get; set; }
+    public string? InsertId { get; set; }
 
     public Source(string fileName)
     {
@@ -222,13 +222,13 @@ public static class DocumentBuilder
 
     private class Atbi
     {
-        public XElement BlockLevelContent;
+        public XElement BlockLevelContent = null!;
         public int Index;
     }
 
     private class Atbid
     {
-        public XElement BlockLevelContent;
+        public XElement? BlockLevelContent;
         public int Index;
         public int Div;
     }
@@ -242,12 +242,17 @@ public static class DocumentBuilder
         List<TempSource> tempSourceList;
         using OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(doc);
         using WordprocessingDocument document = streamDoc.GetWordprocessingDocument();
+        if (document.MainDocumentPart is null)
+            yield break;
+
         XDocument mainDocument = document.MainDocumentPart.GetXDocument();
         // Filter out body-level w:sectPr elements as they are section properties, not block-level content
         // A body-level sectPr marks a section boundary and should not be included in element counts
-        var bodyElements = mainDocument
-            .Root
-            .Element(W.body)
+        var bodyElement = mainDocument.Root?.Element(W.body);
+        if (bodyElement is null)
+            yield break;
+
+        var bodyElements = bodyElement
             .Elements()
             .Where(e => e.Name != W.sectPr)
             .ToList();
@@ -260,13 +265,13 @@ public static class DocumentBuilder
             })
             .Rollup(new Atbid
             {
-                BlockLevelContent = (XElement)null,
+                BlockLevelContent = null,
                 Index = -1,
                 Div = 0,
             },
                 (b, p) =>
                 {
-                    XElement elementBefore = b.BlockLevelContent
+                    XElement? elementBefore = b.BlockLevelContent?
                         .SiblingsBeforeSelfReverseDocumentOrder()
                         .FirstOrDefault();
                     if (elementBefore != null && elementBefore.Descendants(W.sectPr).Any())

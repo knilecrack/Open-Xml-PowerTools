@@ -38,7 +38,7 @@ public class ListItemTextGetter_fr_FR
         "soixante", "", "quatre-vingt", ""
     };
 
-    public static string GetListItemText(string languageCultureName, int levelNumber, string numFmt)
+    public static string? GetListItemText(string languageCultureName, int levelNumber, string numFmt)
     {
         if (numFmt == "cardinalText")
         {

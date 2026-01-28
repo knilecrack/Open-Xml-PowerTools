@@ -1,12 +1,10 @@
   Determining projects to restore...
-  Restored J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\OpenXmlPowerTools.Tests.csproj (in 279 ms).
-  Restored J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\OpenXmlPowerTools.csproj (in 279 ms).
-J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlToHtmlConverter.cs(3065,23): error CS1061: 'ImagePart' does not contain a definition for 'OpenXmlPart' and no accessible extension method 'OpenXmlPart' accepting a first argument of type 'ImagePart' could be found (are you missing a using directive or an assembly reference?) [J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\OpenXmlPowerTools.csproj]
+  All projects are up-to-date for restore.
+  OpenXmlPowerTools -> J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\bin\Debug\net10.0\OpenXmlPowerTools.dll
+  OpenXmlPowerTools.Tests -> J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\bin\Debug\net10.0\OpenXmlPowerTools.Tests.dll
 
-Build FAILED.
-
-J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlToHtmlConverter.cs(3065,23): error CS1061: 'ImagePart' does not contain a definition for 'OpenXmlPart' and no accessible extension method 'OpenXmlPart' accepting a first argument of type 'ImagePart' could be found (are you missing a using directive or an assembly reference?) [J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\OpenXmlPowerTools.csproj]
+Build succeeded.
     0 Warning(s)
-    1 Error(s)
+    0 Error(s)
 
-Time Elapsed 00:00:04.55
+Time Elapsed 00:00:01.44

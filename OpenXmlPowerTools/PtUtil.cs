@@ -43,6 +43,30 @@ public static class PtUtils
         return HexStringFromBytes(hashBytes);
     }
 
+    public static string XXHash3ForByteArray(byte[] bytes)
+    {
+        Span<byte> hash = stackalloc byte[32];
+        XxHash3.Hash(bytes, hash);
+        //var xXHash3 = XxHash3.Hash(bytes);
+        //return HexStringFromBytes(xXHash3);
+        return HexStringFromBytes(hash);
+    }
+
+    public static string HexStringFromBytes(ReadOnlySpan<byte> bytes)
+    {
+        return string.Create(bytes.Length * 2, bytes, static (dest, source) =>
+        {
+            for(int i = 0; i< source.Length; i++)
+            {
+                byte b = source[i];
+                dest[(i * 2)] = GetHexChar(b >> 4);
+                dest[(i * 2) + 1] = GetHexChar(b & 0xF);
+            }
+        });
+
+        static char GetHexChar(int value) => (char)(value < 10 ? ('0'+value): ('a' + (value - 10)));
+    }
+
     public static string HexStringFromBytes(byte[] bytes)
     {
         var sb = new StringBuilder();
@@ -83,27 +107,27 @@ public static class PtUtils
 
 public class MhtParser
 {
-    public string MimeVersion;
-    public string ContentType;
-    public MhtParserPart[] Parts;
+    public string? MimeVersion;
+    public string? ContentType;
+    public MhtParserPart[]? Parts;
 
     public class MhtParserPart
     {
-        public string ContentLocation;
-        public string ContentTransferEncoding;
-        public string ContentType;
-        public string CharSet;
-        public string Text;
-        public byte[] Binary;
+        public string? ContentLocation;
+        public string? ContentTransferEncoding;
+        public string? ContentType;
+        public string? CharSet;
+        public string? Text;
+        public byte[]? Binary;
     }
 
     public static MhtParser Parse(string src)
     {
-        string mimeVersion = null;
-        string contentType = null;
-        string boundary = null;
+        string? mimeVersion = null;
+        string? contentType = null;
+        string? boundary = null;
 
-        string[] lines = src.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        string[] lines = src.Split([Environment.NewLine], StringSplitOptions.None);
 
 
         var priambleKeyWords = new[]
@@ -170,11 +194,11 @@ public class MhtParser
                     return partPriambleKeyWords.Any(pk => s.StartsWith(pk));
                 }).ToArray();
 
-                string contentLocation = null;
-                string contentTransferEncoding = null;
-                string partContentType = null;
-                string partCharSet = null;
-                byte[] partBinary = null;
+                string? contentLocation = null;
+                string? contentTransferEncoding = null;
+                string? partContentType = null;
+                string? partCharSet = null;
+                byte[]? partBinary = null;
 
                 foreach (var item in partPriamble)
                 {
@@ -188,7 +212,7 @@ public class MhtParser
 
                 var blankLinesAtBeginning = rp
                     .Skip(partPriamble.Length)
-                    .TakeWhile(l => l == "")
+                    .TakeWhile(l => l?.Length == 0)
                     .Count();
 
                 var partText = rp
@@ -199,7 +223,7 @@ public class MhtParser
 
                 if (partContentType != null && partContentType.Contains(";"))
                 {
-                    string thisPartContentType = null;
+                    string? thisPartContentType = null;
                     var spl = partContentType.Split(';').Select(s => s.Trim()).ToArray();
                     foreach (var s in spl)
                     {
@@ -210,7 +234,7 @@ public class MhtParser
                             partCharSet = s.Substring(begLen, s.Length - begLen - 1);
                             continue;
                         }
-                        if (thisPartContentType == null)
+                        if (string.IsNullOrEmpty(thisPartContentType))
                         {
                             thisPartContentType = s;
                             continue;
@@ -1136,9 +1160,9 @@ public class ExecutableRunner
     public class RunResults
     {
         public int ExitCode;
-        public Exception RunException;
-        public StringBuilder Output;
-        public StringBuilder Error;
+        public Exception? RunException;
+        public StringBuilder? Output;
+        public StringBuilder? Error;
     }
 
     public static RunResults RunExecutable(string executablePath, string arguments, string workingDirectory)
@@ -1187,17 +1211,17 @@ public class ExecutableRunner
 
 public class SiblingsReverseDocumentOrderInfo
 {
-    public XElement PreviousSibling;
+    public XElement? PreviousSibling;
 }
 
 public class DescendantsReverseDocumentOrderInfo
 {
-    public XElement PreviousElement;
+    public XElement? PreviousElement;
 }
 
 public class DescendantsTrimmedReverseDocumentOrderInfo
 {
-    public XElement PreviousElement;
+    public XElement? PreviousElement;
 }
 
 public class GroupOfAdjacent<TSource, TKey> : IGrouping<TKey, TSource>
@@ -1354,7 +1378,7 @@ public static class PtBucketTimer
 
     public static string LastBucket = null;
     private static DateTime LastTime;
-    private static Dictionary<string, BucketInfo> Buckets;
+    private static Dictionary<string, BucketInfo>? Buckets;
 
     public static void Bucket(string bucket)
     {
