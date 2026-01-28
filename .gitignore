@@ -41,3 +41,4 @@ TestResults/
 .idea/
 _ReSharper.Caches/
 **/tmpclaude*cwd
+.claude/
