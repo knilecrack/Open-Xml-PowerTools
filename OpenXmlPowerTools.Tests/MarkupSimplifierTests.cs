@@ -10,14 +10,14 @@ using Xunit;
 
 #if !ELIDE_XUNIT_TESTS
 
-namespace OpenXmlPowerTools.Tests
-{
-    public class MarkupSimplifierTests
-    {
-        private const WordprocessingDocumentType DocumentType = WordprocessingDocumentType.Document;
+namespace OpenXmlPowerTools.Tests;
 
-        private const string SmartTagDocumentTextValue = "The countries include Algeria, Botswana, and Sri Lanka.";
-        private const string SmartTagDocumentXmlString =
+public class MarkupSimplifierTests
+{
+    private const WordprocessingDocumentType DocumentType = WordprocessingDocumentType.Document;
+
+    private const string SmartTagDocumentTextValue = "The countries include Algeria, Botswana, and Sri Lanka.";
+    private const string SmartTagDocumentXmlString =
 @"<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
   <w:body>
     <w:p >
@@ -55,7 +55,7 @@ namespace OpenXmlPowerTools.Tests
 </w:document>
 ";
 
-        private const string SdtDocumentXmlString =
+    private const string SdtDocumentXmlString =
 @"<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
   <w:body>
     <w:sdt>
@@ -73,7 +73,7 @@ namespace OpenXmlPowerTools.Tests
   </w:body>
 </w:document>";
 
-        private const string GoBackBookmarkDocumentXmlString =
+    private const string GoBackBookmarkDocumentXmlString =
 @"<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
   <w:body>
     <w:p>
@@ -83,79 +83,78 @@ namespace OpenXmlPowerTools.Tests
   </w:body>
 </w:document>";
 
-        [Fact]
-        public void CanRemoveSmartTags()
+    [Fact]
+    public void CanRemoveSmartTags()
+    {
+        XDocument partDocument = XDocument.Parse(SmartTagDocumentXmlString);
+        Assert.True(partDocument.Descendants(W.smartTag).Any());
+
+        using (var stream = new MemoryStream())
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
         {
-            XDocument partDocument = XDocument.Parse(SmartTagDocumentXmlString);
-            Assert.True(partDocument.Descendants(W.smartTag).Any());
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.PutXDocument(partDocument);
 
-            using (var stream = new MemoryStream())
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.PutXDocument(partDocument);
+            var settings = new SimplifyMarkupSettings { RemoveSmartTags = true };
+            MarkupSimplifier.SimplifyMarkup(wordDocument, settings);
 
-                var settings = new SimplifyMarkupSettings { RemoveSmartTags = true };
-                MarkupSimplifier.SimplifyMarkup(wordDocument, settings);
+            partDocument = part.GetXDocument();
+            XElement t = partDocument.Descendants(W.t).First();
 
-                partDocument = part.GetXDocument();
-                XElement t = partDocument.Descendants(W.t).First();
-
-                Assert.False(partDocument.Descendants(W.smartTag).Any());
-                Assert.Equal(SmartTagDocumentTextValue, t.Value);
-            }
+            Assert.False(partDocument.Descendants(W.smartTag).Any());
+            Assert.Equal(SmartTagDocumentTextValue, t.Value);
         }
+    }
 
-        [Fact]
-        public void CanRemoveContentControls()
+    [Fact]
+    public void CanRemoveContentControls()
+    {
+        XDocument partDocument = XDocument.Parse(SdtDocumentXmlString);
+        Assert.True(partDocument.Descendants(W.sdt).Any());
+
+        using (var stream = new MemoryStream())
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
         {
-            XDocument partDocument = XDocument.Parse(SdtDocumentXmlString);
-            Assert.True(partDocument.Descendants(W.sdt).Any());
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.PutXDocument(partDocument);
 
-            using (var stream = new MemoryStream())
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.PutXDocument(partDocument);
+            var settings = new SimplifyMarkupSettings { RemoveContentControls = true };
+            MarkupSimplifier.SimplifyMarkup(wordDocument, settings);
 
-                var settings = new SimplifyMarkupSettings { RemoveContentControls = true };
-                MarkupSimplifier.SimplifyMarkup(wordDocument, settings);
+            partDocument = part.GetXDocument();
+            XElement element = partDocument
+                .Descendants(W.body)
+                .Descendants()
+                .First();
 
-                partDocument = part.GetXDocument();
-                XElement element = partDocument
-                    .Descendants(W.body)
-                    .Descendants()
-                    .First();
-
-                Assert.False(partDocument.Descendants(W.sdt).Any());
-                Assert.Equal(W.p, element.Name);
-            }
+            Assert.False(partDocument.Descendants(W.sdt).Any());
+            Assert.Equal(W.p, element.Name);
         }
+    }
 
-        [Fact]
-        public void CanRemoveGoBackBookmarks()
-        {
-            XDocument partDocument = XDocument.Parse(GoBackBookmarkDocumentXmlString);
-            Assert.Contains(partDocument
-                .Descendants(W.bookmarkStart)
+    [Fact]
+    public void CanRemoveGoBackBookmarks()
+    {
+        XDocument partDocument = XDocument.Parse(GoBackBookmarkDocumentXmlString);
+        Assert.Contains(partDocument
+            .Descendants(W.bookmarkStart)
 , e => e.Attribute(W.name).Value == "_GoBack" && e.Attribute(W.id).Value == "0");
-            Assert.Contains(partDocument
-                .Descendants(W.bookmarkEnd)
+        Assert.Contains(partDocument
+            .Descendants(W.bookmarkEnd)
 , e => e.Attribute(W.id).Value == "0");
 
-            using (var stream = new MemoryStream())
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.PutXDocument(partDocument);
+        using (var stream = new MemoryStream())
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
+        {
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.PutXDocument(partDocument);
 
-                var settings = new SimplifyMarkupSettings { RemoveGoBackBookmark = true };
-                MarkupSimplifier.SimplifyMarkup(wordDocument, settings);
+            var settings = new SimplifyMarkupSettings { RemoveGoBackBookmark = true };
+            MarkupSimplifier.SimplifyMarkup(wordDocument, settings);
 
-                partDocument = part.GetXDocument();
-                Assert.False(partDocument.Descendants(W.bookmarkStart).Any());
-                Assert.False(partDocument.Descendants(W.bookmarkEnd).Any());
-            }
+            partDocument = part.GetXDocument();
+            Assert.False(partDocument.Descendants(W.bookmarkStart).Any());
+            Assert.False(partDocument.Descendants(W.bookmarkEnd).Any());
         }
     }
 }

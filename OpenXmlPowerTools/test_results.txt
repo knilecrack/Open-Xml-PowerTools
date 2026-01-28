@@ -1,0 +1,1481 @@
+Build started 1/22/2026 11:37:34 PM.
+     1>Project "J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.sln" on node 1 (VSTest target(s)).
+     1>ValidateSolutionConfiguration:
+         Building solution configuration "Release|Any CPU".
+Test run for J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\bin\Release\net10.0\OpenXmlPowerTools.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.0.0+e341b939fe (64-bit .NET 10.0.2)
+[xUnit.net 00:00:00.07]   Discovering: OpenXmlPowerTools.Tests
+[xUnit.net 00:00:00.45]   Discovered:  OpenXmlPowerTools.Tests
+[xUnit.net 00:00:00.92]   Starting:    OpenXmlPowerTools.Tests
+[xUnit.net 00:00:01.00]     OxPt.PtUtilTests.PU001 [SKIP]
+[xUnit.net 00:00:01.00]       This is failing on AppVeyor
+  Skipped OxPt.PtUtilTests.PU001 [1 ms]
+  Passed OpenXmlPowerTools.Tests.PowerToolsBlockTests.ConstructorThrowsWhenPassingNull [10 ms]
+  Passed OpenXmlPowerTools.Tests.StronglyTypedBlockTests.ConstructorThrowsWhenPassingNull [9 ms]
+  Passed OpenXmlPowerTools.Tests.UnicodeMapperTests.CanCreateCoalescedRuns [22 ms]
+  Passed OpenXmlPowerTools.Tests.UnicodeMapperTests.CanStringifySymbols [11 ms]
+  Passed OpenXmlPowerTools.Tests.UnicodeMapperTests.CanCreateRunChildElementsFromSpecialCharacters [3 ms]
+  Passed OpenXmlPowerTools.Tests.UnicodeMapperTests.CanStringifySpecialElements [< 1 ms]
+  Passed OpenXmlPowerTools.Tests.UnicodeMapperTests.CanStringifyRunAndTextElements [< 1 ms]
+  Passed OpenXmlPowerTools.Tests.UnicodeMapperTests.CanMapSymbols [1 ms]
+  Passed OxPt.CaTests.CA003_ContentAtoms_Throws(name: "CA/CA009-altChunk.docx") [105 ms]
+  Passed OpenXmlPowerTools.Tests.MarkupSimplifierTests.CanRemoveSmartTags [113 ms]
+  Passed OpenXmlPowerTools.Tests.OpenXmlRegexTests.CanReplaceTextWithQuotationMarks [115 ms]
+  Passed OpenXmlPowerTools.Tests.MarkupSimplifierTests.CanRemoveContentControls [3 ms]
+  Passed OxPt.CuTests.CU001(name: "CU004-Chart-Cached-Data-04.docx") [117 ms]
+  Passed OpenXmlPowerTools.Tests.MarkupSimplifierTests.CanRemoveGoBackBookmarks [6 ms]
+  Passed OpenXmlPowerTools.Tests.OpenXmlRegexTests.CanReplaceTextWithQuotationMarksAndAddTrackedChangesWhenReplacing [8 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH128-FmtNumId-19.xlsx", sheetName: "Sheet1", range: "A1:A10") [144 ms]
+  Passed OpenXmlPowerTools.Tests.OpenXmlRegexTests.CanReplaceTextWithFields [22 ms]
+  Passed OpenXmlPowerTools.Tests.OpenXmlRegexTests.CanReplaceTextWithSymbolsAndTrackedChanges [2 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH113-VertMergedCell.xlsx", sheetName: "Sheet1", range: "A1:A1") [4 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH111-ChangedDefaultColumnWidth.xlsx", sheetName: "Sheet1", range: "A1:A1") [3 ms]
+  Passed OpenXmlPowerTools.Tests.OpenXmlRegexTests.CanReplaceTextWithQuotationMarksAndTrackedChanges [6 ms]
+  Passed OxPt.CuTests.CU001(name: "CU009-Chart-Embedded-Xlsx-01.docx") [55 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH101-SimpleFormats.xlsx", sheetName: "Sheet1", range: "A4:B8") [21 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH127-FmtNumId-18.xlsx", sheetName: "Sheet1", range: "A1:A10") [6 ms]
+  Passed OxPt.CaTests.CA002_Annotations(name: "HC009-Test-04.docx") [96 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00%", value: "1", expected: "100.00%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00%", value: "2", expected: "200.00%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0", value: "1000000000.1", expected: "1,000,000,000", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0%", value: "0.01", expected: "1%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0.00;(#,##0.00)", value: "-100.00", expected: "(100.00)", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "# ??/??", value: "0.125", expected: "0.13", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0.00", value: "100000000.09999999", expected: "100,000,000.10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0", value: "1.1000000000000001", expected: "1", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0%", value: "1", expected: "100%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "mm:ss.0", value: "42344.295445092591", expected: "05:26:456", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00E+00", value: "100", expected: "1.00E+02", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0", value: "10.1", expected: "10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0", value: "1.1000000000000001", expected: "1", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00", value: "1.1000000000000001", expected: "1.10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0.00", value: "10.1", expected: "10.10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00E+00", value: "10000.1", expected: "1.00E+04", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "##0.0E+0", value: "100.0", expected: "100.0E+0", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "d-mmm", value: "42344", expected: "6-Dec", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00E+00", value: "100000.5", expected: "1.00E+05", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "h:mm AM/PM", value: "42344.295138888891", expected: "7:05 AM", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "[h]:mm:ss", value: "42344.295405092591", expected: "1016263:05:23", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0 ;(#,##0)", value: "-100", expected: "(100)", expectedColor: null) [< 1 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH131-FmtNumId-22.xlsx", sheetName: "Sheet1", range: "A1:A10") [6 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0%", value: "0.25", expected: "25%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0.00;(#,##0.00)", value: "100.00", expected: "100.00", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0.00;[Red](#,##0.00)", value: "-100.00", expected: "(100.00)", expectedColor: "Red") [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0", value: "100000000.09999999", expected: "100,000,000", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00%", value: "0.25", expected: "25.00%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0 ;[Red](#,##0)", value: "100", expected: "100", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00E+00", value: "0.1", expected: "1.00E-01", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "# ?/?", value: "0.25", expected: "0.25", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00%", value: "0.1", expected: "10.00%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "General", value: "0", expected: "0", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0 ;[Red](#,##0)", value: "-100", expected: "(100)", expectedColor: "Red") [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00E+00", value: "0.01", expected: "1.00E-02", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "mm-dd-yy", value: "42344", expected: "12-06-15", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "m/d/yy h:mm", value: "42344.295405092591", expected: "12/6/15 7:05", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "# ??/??", value: "0.25", expected: "0.25", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00%", value: "0.01", expected: "1.00%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0", value: "100.1", expected: "100", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "d-mmm-yy", value: "42344", expected: "6-Dec-15", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00E+00", value: "0.25", expected: "2.50E-01", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "# ?/?", value: "0.125", expected: "0.13", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "##0.0E+0", value: "543.210", expected: "543.2E+0", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "h:mm", value: "42344.295405092591", expected: "7:05", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0.00;[Red](#,##0.00)", value: "100.00", expected: "100.00", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00", value: "10.1", expected: "10.10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0 ;(#,##0)", value: "100", expected: "100", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00E+00", value: "1", expected: "1.00E+00", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0.00", value: "1000.1", expected: "1,000.10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0", value: "10.1", expected: "10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "#,##0.00", value: "1.1000000000000001", expected: "1.10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "h:mm:ss AM/PM", value: "42344.295405092591", expected: "7:05:23 AM", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0%", value: "2", expected: "200%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "h:mm:ss", value: "42344.295405092591", expected: "7:05:23", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "mm:ss", value: "42344.295405092591", expected: "05:23", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "mmm-yy", value: "42344", expected: "Dec-15", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00%", value: "0.1025", expected: "10.25%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00", value: "100000000.09999999", expected: "100000000.10", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0.00E+00", value: "1000", expected: "1.00E+03", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0%", value: "0.1", expected: "10%", expectedColor: null) [< 1 ms]
+  Passed OxPt.CfTests.CF001(formatCode: "0", value: "100000000.09999999", expected: "100000000", expectedColor: null) [< 1 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1", range: "A9:A9") [19 ms]
+  Passed OxPt.CuTests.CU001(name: "CU013-Chart-Embedded-Xlsx-05.docx") [54 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "F2:F2", expected: "CHF  -123.45", expectedColor: null) [21 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "C2:C2", expected: "-£ 123.45", expectedColor: null) [6 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1", range: "A2:D4") [9 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "E1:E1", expected: "¥ 123.45", expectedColor: null) [6 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH120-FmtNumId-9.xlsx", sheetName: "Sheet1", range: "A1:A10") [8 ms]
+  Passed OxPt.CfTests.CF002(name: "SH204-Cell-A1-B1-C1-Without-R-Attr.xlsx", sheetName: "Sheet1", range: "A1:A1", expected: "1", expectedColor: null) [17 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH125-FmtNumId-16.xlsx", sheetName: "Sheet1", range: "A1:A10") [18 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "G1:G1", expected: "₩ 123.45", expectedColor: null) [5 ms]
+  Passed OxPt.CuTests.CU001(name: "CU012-Chart-Embedded-Xlsx-04.docx") [37 ms]
+  Passed OxPt.RaTests.RA001(name: "RA001-Tracked-Revisions-02.docx") [265 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "H1:H1", expected: "£ 123.45", expectedColor: null) [3 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH129-FmtNumId-20.xlsx", sheetName: "Sheet1", range: "A1:A10") [5 ms]
+  Passed OpenXmlPowerTools.Tests.StronglyTypedBlockTests.CanUseStronglyTypedBlockToDemarcateApis [258 ms]
+  Passed OpenXmlPowerTools.Tests.PowerToolsBlockExtensionsTests.MustBeginPowerToolsBlockToUsePowerTools [270 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "E2:E2", expected: "¥ -123.45", expectedColor: null) [3 ms]
+  Passed OpenXmlPowerTools.Tests.PowerToolsBlockTests.CanUsePowerToolsBlockToDemarcateApis [259 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH126-FmtNumId-17.xlsx", sheetName: "Sheet1", range: "A1:A10") [6 ms]
+  Passed OxPt.CfTests.CF002(name: "SH201-Cell-C1-Without-R-Attr.xlsx", sheetName: "Sheet1", range: "C1:C1", expected: "3", expectedColor: null) [4 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1", range: "C2:C2") [4 ms]
+  Passed OxPt.CuTests.CU001(name: "CU018-Chart-Cached-Data-41.pptx") [15 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH118-FmtNumId-3.xlsx", sheetName: "Sheet1", range: "A1:A10") [23 ms]
+  Passed OxPt.CuTests.CU001(name: "CU001-Chart-Cached-Data-01.docx") [25 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH117-FmtNumId-2.xlsx", sheetName: "Sheet1", range: "A1:A10") [6 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH116-FmtNumId-1.xlsx", sheetName: "Sheet1", range: "A1:A10") [21 ms]
+  Passed OxPt.CuTests.CU001(name: "CU015-Chart-Embedded-Xlsx-07.docx") [27 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH114-Centered-Cell.xlsx", sheetName: "Sheet1", range: "A1:A1") [5 ms]
+[xUnit.net 00:00:01.32]     OpenXmlPowerTools.Tests.PowerToolsBlockExtensionsTests.MustEndPowerToolsBlockToUseStronglyTypedClasses [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Single() Failure: The collection contained 2 items
+[xUnit.net 00:00:01.32]       Collection: [[···], [···]]
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\PowerToolsBlockExtensionsTests.cs(115,0): at OpenXmlPowerTools.Tests.PowerToolsBlockExtensionsTests.MustEndPowerToolsBlockToUseStronglyTypedClasses()
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:01.32]     OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "G3:G3", expected: "₩ -", expectedColor: null) [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                  ↓ (pos 0)
+[xUnit.net 00:00:01.32]       Expected: "₩ -"
+[xUnit.net 00:00:01.32]       Actual:   "-₩ -"
+[xUnit.net 00:00:01.32]                  ↑ (pos 0)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs(144,0): at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor)
+[xUnit.net 00:00:01.32]            at InvokeStub_CfTests.CF002(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]     OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "H3:H3", expected: "£ -", expectedColor: null) [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                  ↓ (pos 0)
+[xUnit.net 00:00:01.32]       Expected: "£ -"
+[xUnit.net 00:00:01.32]       Actual:   "-£ -"
+[xUnit.net 00:00:01.32]                  ↑ (pos 0)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs(144,0): at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor)
+[xUnit.net 00:00:01.32]            at InvokeStub_CfTests.CF002(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed OpenXmlPowerTools.Tests.PowerToolsBlockExtensionsTests.MustEndPowerToolsBlockToUseStronglyTypedClasses [36 ms]
+  Error Message:
+   Assert.Single() Failure: The collection contained 2 items
+Collection: [[···], [···]]
+  Stack Trace:
+     at OpenXmlPowerTools.Tests.PowerToolsBlockExtensionsTests.MustEndPowerToolsBlockToUseStronglyTypedClasses() in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\PowerToolsBlockExtensionsTests.cs:line 115
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "G3:G3", expected: "₩ -", expectedColor: null) [25 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "₩ -"
+Actual:   "-₩ -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.CfTests.CF002(name: "SH202-Cell-C1-D1-Without-R-Attr.xlsx", sheetName: "Sheet1", range: "C1:C1", expected: "3", expectedColor: null) [17 ms]
+  Passed OxPt.CuTests.CU001(name: "CU006-Chart-Cached-Data-06.docx") [23 ms]
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "H3:H3", expected: "£ -", expectedColor: null) [3 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "£ -"
+Actual:   "-£ -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "B1:B1", expected: "$ 123.45", expectedColor: null) [5 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1", range: "A1:I9") [55 ms]
+[xUnit.net 00:00:01.36]     OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "E3:E3", expected: "¥ -", expectedColor: null) [FAIL]
+[xUnit.net 00:00:01.36]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.36]                  ↓ (pos 0)
+[xUnit.net 00:00:01.36]       Expected: "¥ -"
+[xUnit.net 00:00:01.36]       Actual:   "-¥ -"
+[xUnit.net 00:00:01.36]                  ↑ (pos 0)
+[xUnit.net 00:00:01.36]       Stack Trace:
+[xUnit.net 00:00:01.36]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs(144,0): at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor)
+[xUnit.net 00:00:01.36]            at InvokeStub_CfTests.CF002(Object, Span`1)
+[xUnit.net 00:00:01.36]            at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.37]     OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "D3:D3", expected: "€  -", expectedColor: null) [FAIL]
+[xUnit.net 00:00:01.37]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.37]                  ↓ (pos 0)
+[xUnit.net 00:00:01.37]       Expected: "€  -"
+[xUnit.net 00:00:01.37]       Actual:   "-€  -"
+[xUnit.net 00:00:01.37]                  ↑ (pos 0)
+[xUnit.net 00:00:01.37]       Stack Trace:
+[xUnit.net 00:00:01.37]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs(144,0): at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor)
+[xUnit.net 00:00:01.37]            at InvokeStub_CfTests.CF002(Object, Span`1)
+[xUnit.net 00:00:01.37]            at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "F1:F1", expected: "CHF  123.45", expectedColor: null) [28 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH105-No-SharedString.xlsx", sheetName: "Sheet1", range: "A4:A7") [11 ms]
+  Passed OxPt.CuTests.CU001(name: "CU003-Chart-Cached-Data-03.docx") [49 ms]
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "E3:E3", expected: "¥ -", expectedColor: null) [10 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "¥ -"
+Actual:   "-¥ -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "H2:H2", expected: "-£ 123.45", expectedColor: "Red") [3 ms]
+  Passed OxPt.CuTests.CU001(name: "CU002-Chart-Cached-Data-02.docx") [6 ms]
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "D3:D3", expected: "€  -", expectedColor: null) [3 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "€  -"
+Actual:   "-€  -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.38]     OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "F3:F3", expected: "CHF  -", expectedColor: null) [FAIL]
+[xUnit.net 00:00:01.38]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.38]                  ↓ (pos 0)
+[xUnit.net 00:00:01.38]       Expected: "CHF  -"
+[xUnit.net 00:00:01.38]       Actual:   "-CHF  -"
+[xUnit.net 00:00:01.38]                  ↑ (pos 0)
+[xUnit.net 00:00:01.38]       Stack Trace:
+[xUnit.net 00:00:01.38]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs(144,0): at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor)
+[xUnit.net 00:00:01.38]            at InvokeStub_CfTests.CF002(Object, Span`1)
+[xUnit.net 00:00:01.38]            at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "F3:F3", expected: "CHF  -", expectedColor: null) [4 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "CHF  -"
+Actual:   "-CHF  -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH124-FmtNumId-15.xlsx", sheetName: "Sheet1", range: "A1:A10") [17 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "A3:A3", expected: "$0.00", expectedColor: null) [14 ms]
+  Passed OxPt.CuTests.CU001(name: "CU007-Chart-Cached-Data-07.docx") [22 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH110-CellWithMasterStyle.xlsx", sheetName: "Sheet1", range: "A1:A1") [16 ms]
+  Passed OxPt.CfTests.CF002(name: "SH152-Custom-Cell-Format.xlsx", sheetName: "Sheet1", range: "A1:A1", expected: "1,234,567.0000", expectedColor: null) [8 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH119-FmtNumId-4.xlsx", sheetName: "Sheet1", range: "A1:A10") [8 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "D1:D1", expected: "€  123.45", expectedColor: null) [4 ms]
+  Passed OxPt.CuTests.CU001(name: "CU008-Chart-Cached-Data-08.docx") [12 ms]
+  Passed OxPt.RaTests.RA001(name: "RA001-Tracked-Revisions-01.docx") [182 ms]
+  Passed OxPt.CfTests.CF002(name: "SH203-Cell-C1-D1-E1-Without-R-Attr.xlsx", sheetName: "Sheet1", range: "C1:C1", expected: "3", expectedColor: null) [4 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH104-With-SharedString.xlsx", sheetName: "Sheet1", range: "A4:A7") [6 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "B2:B2", expected: "$ (123.45)", expectedColor: null) [3 ms]
+  Passed OxPt.CuTests.CU001(name: "CU014-Chart-Embedded-Xlsx-06.docx") [10 ms]
+[xUnit.net 00:00:01.43]     OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "B3:B3", expected: "$ -", expectedColor: null) [FAIL]
+[xUnit.net 00:00:01.43]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.43]                  ↓ (pos 0)
+[xUnit.net 00:00:01.43]       Expected: "$ -"
+[xUnit.net 00:00:01.43]       Actual:   "-$ -"
+[xUnit.net 00:00:01.43]                  ↑ (pos 0)
+[xUnit.net 00:00:01.43]       Stack Trace:
+[xUnit.net 00:00:01.43]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs(144,0): at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor)
+[xUnit.net 00:00:01.43]            at InvokeStub_CfTests.CF002(Object, Span`1)
+[xUnit.net 00:00:01.43]            at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.44]     OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "C3:C3", expected: "£ -", expectedColor: null) [FAIL]
+[xUnit.net 00:00:01.44]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.44]                  ↓ (pos 0)
+[xUnit.net 00:00:01.44]       Expected: "£ -"
+[xUnit.net 00:00:01.44]       Actual:   "-£ -"
+[xUnit.net 00:00:01.44]                  ↑ (pos 0)
+[xUnit.net 00:00:01.44]       Stack Trace:
+[xUnit.net 00:00:01.44]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs(144,0): at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor)
+[xUnit.net 00:00:01.44]            at InvokeStub_CfTests.CF002(Object, Span`1)
+[xUnit.net 00:00:01.44]            at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH103-No-SharedString.xlsx", sheetName: "Sheet1", range: "A1:A1") [5 ms]
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "B3:B3", expected: "$ -", expectedColor: null) [16 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "$ -"
+Actual:   "-$ -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH115-DigitsToRight.xlsx", sheetName: "Sheet1", range: "A1:A10") [7 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "C1:C1", expected: "£ 123.45", expectedColor: null) [6 ms]
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "C3:C3", expected: "£ -", expectedColor: null) [5 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "£ -"
+Actual:   "-£ -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH112-NotVertMergedCell.xlsx", sheetName: "Sheet1", range: "A1:A1") [6 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "D2:D2", expected: "€  (123.45)", expectedColor: null) [4 ms]
+  Passed OxPt.HcTests.HC001(name: "HC040-Hyperlink-Fieldcode-01.docx") [488 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1", range: "I9:I9") [5 ms]
+  Passed OxPt.CuTests.CU001(name: "CU016-Chart-Embedded-Xlsx-08.docx") [31 ms]
+  Passed OxPt.CfTests.CF002(name: "SH152-Custom-Cell-Format.xlsx", sheetName: "Sheet1", range: "B1:B1", expected: "This is the value: abc", expectedColor: null) [4 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1", range: "C5:G7") [26 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "G2:G2", expected: "-₩ 123.45", expectedColor: null) [24 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "A1:A1", expected: "$123.45", expectedColor: null) [5 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH109-CellWithBorder.xlsx", sheetName: "Sheet1", range: "A1:A1") [6 ms]
+  Passed OxPt.CuTests.CU001(name: "CU010-Chart-Embedded-Xlsx-02.docx") [32 ms]
+  Passed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "A2:A2", expected: "-$123.45", expectedColor: null) [5 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH122-FmtNumId-12.xlsx", sheetName: "Sheet1", range: "A1:A10") [22 ms]
+  Passed OxPt.CuTests.CU001(name: "CU011-Chart-Embedded-Xlsx-03.docx") [26 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1", range: "I1:I1") [4 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH121-FmtNumId-11.xlsx", sheetName: "Sheet1", range: "A1:A10") [7 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH123-FmtNumId-14.xlsx", sheetName: "Sheet1", range: "A1:A10") [19 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1", range: "A1:A1") [7 ms]
+  Passed OxPt.CuTests.CU001(name: "CU019-Chart-Embedded-Xlsx-41.pptx") [36 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH108-SimpleFormattedCell.xlsx", sheetName: "Sheet1", range: "A1:A1") [7 ms]
+  Passed OxPt.CuTests.CU001(name: "CU005-Chart-Cached-Data-05.docx") [10 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH101-SimpleFormats.xlsx", sheetName: "Sheet1", range: "A1:B10") [34 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH130-FmtNumId-21.xlsx", sheetName: "Sheet1", range: "A1:A10") [8 ms]
+  Passed OxPt.CuTests.CU001(name: "CU017-Chart-Embedded-Xlsx-10.docx") [45 ms]
+  Passed OxPt.ShTests.SH004_ConvertRange(name: "SH106-9-x-9-Formatted.xlsx", sheetName: "Sheet1", range: "A1:I9") [36 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH109-CellWithBorder.xlsx", sheetName: "Sheet1") [8 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00060", src: "FA/RevTracking/006-DeletedTableRow.docx") [685 ms]
+[xUnit.net 00:00:01.67]     OxPt.SwTests.SW002_AllDataTypes [FAIL]
+[xUnit.net 00:00:01.67]       Assert.Empty() Failure: Collection was not empty
+[xUnit.net 00:00:01.67]       Collection: [ValidationErrorInfo { Description = "Cell contents have invalid value '2012-01-09T00:00"···, ErrorType = Semantic, Id = "Sem_CellValue", Node = [···], Part = WorksheetPart { ContentType = "application/vnd.openxmlformats-officedocument.spre"···, ControlPropertiesParts = [···], CustomPropertyParts = [···], DataPartReferenceRelationships = [···], DrawingsPart = null, ··· }, ··· }, ValidationErrorInfo { Description = "Cell contents have invalid value '2012-01-08T00:00"···, ErrorType = Semantic, Id = "Sem_CellValue", Node = [···], Part = WorksheetPart { ContentType = "application/vnd.openxmlformats-officedocument.spre"···, ControlPropertiesParts = [···], CustomPropertyParts = [···], DataPartReferenceRelationships = [···], DrawingsPart = null, ··· }, ··· }]
+[xUnit.net 00:00:01.67]       Stack Trace:
+[xUnit.net 00:00:01.67]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SpreadsheetWriterTests.cs(335,0): at OxPt.SwTests.Validate(FileInfo fi)
+[xUnit.net 00:00:01.67]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SpreadsheetWriterTests.cs(309,0): at OxPt.SwTests.SW002_AllDataTypes()
+[xUnit.net 00:00:01.67]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:01.67]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed OxPt.SwTests.SW002_AllDataTypes [670 ms]
+  Error Message:
+   Assert.Empty() Failure: Collection was not empty
+Collection: [ValidationErrorInfo { Description = "Cell contents have invalid value '2012-01-09T00:00"···, ErrorType = Semantic, Id = "Sem_CellValue", Node = [···], Part = WorksheetPart { ContentType = "application/vnd.openxmlformats-officedocument.spre"···, ControlPropertiesParts = [···], CustomPropertyParts = [···], DataPartReferenceRelationships = [···], DrawingsPart = null, ··· }, ··· }, ValidationErrorInfo { Description = "Cell contents have invalid value '2012-01-08T00:00"···, ErrorType = Semantic, Id = "Sem_CellValue", Node = [···], Part = WorksheetPart { ContentType = "application/vnd.openxmlformats-officedocument.spre"···, ControlPropertiesParts = [···], CustomPropertyParts = [···], DataPartReferenceRelationships = [···], DrawingsPart = null, ··· }, ··· }]
+  Stack Trace:
+     at OxPt.SwTests.Validate(FileInfo fi) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SpreadsheetWriterTests.cs:line 335
+   at OxPt.SwTests.SW002_AllDataTypes() in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SpreadsheetWriterTests.cs:line 309
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1") [36 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH129-FmtNumId-20.xlsx", sheetName: "Sheet1") [8 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH126-FmtNumId-17.xlsx", sheetName: "Sheet1") [30 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH104-With-SharedString.xlsx", sheetName: "Sheet1") [6 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH121-FmtNumId-11.xlsx", sheetName: "Sheet1") [9 ms]
+  Passed OxPt.DaTests.DA101(name: "DA250-ConditionalWithRichXPath.docx", data: "DA250-Address.xml", err: False) [773 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH114-Centered-Cell.xlsx", sheetName: "Sheet1") [8 ms]
+  Passed OxPt.SwTests.SW001_Simple [76 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH111-ChangedDefaultColumnWidth.xlsx", sheetName: "Sheet1") [23 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH125-FmtNumId-16.xlsx", sheetName: "Sheet1") [6 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH116-FmtNumId-1.xlsx", sheetName: "Sheet1") [8 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH131-FmtNumId-22.xlsx", sheetName: "Sheet1") [6 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH105-No-SharedString.xlsx", sheetName: "Sheet1") [16 ms]
+  Passed OxPt.HwTests.HW001(name: "T1020.html") [845 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH106-9-x-9-Formatted.xlsx", sheetName: "Sheet1") [86 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH124-FmtNumId-15.xlsx", sheetName: "Sheet1") [22 ms]
+  Passed OxPt.DaTests.DA101(name: "DA202-TemplateDocument.docx", data: "DA-DataNotHighValueCust.xml", err: False) [196 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH118-FmtNumId-3.xlsx", sheetName: "Sheet1") [31 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH119-FmtNumId-4.xlsx", sheetName: "Sheet1") [8 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH113-VertMergedCell.xlsx", sheetName: "Sheet1") [18 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH130-FmtNumId-21.xlsx", sheetName: "Sheet1") [24 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH108-SimpleFormattedCell.xlsx", sheetName: "Sheet1") [5 ms]
+  Passed OxPt.PbTests.PB001_Formatting [1 s]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH127-FmtNumId-18.xlsx", sheetName: "Sheet1") [19 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH123-FmtNumId-14.xlsx", sheetName: "Sheet1") [15 ms]
+  Passed OxPt.HwTests.HW001(name: "T0012.html") [233 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH101-SimpleFormats.xlsx", sheetName: "Sheet1") [29 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH110-CellWithMasterStyle.xlsx", sheetName: "Sheet1") [6 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH128-FmtNumId-19.xlsx", sheetName: "Sheet1") [23 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00040", src: "FA/RevTracking/004-InsertedNumberingProperties.doc"···) [457 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH115-DigitsToRight.xlsx", sheetName: "Sheet1") [7 ms]
+  Passed OxPt.DaTests.DA101(name: "DA263-ConditionalNotMatch.docx", data: "DA-DataSmallCustomer.xml", err: False) [174 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH117-FmtNumId-2.xlsx", sheetName: "Sheet1") [22 ms]
+  Passed OxPt.MgTests.MG001(name: "DA005-SelectRowData-NoData.docx") [1 s]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH120-FmtNumId-9.xlsx", sheetName: "Sheet1") [9 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH122-FmtNumId-12.xlsx", sheetName: "Sheet1") [9 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH112-NotVertMergedCell.xlsx", sheetName: "Sheet1") [26 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH103-No-SharedString.xlsx", sheetName: "Sheet1") [6 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH003-TableWithDateInFirstColumn.xlsx", tableName: "MyTable") [33 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH007-One-Cell-Table.xlsx", tableName: "Table1") [8 ms]
+  Passed OxPt.HwTests.HW001(name: "T0740.html") [188 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH107-9-x-9-Formatted-Table.xlsx", tableName: "Table1") [37 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH006-Table-No-SharedStrings.xlsx", tableName: "Table1") [24 ms]
+  Passed OxPt.DaTests.DA101(name: "DA204-Select-XPathFindsNoDataOptional.docx", data: "DA-Data.xml", err: False) [184 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH004-TableAtOffsetLocation.xlsx", tableName: "MyTable") [25 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH009-Table-With-Wide-Column.xlsx", tableName: "Table1") [7 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH005-Table-With-SharedStrings.xlsx", tableName: "Table1") [19 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH001-Table.xlsx", tableName: "MyTable") [27 ms]
+  Passed OxPt.ShTests.SH003_ConvertTable(name: "SH008-Table-With-Tall-Row.xlsx", tableName: "Table1") [22 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00200", src: "FA/RevTracking/020-SectionPropertiesChange.docx") [312 ms]
+  Passed OxPt.HwTests.HW001(name: "T0015.html") [188 ms]
+  Passed OxPt.ShTests.SH002_SheetNames(name: "Spreadsheet.xlsx", numberOfSheets: 2) [25 ms]
+  Passed OxPt.ShTests.SH001_TableNames(name: "SH002-TwoTablesTwoSheets.xlsx", numberOfTables: 2) [32 ms]
+  Passed OxPt.ShTests.SH001_TableNames(name: "SH001-Table.xlsx", numberOfTables: 1) [6 ms]
+  Passed OxPt.DaTests.DA101(name: "DA018-SmartQuotes.docx", data: "DA-Data.xml", err: False) [182 ms]
+  Passed OxPt.DaTests.DA101(name: "DA210-InvalidXml.docx", data: "DA-Data.xml", err: True) [153 ms]
+  Passed OxPt.HwTests.HW001(name: "T0111.html") [233 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00080", src: "FA/RevTracking/008-InsertedFieldCode.docx") [243 ms]
+  Passed OxPt.MgTests.MG001(name: "DA003-Select-XPathFindsNoData.docx") [573 ms]
+  Passed OxPt.DaTests.DA101(name: "DA212-OtherMarkupTypes.docx", data: "DA-Data.xml", err: True) [149 ms]
+  Passed OxPt.HwTests.HW001(name: "T0410.html") [133 ms]
+  Passed OxPt.WcTests2.CZ001_CompareTrackedInPrev(testId: "CZ-1030", name1: "CZ/CZ004-Multi-Paragraphs-in-Cell.docx", name2: "CZ/CZ004-Multi-Paragraphs-in-Cell-Mod.docx", revisionCount: 1) [1 s]
+  Passed OxPt.PbTests.PB005_Formatting [905 ms]
+  Passed OxPt.DaTests.DA101(name: "DA032-TooMuchDataForConditional.docx", data: "DA-TooMuchDataForConditional.xml", err: True) [157 ms]
+  Passed OxPt.HwTests.HW001(name: "T0955.html") [170 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00070", src: "FA/RevTracking/007-InsertedTableRow.docx") [297 ms]
+  Passed OxPt.DaTests.DA101(name: "DA011-SchemaError.docx", data: "DA-Data.xml", err: True) [60 ms]
+  Passed OxPt.HwTests.HW001(name: "T1570.html") [133 ms]
+  Passed OxPt.DaTests.DA101(name: "DA213-Runs.docx", data: "DA-Data.xml", err: False) [118 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00100", src: "FA/RevTracking/010-InsertedRun.docx") [230 ms]
+  Passed OxPt.HwTests.HW001(name: "T1410.html") [195 ms]
+  Passed OxPt.DaTests.DA101(name: "DA203-Select-XPathFindsNoData.docx", data: "DA-Data.xml", err: True) [218 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP002-Deleted-Text.docx") [2 s]
+  Passed OxPt.HwTests.HW001(name: "T0360.html") [161 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1400", name: "WC/WC015-Three-Paragraphs-After.docx") [2 s]
+  Passed OxPt.DaTests.DA101(name: "DA261-RunLevelConditional.docx", data: "DA-Data.xml", err: False) [142 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00190", src: "FA/RevTracking/019-RunPropertiesChange.docx") [286 ms]
+  Passed OxPt.HwTests.HW001(name: "T0928.html") [156 ms]
+  Passed OxPt.PbTests.PB003_Formatting [757 ms]
+  Passed OxPt.DaTests.DA101(name: "DA251-EnhancedTables.docx", data: "DA-Data.xml", err: False) [221 ms]
+  Passed OxPt.WcTests2.CZ001_CompareTrackedInPrev(testId: "CZ-1010", name1: "CZ/CZ002-Multi-Paragraphs.docx", name2: "CZ/CZ002-Multi-Paragraphs-Mod.docx", revisionCount: 1) [902 ms]
+  Passed OxPt.HwTests.HW001(name: "T0020.html") [171 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00140", src: "FA/RevTracking/014-MovedParagraph.docx") [300 ms]
+  Passed OxPt.HwTests.HW001(name: "T0120.html") [153 ms]
+  Passed OxPt.DaTests.DA101(name: "DA223-RepeatWOEndRepeat.docx", data: "DA-Data.xml", err: True) [233 ms]
+[xUnit.net 00:00:03.97]     OxPt.PbTests.PB006_VideoFormats [FAIL]
+[xUnit.net 00:00:03.97]       System.IO.IOException : Entries cannot be opened multiple times in Update mode.
+[xUnit.net 00:00:03.97]       Stack Trace:
+[xUnit.net 00:00:03.97]            at System.IO.Compression.ZipArchiveEntry.OpenInUpdateMode()
+[xUnit.net 00:00:03.97]            at System.IO.Compression.ZipArchiveEntry.Open()
+[xUnit.net 00:00:03.97]            at System.IO.Packaging.ZipStreamManager.Open(ZipArchiveEntry zipArchiveEntry, FileAccess streamFileAccess)
+[xUnit.net 00:00:03.97]            at System.IO.Packaging.ZipPackagePart.GetStreamCore(FileMode streamFileMode, FileAccess streamFileAccess)
+[xUnit.net 00:00:03.97]            at System.IO.Packaging.PackagePart.GetStream(FileMode mode, FileAccess access)
+[xUnit.net 00:00:03.97]            at DocumentFormat.OpenXml.Features.PackageFeatureBase.PackagePart.GetStream(FileMode open, FileAccess write)
+[xUnit.net 00:00:03.97]            at DocumentFormat.OpenXml.Packaging.DataPart.GetStream(FileMode mode, FileAccess access)
+[xUnit.net 00:00:03.97]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PtOpenXmlUtil.cs(1908,0): at OpenXmlPowerTools.MediaData..ctor(DataPart part)
+[xUnit.net 00:00:03.97]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs(1737,0): at OpenXmlPowerTools.PresentationBuilder.ManageMediaCopy(DataPart oldMedia, List`1 mediaList)
+[xUnit.net 00:00:03.97]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs(1332,0): at OpenXmlPowerTools.PresentationBuilder.CopyRelatedMedia(OpenXmlPart oldContentPart, OpenXmlPart newContentPart, XElement imageReference, XName attributeName, List`1 mediaList, String mediaRelationshipType)
+[xUnit.net 00:00:03.97]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs(654,0): at OpenXmlPowerTools.PresentationBuilder.CopyRelatedPartsForContentParts(PresentationDocument newDocument, OpenXmlPart oldContentPart, OpenXmlPart newContentPart, IEnumerable`1 newContent, List`1 images, List`1 mediaList)
+[xUnit.net 00:00:03.97]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs(411,0): at OpenXmlPowerTools.PresentationBuilder.AppendSlides(PresentationDocument sourceDocument, PresentationDocument newDocument, Int32 start, Int32 count, Boolean keepMaster, List`1 images, SlideMasterPart currentMasterPart, List`1 mediaList)
+[xUnit.net 00:00:03.97]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs(154,0): at OpenXmlPowerTools.PresentationBuilder.BuildPresentation(List`1 sources, PresentationDocument output)
+[xUnit.net 00:00:03.97]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs(78,0): at OpenXmlPowerTools.PresentationBuilder.BuildPresentation(List`1 sources, String fileName)
+[xUnit.net 00:00:03.97]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\PresentationBuilderTests.cs(136,0): at OxPt.PbTests.PB006_VideoFormats()
+[xUnit.net 00:00:03.97]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:03.97]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed OxPt.PbTests.PB006_VideoFormats [305 ms]
+  Error Message:
+   System.IO.IOException : Entries cannot be opened multiple times in Update mode.
+  Stack Trace:
+     at System.IO.Compression.ZipArchiveEntry.OpenInUpdateMode()
+   at System.IO.Compression.ZipArchiveEntry.Open()
+   at System.IO.Packaging.ZipStreamManager.Open(ZipArchiveEntry zipArchiveEntry, FileAccess streamFileAccess)
+   at System.IO.Packaging.ZipPackagePart.GetStreamCore(FileMode streamFileMode, FileAccess streamFileAccess)
+   at System.IO.Packaging.PackagePart.GetStream(FileMode mode, FileAccess access)
+   at DocumentFormat.OpenXml.Features.PackageFeatureBase.PackagePart.GetStream(FileMode open, FileAccess write)
+   at DocumentFormat.OpenXml.Packaging.DataPart.GetStream(FileMode mode, FileAccess access)
+   at OpenXmlPowerTools.MediaData..ctor(DataPart part) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PtOpenXmlUtil.cs:line 1908
+   at OpenXmlPowerTools.PresentationBuilder.ManageMediaCopy(DataPart oldMedia, List`1 mediaList) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs:line 1737
+   at OpenXmlPowerTools.PresentationBuilder.CopyRelatedMedia(OpenXmlPart oldContentPart, OpenXmlPart newContentPart, XElement imageReference, XName attributeName, List`1 mediaList, String mediaRelationshipType) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs:line 1332
+   at OpenXmlPowerTools.PresentationBuilder.CopyRelatedPartsForContentParts(PresentationDocument newDocument, OpenXmlPart oldContentPart, OpenXmlPart newContentPart, IEnumerable`1 newContent, List`1 images, List`1 mediaList) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs:line 654
+   at OpenXmlPowerTools.PresentationBuilder.AppendSlides(PresentationDocument sourceDocument, PresentationDocument newDocument, Int32 start, Int32 count, Boolean keepMaster, List`1 images, SlideMasterPart currentMasterPart, List`1 mediaList) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs:line 411
+   at OpenXmlPowerTools.PresentationBuilder.BuildPresentation(List`1 sources, PresentationDocument output) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs:line 154
+   at OpenXmlPowerTools.PresentationBuilder.BuildPresentation(List`1 sources, String fileName) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\PresentationBuilder.cs:line 78
+   at OxPt.PbTests.PB006_VideoFormats() in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\PresentationBuilderTests.cs:line 136
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00170", src: "FA/RevTracking/017-NumberingChange.docx") [291 ms]
+  Passed OxPt.DaTests.DA101(name: "DA216-TwoRunsSchemaErrorInSecond.docx", data: "DA-Data.xml", err: True) [141 ms]
+  Passed OxPt.HcTests.HC001(name: "HC048-Excerpt.docx") [2 s]
+  Passed OxPt.HwTests.HW001(name: "T1370.html") [193 ms]
+  Passed OxPt.HcTests.HC001(name: "HC013-Test-08.docx") [38 ms]
+  Passed OxPt.DaTests.DA101(name: "DA256-NoInvalidDocOnErrorInRun.docx", data: "DA-Data.xml", err: True) [175 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00030", src: "FA/RevTracking/003-DeletedFieldCode.docx") [194 ms]
+  Passed OxPt.HwTests.HW001(name: "T1700.html") [140 ms]
+  Passed OxPt.HcTests.HC001(name: "HC032-Named-Color.docx") [184 ms]
+  Passed OxPt.DaTests.DA101(name: "DA238-SchemaErrorInConditional.docx", data: "DA-Data.xml", err: True) [188 ms]
+  Passed OxPt.HwTests.HW001(name: "T1430.html") [188 ms]
+  Passed OxPt.PbTests.PB002_Formatting [544 ms]
+  Passed OxPt.HcTests.HC001(name: "HC038-Conflicting-Border-Weight.docx") [244 ms]
+  Passed OxPt.MgTests.MG001(name: "Presentation.pptx") [1 s]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00210", src: "FA/RevTracking/021-TableGridChange.docx") [374 ms]
+  Passed OxPt.HwTests.HW001(name: "T0280.html") [205 ms]
+  Passed OxPt.DaTests.DA101(name: "DA234-HeaderFooter.docx", data: "DA-Data.xml", err: False) [239 ms]
+  Passed OxPt.HwTests.HW001(name: "T0812.html") [168 ms]
+  Passed OxPt.WcTests2.CZ001_CompareTrackedInPrev(testId: "CZ-1020", name1: "CZ/CZ003-Multi-Paragraphs.docx", name2: "CZ/CZ003-Multi-Paragraphs-Mod.docx", revisionCount: 1) [1 s]
+  Passed OxPt.HcTests.HC001(name: "HC024-Tabs-01.docx") [259 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00010", src: "FA/RevTracking/001-DeletedRun.docx") [251 ms]
+  Passed OxPt.DaTests.DA101(name: "DA222-InvalidXPath.docx", data: "DA-Data.xml", err: True) [219 ms]
+  Passed OxPt.HwTests.HW001(name: "T0070.html") [163 ms]
+  Passed OxPt.HcTests.HC001(name: "HC017-Vertical-Alignment-Cell-01.docx") [185 ms]
+  Passed OxPt.DaTests.DA101(name: "DA227-XPathErrorInPara.docx", data: "DA-Data.xml", err: True) [192 ms]
+  Passed OxPt.HwTests.HW001(name: "T0380.html") [143 ms]
+  Passed OxPt.MgTests.MG001(name: "DA001-TemplateDocument.docx") [516 ms]
+  Passed OxPt.HcTests.HC001(name: "HC016-Horizontal-Spacing-firstLine.docx") [154 ms]
+  Passed OxPt.DaTests.DA101(name: "DA036-SchemaErrorInConditional.docx", data: "DA-Data.xml", err: True) [82 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00230", src: "FA/RevTracking/023-CellPropertiesChange.docx") [341 ms]
+  Passed OxPt.PbTests.PB004_Formatting [719 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1280", name: "WC/WC012-Math-Before.docx") [1 s]
+  Passed OxPt.HwTests.HW001(name: "T0130.html") [142 ms]
+  Passed OxPt.DaTests.DA101(name: "DA033-ConditionalOnAttribute.docx", data: "DA-ConditionalOnAttribute.xml", err: False) [110 ms]
+  Passed OxPt.HcTests.HC001(name: "HC030-Content-Controls.docx") [113 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP011-Multiple-Deleted-Rows.docx") [2 s]
+  Passed OxPt.HwTests.HW001(name: "T0160.html") [107 ms]
+  Passed OxPt.HcTests.HC001(name: "HC034-Run-With-Position.docx") [132 ms]
+  Passed OxPt.DaTests.DA101(name: "DA219-RunIsEntireParagraph.docx", data: "DA-Data.xml", err: False) [147 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00070", src: "DB/HeadersFooters/Src/Disclaimer.docx", dest: "DB/HeadersFooters/Dest/Fax.docx", insertId: "Templafy") [4 s]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00150", src: "FA/RevTracking/015-InsertedContentControl.docx") [260 ms]
+  Passed OxPt.DaTests.DA101(name: "DA035-SchemaErrorInRepeat.docx", data: "DA-Data.xml", err: True) [75 ms]
+  Passed OxPt.HwTests.HW001(name: "T0110.html") [144 ms]
+  Passed OxPt.HcTests.HC001(name: "HC043-Chart.docx") [122 ms]
+  Passed OxPt.WcTests2.CZ001_CompareTrackedInPrev(testId: "CZ-1000", name1: "CZ/CZ001-Plain.docx", name2: "CZ/CZ001-Plain-Mod.docx", revisionCount: 1) [715 ms]
+  Passed OxPt.DaTests.DA101(name: "DA016-TwoRunsSchemaErrorInSecond.docx", data: "DA-Data.xml", err: True) [111 ms]
+  Passed OxPt.HcTests.HC001(name: "HC046-BoldAndItalic.docx") [116 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00130", src: "FA/RevTracking/013-DeletedParagraph.docx") [165 ms]
+  Passed OxPt.HwTests.HW001(name: "T1260.html") [136 ms]
+  Passed OxPt.DaTests.DA101(name: "DA026-InvalidRootXmlElement.docx", data: "DA-Data.xml", err: True) [131 ms]
+  Passed OxPt.HcTests.HC001(name: "HC019-Hidden-Run.docx") [129 ms]
+  Passed OxPt.HwTests.HW001(name: "T0780.html") [126 ms]
+  Passed OxPt.DaTests.DA101(name: "DA010-InvalidXml.docx", data: "DA-Data.xml", err: True) [64 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00090", src: "FA/RevTracking/009-InsertedParagraph.docx") [199 ms]
+  Passed OxPt.MgTests.MG001(name: "Spreadsheet.xlsx") [752 ms]
+  Passed OxPt.DaTests.DA101(name: "DA262-ConditionalNotMatch.docx", data: "DA-Data.xml", err: False) [104 ms]
+  Passed OxPt.HwTests.HW001(name: "T0450.html") [141 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00120", src: "FA/RevTracking/012-DeletedMathChar.docx") [168 ms]
+  Passed OxPt.DaTests.DA101(name: "DA030-TooMuchDataForCell.docx", data: "DA-TooMuchDataForCell.xml", err: True) [123 ms]
+  Passed OxPt.HwTests.HW001(name: "T0560.html") [107 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00150", src: "DB/HeadersFooters/Src/Watermark-1.docx", dest: "DB/HeadersFooters/Dest/Letter.docx", insertId: "Templafy") [591 ms]
+  Passed OxPt.HwTests.HW001(name: "T0060.html") [104 ms]
+  Passed OxPt.DaTests.DA101(name: "DA022-InvalidXPath.docx", data: "DA-Data.xml", err: True) [114 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00050", src: "FA/RevTracking/005-InsertedNumberedParagraph.docx") [216 ms]
+  Passed OxPt.HcTests.HC001(name: "HC006-Test-01.docx") [461 ms]
+  Passed OxPt.MgTests.MG001(name: "DA002-TemplateDocument.docx") [375 ms]
+  Passed OxPt.HwTests.HW001(name: "T0600.html") [138 ms]
+  Passed OxPt.DaTests.DA101(name: "DA228-NoPrototypeRow.docx", data: "DA-Data.xml", err: True) [150 ms]
+  Passed OxPt.HcTests.HC001(name: "HC027-Tabs-04.docx") [72 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00020", src: "FA/RevTracking/002-DeletedNumberedParagraphs.docx") [113 ms]
+  Passed OxPt.HwTests.HW001(name: "T0320.html") [88 ms]
+  Passed OxPt.HcTests.HC001(name: "HC050-Shaded-Text-01.docx") [101 ms]
+  Passed OxPt.DaTests.DA101(name: "DA029-NoDataForCell.docx", data: "DA-Data.xml", err: True) [113 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1190", name: "WC/WC007-Moved-into-Table.docx") [1 s]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00180", src: "FA/RevTracking/018-ParagraphPropertiesChange.docx") [87 ms]
+  Passed OxPt.HwTests.HW001(name: "T1110.html") [87 ms]
+  Passed OxPt.DaTests.DA101(name: "DA214-TwoRuns-NoValuesSelected.docx", data: "DA-Data.xml", err: True) [89 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP032-Table-Prop-Change.docx") [1 s]
+  Passed OxPt.HwTests.HW001(name: "T0790.html") [73 ms]
+  Passed OxPt.MgTests.MG001(name: "DA004-Select-XPathFindsNoDataOptional.docx") [342 ms]
+  Passed OxPt.DaTests.DA101(name: "DA101-TemplateDocument.docx", data: "DA-Data.xml", err: True) [90 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00240", src: "FA/RevTracking/024-RowPropertiesChange.docx") [162 ms]
+  Passed OxPt.HwTests.HW001(name: "T0810.html") [86 ms]
+  Passed OxPt.DaTests.DA101(name: "DA028-NoPrototypeRow.docx", data: "DA-Data.xml", err: True) [96 ms]
+  Passed OxPt.HwTests.HW001(name: "T0610.html") [88 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00160", src: "FA/RevTracking/016-DeletedContentControl.docx") [136 ms]
+  Passed OxPt.DaTests.DA101(name: "DA017-FiveRuns.docx", data: "DA-Data.xml", err: True) [72 ms]
+  Passed OxPt.HwTests.HW001(name: "T1040.html") [66 ms]
+  Passed OxPt.DaTests.DA101(name: "DA207-SelectRepeatingData-NoData.docx", data: "DA-Data.xml", err: True) [97 ms]
+  Passed OxPt.MgTests.MG001(name: "DA006-SelectTestValue-NoData.docx") [282 ms]
+  Passed OxPt.HcTests.HC001(name: "HC009-Test-04.docx") [462 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00220", src: "FA/RevTracking/022-TablePropertiesChange.docx") [173 ms]
+  Passed OxPt.DaTests.DA101(name: "DA231-CellDataInAttributes.docx", data: "DA-CellDataInAttributes.xml", err: True) [98 ms]
+  Passed OxPt.HcTests.HC001(name: "HC060-Image-with-Hyperlink.docx") [95 ms]
+  Passed OxPt.FaTests.FA001_DocumentsWithRevTracking(testId: "FA001-00110", src: "FA/RevTracking/011-InsertedMathChar.docx") [72 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1030", name: "WC/WC002-DeleteAtBeginning.docx") [559 ms]
+  Passed OxPt.HwTests.HW001(name: "T0924.html") [276 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP040-Deleted-Paras-at-End.docx") [537 ms]
+  Passed OxPt.DaTests.DA101(name: "DA232-TooMuchDataForConditional.docx", data: "DA-TooMuchDataForConditional.xml", err: True) [111 ms]
+  Passed OxPt.DaTests.DA101(name: "DA015-TwoRunsXmlExceptionInFirst.docx", data: "DA-Data.xml", err: True) [60 ms]
+  Passed OxPt.DaTests.DA101(name: "DA236-Page-Num-in-Footer.docx", data: "DA-Content-List.xml", err: False) [92 ms]
+  Passed OxPt.DaTests.DA101(name: "DA012-OtherMarkupTypes.docx", data: "DA-Data.xml", err: True) [47 ms]
+  Passed OxPt.DaTests.DA101(name: "DA004-Select-XPathFindsNoDataOptional.docx", data: "DA-Data.xml", err: False) [79 ms]
+  Passed OxPt.DaTests.DA101(name: "DA031-CellDataInAttributes.docx", data: "DA-CellDataInAttributes.xml", err: True) [72 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1460", name: "WC/WC018-Field-Simple-After-2.docx") [464 ms]
+  Passed OxPt.DaTests.DA101(name: "DA019-RunIsEntireParagraph.docx", data: "DA-Data.xml", err: False) [72 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP026-NumberingChange.docx") [493 ms]
+  Passed OxPt.DaTests.DA101(name: "DA220-TwoRunsAndNoOtherContent.docx", data: "DA-Data.xml", err: True) [57 ms]
+  Passed OxPt.HwTests.HW001(name: "T1830.html") [514 ms]
+  Passed OxPt.HwTests.HW001(name: "T1520.html") [62 ms]
+  Passed OxPt.DaTests.DA101(name: "DA230-TooMuchDataForCell.docx", data: "DA-TooMuchDataForCell.xml", err: True) [81 ms]
+  Passed OxPt.HcTests.HC001(name: "HC031-Complicated-Document.docx") [702 ms]
+  Passed OxPt.HwTests.HW001(name: "T0750.html") [55 ms]
+  Passed OxPt.DaTests.DA101(name: "DA211-SchemaError.docx", data: "DA-Data.xml", err: True) [55 ms]
+  Passed OxPt.HwTests.HW001(name: "T0220.html") [53 ms]
+  Passed OxPt.DaTests.DA101(name: "DA217-FiveRuns.docx", data: "DA-Data.xml", err: True) [66 ms]
+  Passed OxPt.HwTests.HW001(name: "T1400.html") [58 ms]
+  Passed OxPt.DaTests.DA101(name: "DA021-NestedRepeat.docx", data: "DA-DataNestedRepeat.xml", err: False) [49 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00010", src: "DB/HeadersFooters/Src/Content-Controls.docx", dest: "DB/HeadersFooters/Dest/Fax.docx", insertId: "Templafy") [1 s]
+  Passed OxPt.DaTests.DA101(name: "DA020-TwoRunsAndNoOtherContent.docx", data: "DA-Data.xml", err: True) [69 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1090", name: "WC/WC002-InsertAtEnd.docx") [446 ms]
+  Passed OxPt.HwTests.HW001(name: "T1310.html") [101 ms]
+  Passed OxPt.HwTests.HW001(name: "T0240.html") [61 ms]
+  Passed OxPt.DaTests.DA101(name: "DA102-TemplateDocument.docx", data: "DA-Data.xml", err: True) [104 ms]
+  Passed OxPt.HwTests.HW001(name: "T1070.html") [79 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP003-Inserted-Text.docx") [478 ms]
+  Passed OxPt.DaTests.DA101(name: "DA013-Runs.docx", data: "DA-Data.xml", err: False) [66 ms]
+  Passed OxPt.HcTests.HC001(name: "HC002-Hebrew-01.docx") [401 ms]
+  Passed OxPt.HwTests.HW001(name: "T0820.html") [57 ms]
+  Passed OxPt.DaTests.DA101(name: "DA002-TemplateDocument.docx", data: "DA-DataNotHighValueCust.xml", err: False) [74 ms]
+  Passed OxPt.HwTests.HW001(name: "T0150.html") [58 ms]
+  Passed OxPt.HwTests.HW001(name: "T0650.html") [74 ms]
+  Passed OxPt.DaTests.DA101(name: "DA100-TemplateDocument.docx", data: "DA-Data.xml", err: False) [91 ms]
+  Passed OxPt.HwTests.HW001(name: "T1500.html") [46 ms]
+  Passed OxPt.DaTests.DA101(name: "DA260-RunLevelRepeat.docx", data: "DA-Data.xml", err: False) [54 ms]
+  Passed OxPt.HwTests.HW001(name: "T1170.html") [60 ms]
+  Passed OxPt.DaTests.DA101(name: "DA001-TemplateDocument.docx", data: "DA-Data.xml", err: False) [66 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1260", name: "WC/WC011-Before.docx") [470 ms]
+  Passed OxPt.HwTests.HW001(name: "T0929.html") [67 ms]
+  Passed OxPt.DaTests.DA101(name: "DA034-HeaderFooter.docx", data: "DA-Data.xml", err: False) [91 ms]
+  Passed OxPt.HwTests.HW001(name: "T0970.html") [43 ms]
+  Passed OxPt.HwTests.HW001(name: "T1120.html") [65 ms]
+  Passed OxPt.DaTests.DA101(name: "DA258-ContentAcceptsCharsAsXPathResult.docx", data: "DA-Data.xml", err: False) [98 ms]
+  Passed OxPt.HwTests.HW001(name: "T0200.html") [37 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP035-Inserted-Cells.docx") [542 ms]
+  Passed OxPt.HcTests.HC001(name: "HC011-Test-06.docx") [503 ms]
+  Passed OxPt.DaTests.DA101(name: "DA006-SelectTestValue-NoData.docx", data: "DA-Data.xml", err: True) [66 ms]
+  Passed OxPt.HcTests.HC001(name: "HC020-Small-Caps.docx") [38 ms]
+  Passed OxPt.HcTests.HC001(name: "HC039-Bold.docx") [28 ms]
+  Passed OxPt.DaTests.DA101(name: "DA252-Table-With-Sum.docx", data: "DA-Data.xml", err: False) [78 ms]
+  Passed OxPt.HwTests.HW001(name: "T0922.html") [198 ms]
+  Passed OxPt.DaTests.DA101(name: "DA003-Select-XPathFindsNoData.docx", data: "DA-Data.xml", err: True) [88 ms]
+  Passed OxPt.HwTests.HW001(name: "T1242.html") [57 ms]
+  Passed OxPt.HwTests.HW001(name: "T0860.html") [51 ms]
+  Passed OxPt.DaTests.DA101(name: "DA253-Table-With-Sum-Run-Level-CC.docx", data: "DA-Data.xml", err: False) [80 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1540", name: "WC/WC021-Math-After-1.docx") [532 ms]
+  Passed OxPt.HwTests.HW001(name: "T0670.html") [44 ms]
+  Passed OxPt.DaTests.DA101(name: "DA221-NestedRepeat.docx", data: "DA-DataNestedRepeat.xml", err: False) [60 ms]
+  Passed OxPt.DaTests.DA101(name: "DA008-TableElementWithNoTable.docx", data: "DA-Data.xml", err: True) [61 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP010-Inserted-Table-Row.docx") [436 ms]
+  Passed OxPt.DaTests.DA101(name: "DA266-RunLevelRepeat-NoData.docx", data: "DA-Data.xml", err: True) [80 ms]
+  Passed OxPt.HcTests.HC001(name: "HC003-Hebrew-02.docx") [420 ms]
+  Passed OxPt.HcTests.HC001(name: "HC021-Symbols.docx") [34 ms]
+  Passed OxPt.DaTests.DA101(name: "DA206-SelectTestValue-NoData.docx", data: "DA-Data.xml", err: True) [77 ms]
+  Passed OxPt.DaTests.DA101(name: "DA201-TemplateDocument.docx", data: "DA-Data.xml", err: False) [120 ms]
+  Passed OxPt.HwTests.HW001(name: "T1820.html") [406 ms]
+  Passed OxPt.DaTests.DA101(name: "DA023-RepeatWOEndRepeat.docx", data: "DA-Data.xml", err: True) [70 ms]
+  Passed OxPt.HwTests.HW001(name: "T0968.html") [45 ms]
+  Passed OxPt.HwTests.HW001(name: "T0140.html") [71 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1490", name: "WC/WC019-Hyperlink-After-2.docx") [527 ms]
+  Passed OxPt.DaTests.DA101(name: "DA226-InvalidRootXmlElement.docx", data: "DA-Data.xml", err: True) [98 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00030", src: "DB/HeadersFooters/Src/Letterhead-with-Watermark.do"···, dest: "DB/HeadersFooters/Dest/Fax.docx", insertId: "Templafy") [1 s]
+  Passed OxPt.HwTests.HW001(name: "T1270.html") [66 ms]
+  Passed OxPt.DaTests.DA101(name: "DA233-ConditionalOnAttribute.docx", data: "DA-ConditionalOnAttribute.xml", err: False) [87 ms]
+  Passed OxPt.HwTests.HW001(name: "T0190.html") [65 ms]
+  Passed OxPt.HcTests.HC001(name: "HC014-RTL-Table-01.docx") [452 ms]
+  Passed OxPt.HcTests.HC001(name: "HC037-Sub-Script.docx") [48 ms]
+  Passed OxPt.HwTests.HW001(name: "T0791.html") [66 ms]
+  Passed OxPt.DaTests.DA101(name: "DA254-Table-With-XPath-Sum.docx", data: "DA-Data.xml", err: False) [108 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP031-Table-Prop-Change.docx") [666 ms]
+  Passed OxPt.HcTests.HC001(name: "HC028-No-Break-Hyphen.docx") [90 ms]
+  Passed OxPt.HwTests.HW001(name: "T0640.html") [86 ms]
+  Passed OxPt.DaTests.DA101(name: "DA007-SelectRepeatingData-NoData.docx", data: "DA-Data.xml", err: True) [134 ms]
+  Passed OxPt.HcTests.HC001(name: "HC041-Hyperlink-Fieldcode-02.docx") [60 ms]
+  Passed OxPt.DaTests.DA101(name: "DA259-MultiLineContents.docx", data: "DA-Data.xml", err: False) [61 ms]
+  Passed OxPt.HwTests.HW001(name: "T0900.html") [160 ms]
+  Passed OxPt.DaTests.DA101(name: "DA027-XPathErrorInPara.docx", data: "DA-Data.xml", err: True) [97 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1470", name: "WC/WC018-Field-Simple-Before.docx") [548 ms]
+  Passed OxPt.DaTests.DA101(name: "DA205-SelectRowData-NoData.docx", data: "DA-Data.xml", err: True) [70 ms]
+  Passed OxPt.DaTests.DA101(name: "DA209-InvalidXPath.docx", data: "DA-Data.xml", err: True) [94 ms]
+  Passed OxPt.HwTests.HW001(name: "T0925.html") [243 ms]
+  Passed OxPt.DaTests.DA101(name: "DA215-TwoRunsXmlExceptionInFirst.docx", data: "DA-Data.xml", err: True) [90 ms]
+  Passed OxPt.HwTests.HW001(name: "T0590.html") [64 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP008-Multiple-Inserted-Para-Mark.docx") [553 ms]
+  Passed OxPt.HwTests.HW001(name: "T0420.html") [69 ms]
+  Passed OxPt.DaTests.DA101(name: "DA229-NoDataForCell.docx", data: "DA-Data.xml", err: True) [103 ms]
+  Passed OxPt.DaTests.DA101(name: "DA235-Crashes.docx", data: "DA-Content-List.xml", err: False) [64 ms]
+  Passed OxPt.HwTests.HW001(name: "T1620.html") [161 ms]
+  Passed OxPt.DaTests.DA101(name: "DA255-Table-With-XPath-Sum-Run-Level-CC.docx", data: "DA-Data.xml", err: False) [103 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1020", name: "WC/WC001-Digits-Mod.docx") [495 ms]
+  Passed OxPt.DaTests.DA101(name: "DA237-SchemaErrorInRepeat.docx", data: "DA-Data.xml", err: True) [85 ms]
+  Passed OxPt.DaTests.DA101(name: "DA257-OptionalRepeat.docx", data: "DA-Data.xml", err: False) [74 ms]
+  Passed OxPt.DaTests.DA101(name: "DA264-InvalidRunLevelRepeat.docx", data: "DA-Data.xml", err: True) [60 ms]
+  Passed OxPt.HcTests.HC001(name: "HC008-Test-03.docx") [905 ms]
+  Passed OxPt.DaTests.DA101(name: "DA265-RunLevelRepeatWithWhiteSpaceBefore.docx", data: "DA-Data.xml", err: False) [75 ms]
+  Passed OxPt.DaTests.DA101(name: "DA239-RunLevelCC-Repeat.docx", data: "DA-Data.xml", err: False) [69 ms]
+  Passed OxPt.DaTests.DA101(name: "DA005-SelectRowData-NoData.docx", data: "DA-Data.xml", err: True) [101 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP033-Table-Prop-Ex-Change.docx") [675 ms]
+  Passed OxPt.HwTests.HW001(name: "T1840.html") [501 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1380", name: "WC/WC014-SmartArt-With-Image-Deleted-After2.docx") [507 ms]
+  Passed OxPt.DaTests.DA101(name: "DA009-InvalidXPath.docx", data: "DA-Data.xml", err: True) [66 ms]
+  Passed OxPt.HwTests.HW001(name: "T1710.html") [63 ms]
+  Passed OxPt.DaTests.DA101(name: "DA014-TwoRuns-NoValuesSelected.docx", data: "DA-Data.xml", err: True) [53 ms]
+  Passed OxPt.HwTests.HW001(name: "T0802.html") [65 ms]
+  Passed OxPt.DaTests.DA101(name: "DA218-SmartQuotes.docx", data: "DA-Data.xml", err: False) [92 ms]
+  Passed OxPt.HwTests.HW001(name: "T0814.html") [62 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00040", src: "DB/HeadersFooters/Src/Logo.docx", dest: "DB/HeadersFooters/Dest/Fax.docx", insertId: "Templafy") [1 s]
+  Passed OxPt.DaTests.DA102_Throws(name: "DA024-TrackedRevisions.docx", data: "DA-Data.xml") [32 ms]
+  Passed OxPt.HwTests.HW001(name: "T0014.html") [71 ms]
+  Passed OxPt.HcTests.HC001(name: "HC061-Hyperlink-in-Field.docx") [551 ms]
+  Passed OxPt.DaTests.DA259(name: "DA259-MultiLineContents.docx", data: "DA-Data.xml", err: False) [63 ms]
+  Passed OxPt.HwTests.HW001(name: "T0540.html") [61 ms]
+  Passed OxPt.DaTests.DA103_UseXmlDocument(name: "DA025-TemplateDocument.docx", data: "DA-Data.xml", err: False) [96 ms]
+  Passed OxPt.HwTests.HW001(name: "T1100.html") [65 ms]
+  Passed OxPt.HwTests.HW001(name: "T1670.html") [68 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00130", src: "DB/HeadersFooters/Src/Letterhead-with-Watermark.do"···, dest: "DB/HeadersFooters/Dest/Letter.docx", insertId: "Templafy") [282 ms]
+  Passed OxPt.HwTests.HW001(name: "T0330.html") [109 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1140", name: "WC/WC006-Table.docx") [567 ms]
+  Passed OxPt.HwTests.HW001(name: "T1150.html") [57 ms]
+  Passed OxPt.HwTests.HW001(name: "T0980.html") [104 ms]
+  Passed OxPt.HwTests.HW001(name: "T1130.html") [66 ms]
+  Passed OxPt.HwTests.HW001(name: "T0011.html") [53 ms]
+  Passed OxPt.HwTests.HW001(name: "T1480.html") [67 ms]
+  Passed OxPt.HwTests.HW001(name: "T1200.html") [113 ms]
+  Passed OxPt.HcTests.HC001(name: "HC007-Test-02.docx") [769 ms]
+  Passed OxPt.HwTests.HW001(name: "T1591.html") [52 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1480", name: "WC/WC019-Hyperlink-After-1.docx") [520 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP049-Deleted-Para-Before-Table.docx") [1 s]
+  Passed OxPt.HcTests.HC001(name: "HC029-Table-Merged-Cells.docx") [103 ms]
+  Passed OxPt.HwTests.HW001(name: "T1280.html") [57 ms]
+  Passed OxPt.HcTests.HC001(name: "HC023-Hyperlink.docx") [42 ms]
+  Passed OxPt.HcTests.HC001(name: "HC033-Run-With-Border.docx") [31 ms]
+  Passed OxPt.HcTests.HC001(name: "HC022-Table-Of-Contents.docx") [74 ms]
+  Passed OxPt.HwTests.HW001(name: "T1800.html") [282 ms]
+  Passed OxPt.HwTests.HW001(name: "T1160.html") [56 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP009-Deleted-Table-Row.docx") [393 ms]
+  Passed OxPt.HcTests.HC001(name: "HC004-ResumeTemplate.docx") [226 ms]
+  Passed OxPt.HwTests.HW001(name: "T1300.html") [46 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1150", name: "WC/WC006-Table-Delete-Contests-of-Row.docx") [449 ms]
+  Passed OxPt.HwTests.HW001(name: "T0340.html") [55 ms]
+  Passed OxPt.HwTests.HW001(name: "T1440.html") [54 ms]
+  Passed OxPt.HwTests.HW001(name: "T1420.html") [73 ms]
+  Passed OxPt.HwTests.HW001(name: "T0935.html") [47 ms]
+  Passed OxPt.HcTests.HC001(name: "HC005-TaskPlanTemplate.docx") [265 ms]
+  Passed OxPt.HwTests.HW001(name: "T0651.html") [50 ms]
+  Passed OxPt.HcTests.HC001(name: "HC036-Super-Script.docx") [35 ms]
+  Passed OxPt.HwTests.HW001(name: "T0760.html") [44 ms]
+  Passed OxPt.HcTests.HC001(name: "HC042-Image-Png.docx") [41 ms]
+  Passed OxPt.HwTests.HW001(name: "T0100.html") [38 ms]
+  Passed OxPt.HcTests.HC001(name: "HC025-Tabs-02.docx") [49 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00060", src: "DB/HeadersFooters/Src/Watermark-2.docx", dest: "DB/HeadersFooters/Dest/Fax.docx", insertId: "Templafy") [1 s]
+  Passed OxPt.RpTests.RP001(name: "RP/RP048-Deleted-Inserted-Para-Mark.docx") [418 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1450", name: "WC/WC018-Field-Simple-After-1.docx") [374 ms]
+  Passed OxPt.HwTests.HW001(name: "T1080.html") [49 ms]
+  Passed OxPt.HwTests.HW001(name: "T0080.html") [45 ms]
+  Passed OxPt.HwTests.HW001(name: "T0251.html") [75 ms]
+  Passed OxPt.HwTests.HW001(name: "T0170.html") [55 ms]
+  Passed OxPt.HwTests.HW001(name: "T0870.html") [73 ms]
+  Passed OxPt.HcTests.HC001(name: "HC012-Test-07.docx") [314 ms]
+  Passed OxPt.HwTests.HW001(name: "T0622.html") [56 ms]
+  Passed OxPt.HwTests.HW001(name: "T0940.html") [52 ms]
+  Passed OxPt.HwTests.HW001(name: "T0700.html") [57 ms]
+  Passed OxPt.HcTests.HC001(name: "HC001-5DayTourPlanTemplate.docx") [142 ms]
+  Passed OxPt.HcTests.HC001(name: "HC047-No-Section.docx") [14 ms]
+  Passed OxPt.HcTests.HC001(name: "HC051-Shaded-Text-02.docx") [47 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1520", name: "WC/WC020-FootNote-After-2.docx") [544 ms]
+  Passed OxPt.HcTests.HC001(name: "HC026-Tabs-03.docx") [68 ms]
+  Passed OxPt.HwTests.HW001(name: "T0921.html") [158 ms]
+  Passed OxPt.HcTests.HC001(name: "HC018-Vertical-Alignment-Para-01.docx") [33 ms]
+  Passed OxPt.HwTests.HW001(name: "T0580.html") [51 ms]
+  Passed OxPt.HcTests.HC001(name: "HC015-Vertical-Spacing-atLeast.docx") [41 ms]
+  Passed OxPt.HwTests.HW001(name: "T0793.html") [55 ms]
+  Passed OxPt.HwTests.HW001(name: "T0840.html") [55 ms]
+  Passed OxPt.HwTests.HW001(name: "T0260.html") [62 ms]
+  Passed OxPt.HwTests.HW001(name: "T0821.html") [58 ms]
+  Passed OxPt.HcTests.HC001(name: "HC010-Test-05.docx") [279 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1420", name: "WC/WC016-Para-Image-Para-w-Deleted-Image.docx") [396 ms]
+  Passed OxPt.HwTests.HW001(name: "T1390.html") [83 ms]
+  Passed OxPt.HcTests.HC001(name: "HC049-Borders.docx") [75 ms]
+  Passed OxPt.HwTests.HW001(name: "T1580.html") [48 ms]
+  Passed OxPt.HcTests.HC001(name: "HC035-Strike-Through.docx") [33 ms]
+  Passed OxPt.HcTests.HC001(name: "HC045-Italic.docx") [36 ms]
+  Passed OxPt.HwTests.HW001(name: "T1190.html") [82 ms]
+  Passed OxPt.HcTests.HC001(name: "HC044-Embedded-Workbook.docx") [56 ms]
+  Passed OxPt.HwTests.HW001(name: "T1350.html") [61 ms]
+  Passed OxPt.HwTests.HW001(name: "T1490.html") [51 ms]
+  Passed OxPt.HwTests.HW001(name: "T0742.html") [64 ms]
+  Passed OxPt.HcTests.HC002_NoCssClasses(name: "HC006-Test-01.docx") [169 ms]
+  Passed OxPt.HwTests.HW001(name: "T0660.html") [61 ms]
+  Passed OxPt.HwTests.HW001(name: "T1320.html") [63 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00020", src: "DB/HeadersFooters/Src/Letterhead.docx", dest: "DB/HeadersFooters/Dest/Fax.docx", insertId: "Templafy") [1 s]
+  Passed OxPt.HwTests.HW001(name: "T0690.html") [45 ms]
+  Passed OxPt.HwTests.HW001(name: "T1590.html") [76 ms]
+  Passed OxPt.HwTests.HW001(name: "T0960.html") [60 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00180", src: "DB/HeadersFooters/Src/Footer.docx", dest: "DB/HeadersFooters/Dest/Letter.docx", insertId: "Templafy") [214 ms]
+  Passed OxPt.HwTests.HW001(name: "T1290.html") [71 ms]
+  Passed OxPt.HwTests.HW001(name: "T0530.html") [46 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1330", name: "WC/WC014-SmartArt-After.docx") [760 ms]
+  Passed OxPt.HwTests.HW001(name: "T1132.html") [53 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP052-Deleted-Para-Mark.docx") [1 s]
+  Passed OxPt.HwTests.HW001(name: "T1450.html") [99 ms]
+  Passed OxPt.HwTests.HW001(name: "T0290.html") [72 ms]
+  Passed OxPt.HwTests.HW001(name: "T1810.html") [254 ms]
+  Passed OxPt.HwTests.HW001(name: "T1140.html") [43 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP047-Inserted-and-Deleted-Paragraph-Mark.docx") [409 ms]
+  Passed OxPt.HwTests.HW001(name: "T0480.html") [49 ms]
+  Passed OxPt.HwTests.HW001(name: "T1201.html") [42 ms]
+  Passed OxPt.HwTests.HW001(name: "T0390.html") [44 ms]
+  Passed OxPt.HwTests.HW001(name: "T0933.html") [41 ms]
+  Passed OxPt.HwTests.HW001(name: "T0927.html") [35 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1360", name: "WC/WC014-SmartArt-With-Image-Before.docx") [745 ms]
+  Passed OxPt.HwTests.HW001(name: "T0050.html") [42 ms]
+  Passed OxPt.HwTests.HW001(name: "T0931.html") [36 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP039-Inserted-Paras-at-End.docx") [304 ms]
+  Passed OxPt.HwTests.HW001(name: "T1360.html") [36 ms]
+  Passed OxPt.HwTests.HW001(name: "T0890.html") [35 ms]
+  Passed OxPt.HwTests.HW001(name: "T1470.html") [46 ms]
+  Passed OxPt.HwTests.HW001(name: "T0431.html") [30 ms]
+  Passed OxPt.HwTests.HW001(name: "T0112.html") [54 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1390", name: "WC/WC015-Three-Paragraphs.docx") [270 ms]
+  Passed OxPt.HwTests.HW001(name: "T0990.html") [28 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00050", src: "DB/HeadersFooters/Src/Watermark-1.docx", dest: "DB/HeadersFooters/Dest/Fax.docx", insertId: "Templafy") [1 s]
+  Passed OxPt.HwTests.HW001(name: "T0910.html") [57 ms]
+  Passed OxPt.HwTests.HW001(name: "T0920.html") [38 ms]
+  Passed OxPt.HwTests.HW001(name: "T0470.html") [42 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP004-Deleted-Text-in-CC.docx") [367 ms]
+  Passed OxPt.HwTests.HW001(name: "T0792.html") [46 ms]
+  Passed OxPt.HwTests.HW001(name: "T1050.html") [48 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00160", src: "DB/HeadersFooters/Src/Watermark-2.docx", dest: "DB/HeadersFooters/Dest/Letter.docx", insertId: "Templafy") [180 ms]
+  Passed OxPt.HwTests.HW001(name: "T0350.html") [37 ms]
+  Passed OxPt.HwTests.HW001(name: "T1241.html") [55 ms]
+  Passed OxPt.HwTests.HW001(name: "T0720.html") [62 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00120", src: "DB/HeadersFooters/Src/Letterhead.docx", dest: "DB/HeadersFooters/Dest/Letter.docx", insertId: "Templafy") [197 ms]
+  Passed OxPt.HwTests.HW001(name: "T0500.html") [52 ms]
+  Passed OxPt.HwTests.HW001(name: "T1560.html") [41 ms]
+  Passed OxPt.HwTests.HW001(name: "T1660.html") [50 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP037-Changed-Style-Para-Props.docx") [436 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00140", src: "DB/HeadersFooters/Src/Logo.docx", dest: "DB/HeadersFooters/Dest/Letter.docx", insertId: "Templafy") [172 ms]
+  Passed OxPt.HwTests.HW001(name: "T1630.html") [129 ms]
+  Passed OxPt.HwTests.HW001(name: "T0770.html") [40 ms]
+  Passed OxPt.HwTests.HW001(name: "T0710.html") [56 ms]
+  Passed OxPt.HwTests.HW001(name: "T0923.html") [52 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00110", src: "DB/HeadersFooters/Src/Content-Controls.docx", dest: "DB/HeadersFooters/Dest/Letter.docx", insertId: "Templafy") [242 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1570", name: "WC/WC022-Image-Math-Para-Before.docx") [995 ms]
+  Passed OxPt.HwTests.HW001(name: "T1112.html") [197 ms]
+  Passed OxPt.HwTests.HW001(name: "T0430.html") [39 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00170", src: "DB/HeadersFooters/Src/Disclaimer.docx", dest: "DB/HeadersFooters/Dest/Letter.docx", insertId: "Templafy") [202 ms]
+  Passed OxPt.HwTests.HW001(name: "T0880.html") [42 ms]
+  Passed OxPt.HwTests.HW001(name: "T0300.html") [73 ms]
+  Passed OxPt.HwTests.HW001(name: "T0795.html") [78 ms]
+  Passed OxPt.HwTests.HW001(name: "T0010.html") [69 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1310", name: "WC/WC013-Image-Before.docx") [363 ms]
+  Passed OxPt.HwTests.HW001(name: "T0230.html") [36 ms]
+  Passed OxPt.HwTests.HW001(name: "T1240.html") [98 ms]
+  Passed OxPt.HwTests.HW001(name: "T1610.html") [41 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP038-Inserted-Paras-at-End.docx") [894 ms]
+  Passed OxPt.HwTests.HW001(name: "T0270.html") [38 ms]
+  Passed OxPt.HwTests.HW001(name: "T1460.html") [33 ms]
+  Passed OxPt.HwTests.HW001(name: "T0850.html") [46 ms]
+  Passed OxPt.HwTests.HW001(name: "T1180.html") [47 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1290", name: "WC/WC013-Image-After.docx") [351 ms]
+  Passed OxPt.HwTests.HW001(name: "T1690.html") [48 ms]
+  Passed OxPt.HwTests.HW001(name: "T0830.html") [36 ms]
+  Passed OxPt.HwTests.HW001(name: "T0040.html") [49 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP021-Inserted-Numbering-Properties.docx") [310 ms]
+  Passed OxPt.HwTests.HW001(name: "T0310.html") [33 ms]
+  Passed OxPt.HwTests.HW001(name: "T0932.html") [40 ms]
+  Passed OxPt.HwTests.HW001(name: "T1030.html") [36 ms]
+  Passed OxPt.HwTests.HW001(name: "T1550.html") [37 ms]
+  Passed OxPt.HwTests.HW001(name: "T1250.html") [44 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1270", name: "WC/WC012-Math-After.docx") [317 ms]
+  Passed OxPt.HwTests.HW001(name: "T1850.html") [69 ms]
+  Passed OxPt.HwTests.HW001(name: "T1640.html") [63 ms]
+  Passed OxPt.DbTests.DB009_ImportIntoHeadersFooters(testId: "DB009-00080", src: "DB/HeadersFooters/Src/Footer.docx", dest: "DB/HeadersFooters/Dest/Fax.docx", insertId: "Templafy") [1 s]
+  Passed OxPt.RpTests.RP001(name: "RP/RP046-Consecutive-Deleted-Ranges.docx") [352 ms]
+  Passed OxPt.HwTests.HW001(name: "T0948.html") [42 ms]
+  Passed OxPt.HwTests.HW001(name: "T0926.html") [43 ms]
+  Passed OxPt.HwTests.HW001(name: "T0620.html") [42 ms]
+  Passed OxPt.DbTests.DB007_Example_DocumentBuilder02_WhitePaper [138 ms]
+  Passed OxPt.HwTests.HW001(name: "T1230.html") [45 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1200", name: "WC/WC007-Unmodified.docx") [308 ms]
+  Passed OxPt.HwTests.HW001(name: "T0745.html") [34 ms]
+  Passed OxPt.HwTests.HW001(name: "T0630.html") [42 ms]
+  Passed OxPt.DbTests.DB008_DeleteParasWithGivenStyle [86 ms]
+  Passed OxPt.HwTests.HW001(name: "T1220.html") [48 ms]
+  Passed OxPt.HwTests.HW001(name: "T1540.html") [52 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP023-NumberingChange.docx") [353 ms]
+  Passed OxPt.HwTests.HW001(name: "T0730.html") [43 ms]
+  Passed OxPt.HwTests.HW001(name: "T1251.html") [50 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00200", baseline: null, src1: "DB/GlossaryDocuments/BaseDocument.docx", src2: "DB/GlossaryDocuments/CellLevelContentControl.docx", src3: "DB/GlossaryDocuments/NestedContentControl.docx", src4: null, src5: null, src6: null) [200 ms]
+  Passed OxPt.HwTests.HW001(name: "T1530.html") [44 ms]
+  Passed OxPt.HwTests.HW001(name: "T0570.html") [60 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1500", name: "WC/WC019-Hyperlink-Before.docx") [406 ms]
+  Passed OxPt.HwTests.HW001(name: "T1680.html") [64 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00040", baseline: "DB/GlossaryDocuments/NestedContentControl-built.do"···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/NestedContentControl.docx", src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [191 ms]
+  Passed OxPt.HwTests.HW001(name: "T0510.html") [40 ms]
+  Passed OxPt.HwTests.HW001(name: "T0934.html") [48 ms]
+  Passed OxPt.HwTests.HW001(name: "T1060.html") [39 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP024-ParagraphMark-rPr-Change.docx") [381 ms]
+  Passed OxPt.HwTests.HW001(name: "T0550.html") [50 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00060", baseline: "DB/GlossaryDocuments/ContentControlDanishProofingL"···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/ContentControlDanishProofingL"···, src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [149 ms]
+  Passed OxPt.HwTests.HW001(name: "T0805.html") [69 ms]
+  Passed OxPt.HwTests.HW001(name: "T1510.html") [65 ms]
+  Passed OxPt.HwTests.HW001(name: "T1000.html") [76 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00100", baseline: "DB/GlossaryDocuments/FooterContent-built.docx", src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/FooterContent.docx", src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [230 ms]
+  Passed OxPt.HwTests.HW001(name: "T0804.html") [91 ms]
+  Passed OxPt.HwTests.HW001(name: "T0520.html") [243 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP041-Cell-With-Empty-Paras-at-End.docx") [580 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00090", baseline: "DB/GlossaryDocuments/ContentControlWithContent-bui"···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/ContentControlWithContent.doc"···, src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [348 ms]
+  Passed OxPt.HwTests.HW001(name: "T1210.html") [87 ms]
+  Passed OxPt.HwTests.HW001(name: "T1010.html") [72 ms]
+  Passed OxPt.HwTests.HW001(name: "T0680.html") [125 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00020", baseline: "DB/GlossaryDocuments/InlineContentControl-built.do"···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/InlineContentControl.docx", src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [291 ms]
+  Passed OxPt.HwTests.HW001(name: "T0013.html") [95 ms]
+  Passed OxPt.HwTests.HW001(name: "T0030.html") [98 ms]
+  Passed OxPt.HwTests.HW001(name: "T0936.html") [68 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP005-Deleted-Paragraph-Mark.docx") [551 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1560", name: "WC/WC022-Image-Math-Para-After.docx") [1 s]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00110", baseline: "DB/GlossaryDocuments/HeaderContent-built.docx", src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/HeaderContent.docx", src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [284 ms]
+  Passed OxPt.HwTests.HW001(name: "T0950.html") [86 ms]
+  Passed OxPt.HwTests.HW001(name: "T0490.html") [238 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00010", baseline: "DB/GlossaryDocuments/CellLevelContentControl-built"···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/CellLevelContentControl.docx", src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [370 ms]
+  Passed OxPt.HwTests.HW001(name: "T0851.html") [139 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1370", name: "WC/WC014-SmartArt-With-Image-Deleted-After.docx") [539 ms]
+  Passed OxPt.HwTests.HW001(name: "T0692.html") [145 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP018-MoveFrom-MoveTo-CC.docx") [742 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00030", baseline: "DB/GlossaryDocuments/MultilineWithBulletPoints-bui"···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/MultilineWithBulletPoints.doc"···, src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [332 ms]
+  Passed OxPt.HwTests.HW001(name: "T1111.html") [272 ms]
+  Passed OxPt.HwTests.HW001(name: "T0794.html") [100 ms]
+  Passed OxPt.HwTests.HW001(name: "T1650.html") [75 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00070", baseline: "DB/GlossaryDocuments/ContentControlEnglishProofing"···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/ContentControlEnglishProofing"···, src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [304 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1170", name: "WC/WC007-Deleted-at-Beginning-of-Para.docx") [541 ms]
+  Passed OxPt.HwTests.HW001(name: "T0090.html") [59 ms]
+  Passed OxPt.HwTests.HW001(name: "T1340.html") [82 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP028-Table-Grid-Change.docx") [569 ms]
+  Passed OxPt.HwTests.HW001(name: "T0250.html") [132 ms]
+  Passed OxPt.HwTests.HW001(name: "T0210.html") [78 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00050", baseline: "DB/GlossaryDocuments/RowLevelContentControl-built."···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/RowLevelContentControl.docx", src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [342 ms]
+  Passed OxPt.HwTests.HW001(name: "T0180.html") [76 ms]
+  Passed OxPt.HwTests.HW001(name: "T0370.html") [101 ms]
+  Passed OxPt.HwTests.HW001(name: "T0432.html") [74 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1000", name: "WC/WC001-Digits.docx") [598 ms]
+  Passed OxPt.HwTests.HW001(name: "T0945.html") [76 ms]
+  Passed OxPt.DbTests.WithGlossaryDocuments(testId: "DB100-00080", baseline: "DB/GlossaryDocuments/ContentControlMixedProofingLa"···, src1: "DB/GlossaryDocuments/BaseDocument.docx,0,4", src2: "DB/GlossaryDocuments/ContentControlMixedProofingLa"···, src3: "DB/GlossaryDocuments/BaseDocument.docx,4", src4: null, src5: null, src6: null) [328 ms]
+  Passed OxPt.HwTests.HW001(name: "T0400.html") [73 ms]
+  Passed OxPt.DbTests.DB005_HeadersWithRefsToImages [125 ms]
+  Passed OxPt.HwTests.HW001(name: "T1330.html") [111 ms]
+  Passed OxPt.HwTests.HW001(name: "T1380.html") [85 ms]
+  Passed OxPt.HwTests.HW001(name: "T0460.html") [64 ms]
+  Passed OxPt.HwTests.HW001(name: "T0691.html") [65 ms]
+  Passed OxPt.HwTests.HW001(name: "T0440.html") [89 ms]
+  Passed OxPt.HwTests.HW001(name: "T0930.html") [54 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1230", name: "WC/WC010-Para-Before-Table-Mod.docx") [626 ms]
+  Passed OxPt.HwTests.HW001(name: "T1131.html") [58 ms]
+  Passed OxPt.HwTests.HW004(name: "E0010.html") [19 ms]
+  Passed OxPt.DbTests.DB0016_DocDefaultStyles [506 ms]
+  Passed OxPt.HwTests.HW004(name: "E0020.html") [9 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP045-One-and-Half-Deleted-Lines-at-End.docx") [1 s]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1340", name: "WC/WC014-SmartArt-Before.docx") [804 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP016-Deleted-CC.docx") [506 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP034-Deleted-Cells.docx") [419 ms]
+  Passed OxPt.DbTests.DB014_KeepWebExtensions [1 s]
+  Passed OxPt.DbTests.DB015_LatentStyles [59 ms]
+[xUnit.net 00:00:23.99]     OxPt.DbTests.DB009_ShredDocument [FAIL]
+[xUnit.net 00:00:23.99]       System.Xml.XmlException : Data at the root level is invalid. Line 57, position 9.
+[xUnit.net 00:00:23.99]       Stack Trace:
+[xUnit.net 00:00:23.99]            at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+[xUnit.net 00:00:23.99]            at System.Xml.XmlTextReaderImpl.Throw(String res, String arg)
+[xUnit.net 00:00:23.99]            at System.Xml.XmlTextReaderImpl.ParseRootLevelWhitespace()
+[xUnit.net 00:00:23.99]            at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+[xUnit.net 00:00:23.99]            at System.Xml.Linq.XElement.ReadElementFrom(XmlReader r, LoadOptions o)
+[xUnit.net 00:00:23.99]            at System.Xml.Linq.XElement.Load(XmlReader reader, LoadOptions options)
+[xUnit.net 00:00:23.99]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\ReferenceAdder.cs(119,0): at OpenXmlPowerTools.ReferenceAdder.AddToc(WordprocessingDocument doc, String xPath, String switches, String title, Nullable`1 rightTabPos)
+[xUnit.net 00:00:23.99]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\DocumentBuilderTests.cs(538,0): at OxPt.DbTests.DB009_ShredDocument()
+[xUnit.net 00:00:23.99]            at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)
+[xUnit.net 00:00:23.99]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:23.99]            at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.DbTests.DB004_DocumentBuilderNoHeaders [47 ms]
+  Passed OxPt.DbTests.DB012_NumberingsWithSameAbstractNumbering [37 ms]
+  Passed OxPt.DbTests.DB001_DocumentBuilderKeepSections [33 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1350", name: "WC/WC014-SmartArt-With-Image-After.docx") [782 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP025-Paragraph-Props-Change.docx") [367 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP020-Inserted-Field-Code.docx") [325 ms]
+  Failed OxPt.DbTests.DB009_ShredDocument [492 ms]
+  Error Message:
+   System.Xml.XmlException : Data at the root level is invalid. Line 57, position 9.
+  Stack Trace:
+     at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+   at System.Xml.XmlTextReaderImpl.Throw(String res, String arg)
+   at System.Xml.XmlTextReaderImpl.ParseRootLevelWhitespace()
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.Linq.XElement.ReadElementFrom(XmlReader r, LoadOptions o)
+   at System.Xml.Linq.XElement.Load(XmlReader reader, LoadOptions options)
+   at OpenXmlPowerTools.ReferenceAdder.AddToc(WordprocessingDocument doc, String xPath, String switches, String title, Nullable`1 rightTabPos) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\ReferenceAdder.cs:line 119
+   at OxPt.DbTests.DB009_ShredDocument() in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\DocumentBuilderTests.cs:line 538
+   at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1510", name: "WC/WC020-FootNote-After-1.docx") [433 ms]
+  Passed OxPt.DbTests.DB011_BodyAndHeaderWithShapes [79 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1250", name: "WC/WC011-After.docx") [326 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP022-NumberingChange.docx") [358 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1240", name: "WC/WC010-Para-Before-Table-Unmodified.docx") [388 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP017-Inserted-CC.docx") [547 ms]
+  Passed OxPt.DbTests.DB006_Example_DocumentBuilder01 [898 ms]
+  Passed OxPt.DbTests.DB010_InsertUsingInsertId [187 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1320", name: "WC/WC013-Image-Before2.docx") [482 ms]
+  Passed OxPt.DbTests.DB002_DocumentBuilderKeepSectionsDiscardHeaders [50 ms]
+  Passed OxPt.DbTests.DB003_DocumentBuilderOnlyDefaultHeader [50 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP019-Deleted-Field-Code.docx") [366 ms]
+  Passed OxPt.DbTests.DB013b_LocalizedStyleIds_List [48 ms]
+  Passed OxPt.DbTests.DB013a_LocalizedStyleIds_Heading [58 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1440", name: "WC/WC017-Image-After.docx") [320 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1110", name: "WC/WC002-Unmodified.docx") [232 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP043-MERGEFORMAT-Field-Code.docx") [565 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1430", name: "WC/WC017-Image.docx") [260 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP013-Deleted-Math-Control-Char.docx") [230 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1010", name: "WC/WC001-Digits-Deleted-Paragraph.docx") [211 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP030-Table-Row-Props-Change.docx") [247 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1210", name: "WC/WC009-Table-Cell-1-1-Mod.docx") [235 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP015-MoveFrom-MoveTo.docx") [213 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1040", name: "WC/WC002-DeleteAtEnd.docx") [227 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1070", name: "WC/WC002-DiffInMiddle.docx") [232 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP042-Deleted-Para-Mark-at-End.docx") [460 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1180", name: "WC/WC007-Longest-At-End.docx") [204 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP006-Inserted-Paragraph-Mark.docx") [178 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1080", name: "WC/WC002-InsertAtBeginning.docx") [211 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1530", name: "WC/WC020-FootNote-Before.docx") [277 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP044-MERGEFORMAT-Field-Code.docx") [467 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1220", name: "WC/WC009-Table-Unmodified.docx") [245 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP050-Deleted-Footnote.docx") [248 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1060", name: "WC/WC002-DiffAtBeginning.docx") [174 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP014-Inserted-Math-Control-Char.docx") [162 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1300", name: "WC/WC013-Image-After2.docx") [199 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP029-Table-Row-Props-Change.docx") [199 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1100", name: "WC/WC002-InsertInMiddle.docx") [170 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP007-Multiple-Deleted-Para-Mark.docx") [172 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP036-Vert-Merged-Cells.docx") [198 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1550", name: "WC/WC021-Math-Before-1.docx") [243 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP012-Multiple-Inserted-Rows.docx") [170 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1160", name: "WC/WC006-Table-Delete-Row.docx") [149 ms]
+  Passed OxPt.RpTests.RP001(name: "RP/RP027-Change-Section.docx") [146 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1410", name: "WC/WC016-Para-Image-Para.docx") [133 ms]
+  Passed OxPt.WcTests.WC004_Compare_To_Self(testId: "WCS-1050", name: "WC/WC002-DeleteInMiddle.docx") [102 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1190", name1: "WC/WC007-Unmodified.docx", name2: "WC/WC007-Moved-into-Table.docx") [131 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1620", name1: "WC/WC036-Footnote-With-Table-Before.docx", name2: "WC/WC036-Footnote-With-Table-After.docx") [310 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1600", name1: "WC/WC035-Footnote-Before.docx", name2: "WC/WC035-Footnote-After.docx") [363 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1410", name1: "WC/WC021-Math-Before-2.docx", name2: "WC/WC021-Math-After-2.docx") [205 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1230", name1: "WC/WC012-Math-Before.docx", name2: "WC/WC012-Math-After.docx") [158 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1710", name1: "WC/WC036-Endnote-With-Table-After.docx", name2: "WC/WC036-Endnote-With-Table-Before.docx") [375 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1440", name1: "WC/WC024-Table-Before.docx", name2: "WC/WC024-Table-After.docx") [182 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1050", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DiffAtBeginning.docx") [141 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1530", name1: "WC/WC032-Para-with-Para-Props.docx", name2: "WC/WC032-Para-with-Para-Props-After.docx") [111 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1570", name1: "WC/WC034-Footnotes-Before.docx", name2: "WC/WC034-Footnotes-After2.docx") [104 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1120", name1: "WC/WC002-DeleteInMiddle.docx", name2: "WC/WC002-Unmodified.docx") [82 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1520", name1: "WC/WC031-Two-Maths-Before.docx", name2: "WC/WC031-Two-Maths-After.docx") [104 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1340", name1: "WC/WC018-Field-Simple-Before.docx", name2: "WC/WC018-Field-Simple-After-1.docx") [76 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1550", name1: "WC/WC033-Merged-Cells-Before.docx", name2: "WC/WC033-Merged-Cells-After2.docx") [91 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1150", name1: "WC/WC006-Table-Delete-Row.docx", name2: "WC/WC006-Table.docx") [81 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1160", name1: "WC/WC006-Table.docx", name2: "WC/WC006-Table-Delete-Contests-of-Row.docx") [92 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1510", name1: "WC/WC030-Image-Math-Before.docx", name2: "WC/WC030-Image-Math-After.docx") [133 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1310", name1: "WC/WC015-Three-Paragraphs.docx", name2: "WC/WC015-Three-Paragraphs-After.docx") [91 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1260", name1: "WC/WC013-Image-Before2.docx", name2: "WC/WC013-Image-After2.docx") [106 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1320", name1: "WC/WC016-Para-Image-Para.docx", name2: "WC/WC016-Para-Image-Para-w-Deleted-Image.docx") [73 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1210", name1: "WC/WC010-Para-Before-Table-Unmodified.docx", name2: "WC/WC010-Para-Before-Table-Mod.docx") [73 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1680", name1: "WC/WC035-Endnote-Before.docx", name2: "WC/WC035-Endnote-After.docx") [140 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1460", name1: "WC/WC025-Simple-Table-Before.docx", name2: "WC/WC025-Simple-Table-After.docx") [78 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1090", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DeleteAtEnd.docx") [66 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1270", name1: "WC/WC014-SmartArt-Before.docx", name2: "WC/WC014-SmartArt-After.docx") [117 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1420", name1: "WC/WC022-Image-Math-Para-Before.docx", name2: "WC/WC022-Image-Math-Para-After.docx") [290 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1380", name1: "WC/WC020-FootNote-Before.docx", name2: "WC/WC020-FootNote-After-1.docx") [91 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1480", name1: "WC/WC027-Twenty-Paras-Before.docx", name2: "WC/WC027-Twenty-Paras-After-1.docx") [78 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1180", name1: "WC/WC007-Unmodified.docx", name2: "WC/WC007-Deleted-at-Beginning-of-Para.docx") [64 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1590", name1: "WC/WC034-Footnotes-After3.docx", name2: "WC/WC034-Footnotes-Before.docx") [80 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1630", name1: "WC/WC036-Footnote-With-Table-After.docx", name2: "WC/WC036-Footnote-With-Table-Before.docx") [121 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1580", name1: "WC/WC034-Footnotes-Before.docx", name2: "WC/WC034-Footnotes-After3.docx") [106 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1290", name1: "WC/WC014-SmartArt-With-Image-Before.docx", name2: "WC/WC014-SmartArt-With-Image-Deleted-After.docx") [116 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1610", name1: "WC/WC035-Footnote-After.docx", name2: "WC/WC035-Footnote-Before.docx") [130 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1650", name1: "WC/WC034-Endnotes-Before.docx", name2: "WC/WC034-Endnotes-After2.docx") [87 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1660", name1: "WC/WC034-Endnotes-Before.docx", name2: "WC/WC034-Endnotes-After3.docx") [108 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1040", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DiffInMiddle.docx") [71 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1560", name1: "WC/WC034-Footnotes-Before.docx", name2: "WC/WC034-Footnotes-After1.docx") [91 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1640", name1: "WC/WC034-Endnotes-Before.docx", name2: "WC/WC034-Endnotes-After1.docx") [96 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1700", name1: "WC/WC036-Endnote-With-Table-Before.docx", name2: "WC/WC036-Endnote-With-Table-After.docx") [153 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1670", name1: "WC/WC034-Endnotes-After3.docx", name2: "WC/WC034-Endnotes-Before.docx") [108 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1020", name1: "WC/WC001-Digits.docx", name2: "WC/WC001-Digits-Deleted-Paragraph.docx") [76 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1400", name1: "WC/WC021-Math-Before-1.docx", name2: "WC/WC021-Math-After-1.docx") [109 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1200", name1: "WC/WC009-Table-Unmodified.docx", name2: "WC/WC009-Table-Cell-1-1-Mod.docx") [90 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1140", name1: "WC/WC006-Table.docx", name2: "WC/WC006-Table-Delete-Row.docx") [98 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1060", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DeleteAtBeginning.docx") [81 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1430", name1: "WC/WC023-Table-4-Row-Image-Before.docx", name2: "WC/WC023-Table-4-Row-Image-After-Delete-1-Row.docx") [254 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1030", name1: "WC/WC001-Digits-Deleted-Paragraph.docx", name2: "WC/WC001-Digits.docx") [60 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1300", name1: "WC/WC014-SmartArt-With-Image-Before.docx", name2: "WC/WC014-SmartArt-With-Image-Deleted-After2.docx") [110 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1110", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-InsertInMiddle.docx") [72 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1170", name1: "WC/WC007-Unmodified.docx", name2: "WC/WC007-Longest-At-End.docx") [65 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1220", name1: "WC/WC011-Before.docx", name2: "WC/WC011-After.docx") [61 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1000", name1: "CA/CA001-Plain.docx", name2: "CA/CA001-Plain-Mod.docx") [56 ms]
+[xUnit.net 00:00:35.54]     OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1740", name1: "RC/RC002-Image.docx", name2: "RC/RC002-Image-After1.docx") [FAIL]
+[xUnit.net 00:00:35.54]       Error
+[xUnit.net 00:00:35.54]         ErrorType: Package
+[xUnit.net 00:00:35.54]         Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+[xUnit.net 00:00:35.54]         Part: /word/document.xml
+[xUnit.net 00:00:35.54]         XPath: 
+[xUnit.net 00:00:35.54]       
+[xUnit.net 00:00:35.54]       Stack Trace:
+[xUnit.net 00:00:35.54]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(487,0): at OxPt.WcTests.WC002_Consolidate_Bulk_Test(String testId, String name1, String name2)
+[xUnit.net 00:00:35.54]            at InvokeStub_WcTests.WC002_Consolidate_Bulk_Test(Object, Span`1)
+[xUnit.net 00:00:35.54]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1740", name1: "RC/RC002-Image.docx", name2: "RC/RC002-Image-After1.docx") [69 ms]
+  Error Message:
+   Error
+  ErrorType: Package
+  Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+  Part: /word/document.xml
+  XPath: 
+
+  Stack Trace:
+     at OxPt.WcTests.WC002_Consolidate_Bulk_Test(String testId, String name1, String name2) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 487
+   at InvokeStub_WcTests.WC002_Consolidate_Bulk_Test(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1010", name1: "WC/WC001-Digits.docx", name2: "WC/WC001-Digits-Mod.docx") [67 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1070", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-InsertAtBeginning.docx") [65 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1390", name1: "WC/WC020-FootNote-Before.docx", name2: "WC/WC020-FootNote-After-2.docx") [83 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1250", name1: "WC/WC013-Image-Before.docx", name2: "WC/WC013-Image-After2.docx") [71 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1360", name1: "WC/WC019-Hyperlink-Before.docx", name2: "WC/WC019-Hyperlink-After-1.docx") [68 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1370", name1: "WC/WC019-Hyperlink-Before.docx", name2: "WC/WC019-Hyperlink-After-2.docx") [72 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1330", name1: "WC/WC017-Image.docx", name2: "WC/WC017-Image-After.docx") [62 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1490", name1: "WC/WC027-Twenty-Paras-After-1.docx", name2: "WC/WC027-Twenty-Paras-Before.docx") [68 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1280", name1: "WC/WC014-SmartArt-With-Image-Before.docx", name2: "WC/WC014-SmartArt-With-Image-After.docx") [119 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1240", name1: "WC/WC013-Image-Before.docx", name2: "WC/WC013-Image-After.docx") [79 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1450", name1: "WC/WC024-Table-Before.docx", name2: "WC/WC024-Table-After2.docx") [69 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1720", name1: "WC/WC038-Document-With-BR-Before.docx", name2: "WC/WC038-Document-With-BR-After.docx") [66 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1350", name1: "WC/WC018-Field-Simple-Before.docx", name2: "WC/WC018-Field-Simple-After-2.docx") [61 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1500", name1: "WC/WC027-Twenty-Paras-Before.docx", name2: "WC/WC027-Twenty-Paras-After-2.docx") [75 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1730", name1: "RC/RC001-Before.docx", name2: "RC/RC001-After1.docx") [84 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1470", name1: "WC/WC026-Long-Table-Before.docx", name2: "WC/WC026-Long-Table-After-1.docx") [110 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1100", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DeleteInMiddle.docx") [94 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1540", name1: "WC/WC033-Merged-Cells-Before.docx", name2: "WC/WC033-Merged-Cells-After1.docx") [120 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1690", name1: "WC/WC035-Endnote-After.docx", name2: "WC/WC035-Endnote-Before.docx") [166 ms]
+  Passed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1080", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-InsertAtEnd.docx") [75 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1420", name1: "WC/WC021-Math-Before-1.docx", name2: "WC/WC021-Math-After-1.docx", revisionCount: 9) [203 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1850", name1: "WC/WC043-Nested-Table.docx", name2: "WC/WC043-Nested-Table-Mod.docx", revisionCount: 2) [143 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1880", name1: "WC/WC046-Two-Text-Box.docx", name2: "WC/WC046-Two-Text-Box-Mod.docx", revisionCount: 2) [152 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1220", name1: "WC/WC011-Before.docx", name2: "WC/WC011-After.docx", revisionCount: 2) [136 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1510", name1: "WC/WC027-Twenty-Paras-Before.docx", name2: "WC/WC027-Twenty-Paras-After-1.docx", revisionCount: 2) [114 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1160", name1: "WC/WC006-Table.docx", name2: "WC/WC006-Table-Delete-Contests-of-Row.docx", revisionCount: 2) [97 ms]
+[xUnit.net 00:00:39.04]     OxPt.WcTests.WC003_Compare(testId: "WC-1720", name1: "WC/WC034-Endnotes-After3.docx", name2: "WC/WC034-Endnotes-Before.docx", revisionCount: 7) [FAIL]
+[xUnit.net 00:00:39.04]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:39.04]       Expected: 7
+[xUnit.net 00:00:39.04]       Actual:   6
+[xUnit.net 00:00:39.04]       Stack Trace:
+[xUnit.net 00:00:39.04]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(757,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:39.04]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:39.04]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1840", name1: "WC/WC042-Table-5.docx", name2: "WC/WC042-Table-5-Mod.docx", revisionCount: 2) [97 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1470", name1: "WC/WC024-Table-Before.docx", name2: "WC/WC024-Table-After2.docx", revisionCount: 7) [98 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1330", name1: "WC/WC015-Three-Paragraphs.docx", name2: "WC/WC015-Three-Paragraphs-After.docx", revisionCount: 3) [87 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1650", name1: "WC/WC035-Footnote-After.docx", name2: "WC/WC035-Footnote-Before.docx", revisionCount: 2) [156 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1740", name1: "WC/WC035-Endnote-After.docx", name2: "WC/WC035-Endnote-Before.docx", revisionCount: 2) [159 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1910", name1: "WC/WC049-Text-Box-in-Cell.docx", name2: "WC/WC049-Text-Box-in-Cell-Mod.docx", revisionCount: 5) [132 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1980", name1: "WC/WC056-French.docx", name2: "WC/WC056-French-Mod.docx", revisionCount: 0) [91 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1100", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DeleteInMiddle.docx", revisionCount: 1) [95 ms]
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1720", name1: "WC/WC034-Endnotes-After3.docx", name2: "WC/WC034-Endnotes-Before.docx", revisionCount: 7) [45 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 7
+Actual:   6
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:39.84]     OxPt.WcTests.WC003_Compare(testId: "WC-1660", name1: "WC/WC036-Footnote-With-Table-Before.docx", name2: "WC/WC036-Footnote-With-Table-After.docx", revisionCount: 5) [FAIL]
+[xUnit.net 00:00:39.84]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:39.84]       Expected: 5
+[xUnit.net 00:00:39.84]       Actual:   0
+[xUnit.net 00:00:39.84]       Stack Trace:
+[xUnit.net 00:00:39.84]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(757,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:39.84]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:39.84]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1440", name1: "WC/WC022-Image-Math-Para-Before.docx", name2: "WC/WC022-Image-Math-Para-After.docx", revisionCount: 10) [382 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1200", name1: "WC/WC009-Table-Unmodified.docx", name2: "WC/WC009-Table-Cell-1-1-Mod.docx", revisionCount: 1) [116 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1990", name1: "WC/WC057-Table-Merged-Cell.docx", name2: "WC/WC057-Table-Merged-Cell-Mod.docx", revisionCount: 4) [121 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1610", name1: "WC/WC034-Footnotes-Before.docx", name2: "WC/WC034-Footnotes-After2.docx", revisionCount: 4) [119 ms]
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1660", name1: "WC/WC036-Footnote-With-Table-Before.docx", name2: "WC/WC036-Footnote-With-Table-After.docx", revisionCount: 5) [62 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 5
+Actual:   0
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2080", name1: "WC/WC065-Textbox.docx", name2: "WC/WC065-Textbox-Mod.docx", revisionCount: 2) [110 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1270", name1: "WC/WC014-SmartArt-Before.docx", name2: "WC/WC014-SmartArt-After.docx", revisionCount: 2) [151 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1460", name1: "WC/WC024-Table-Before.docx", name2: "WC/WC024-Table-After.docx", revisionCount: 1) [104 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1930", name1: "WC/WC051-Table-in-Text-Box.docx", name2: "WC/WC051-Table-in-Text-Box-Mod.docx", revisionCount: 9) [156 ms]
+[xUnit.net 00:00:41.27]     OxPt.WcTests.WC003_Compare(testId: "WC-1240", name1: "WC/WC013-Image-Before.docx", name2: "WC/WC013-Image-After.docx", revisionCount: 2) [FAIL]
+[xUnit.net 00:00:41.27]       System.InvalidOperationException : PackageRelationship with specified ID does not exist for the source part.
+[xUnit.net 00:00:41.28]       Stack Trace:
+[xUnit.net 00:00:41.28]            at System.IO.Packaging.PackagePart.GetRelationship(String id)
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs(4753,0): at OpenXmlPowerTools.WmlComparer.MoveRelatedPartsToDestination(PackagePart partOfDeletedContent, PackagePart partInNewDocument, XElement contentElement)
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs(4621,0): at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_6.<CoalesceRecurse>b__18(ComparisonUnitAtom gce)
+[xUnit.net 00:00:41.28]            at System.Linq.Enumerable.IEnumerableSelectIterator`2.MoveNext()
+[xUnit.net 00:00:41.28]            at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+[xUnit.net 00:00:41.28]            at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+[xUnit.net 00:00:41.28]            at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+[xUnit.net 00:00:41.28]            at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+[xUnit.net 00:00:41.28]            at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+[xUnit.net 00:00:41.28]            at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs(4552,0): at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_0.<CoalesceRecurse>b__2(IGrouping`2 g)
+[xUnit.net 00:00:41.28]            at System.Linq.Enumerable.IEnumerableWhereSelectIterator`2.ToList()
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs(4474,0): at OpenXmlPowerTools.WmlComparer.CoalesceRecurse(OpenXmlPart part, IEnumerable`1 list, Int32 level, WmlComparerSettings settings)
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs(4503,0): at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_0.<CoalesceRecurse>b__5(IGrouping`2 gc)
+[xUnit.net 00:00:41.28]            at System.Linq.Enumerable.ListSelectIterator`2.ToList()
+[xUnit.net 00:00:41.28]            at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_0.<CoalesceRecurse>b__2(IGrouping`2 g)
+[xUnit.net 00:00:41.28]            at System.Linq.Enumerable.IEnumerableWhereSelectIterator`2.ToList()
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs(4474,0): at OpenXmlPowerTools.WmlComparer.CoalesceRecurse(OpenXmlPart part, IEnumerable`1 list, Int32 level, WmlComparerSettings settings)
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs(1686,0): at OpenXmlPowerTools.WmlComparer.ProduceDocumentWithTrackedRevisions(WmlComparerSettings settings, WmlDocument wmlResult, WordprocessingDocument wDoc1, WordprocessingDocument wDoc2)
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs(213,0): at OpenXmlPowerTools.WmlComparer.CompareInternal(WmlDocument source1, WmlDocument source2, WmlComparerSettings settings, Boolean preProcessMarkupInOriginal)
+[xUnit.net 00:00:41.28]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(786,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:41.28]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:41.28]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:41.33]     OxPt.WcTests.WC003_Compare(testId: "WC-1710", name1: "WC/WC034-Endnotes-Before.docx", name2: "WC/WC034-Endnotes-After3.docx", revisionCount: 7) [FAIL]
+[xUnit.net 00:00:41.33]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:41.33]       Expected: 7
+[xUnit.net 00:00:41.33]       Actual:   6
+[xUnit.net 00:00:41.33]       Stack Trace:
+[xUnit.net 00:00:41.33]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(757,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:41.33]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:41.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1700", name1: "WC/WC034-Endnotes-Before.docx", name2: "WC/WC034-Endnotes-After2.docx", revisionCount: 4) [123 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2030", name1: "WC/WC061-Style-Added.docx", name2: "WC/WC061-Style-Added-Mod.docx", revisionCount: 1) [102 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1370", name1: "WC/WC018-Field-Simple-Before.docx", name2: "WC/WC018-Field-Simple-After-2.docx", revisionCount: 3) [116 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1190", name1: "WC/WC007-Unmodified.docx", name2: "WC/WC007-Moved-into-Table.docx", revisionCount: 2) [128 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1120", name1: "WC/WC002-DeleteInMiddle.docx", name2: "WC/WC002-Unmodified.docx", revisionCount: 1) [152 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1770", name1: "WC/WC037-Textbox-Before.docx", name2: "WC/WC037-Textbox-After1.docx", revisionCount: 2) [145 ms]
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1240", name1: "WC/WC013-Image-Before.docx", name2: "WC/WC013-Image-After.docx", revisionCount: 2) [138 ms]
+  Error Message:
+   System.InvalidOperationException : PackageRelationship with specified ID does not exist for the source part.
+  Stack Trace:
+     at System.IO.Packaging.PackagePart.GetRelationship(String id)
+   at OpenXmlPowerTools.WmlComparer.MoveRelatedPartsToDestination(PackagePart partOfDeletedContent, PackagePart partInNewDocument, XElement contentElement) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 4753
+   at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_6.<CoalesceRecurse>b__18(ComparisonUnitAtom gce) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 4621
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.MoveNext()
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+   at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_0.<CoalesceRecurse>b__2(IGrouping`2 g) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 4552
+   at System.Linq.Enumerable.IEnumerableWhereSelectIterator`2.ToList()
+   at OpenXmlPowerTools.WmlComparer.CoalesceRecurse(OpenXmlPart part, IEnumerable`1 list, Int32 level, WmlComparerSettings settings) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 4474
+   at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_0.<CoalesceRecurse>b__5(IGrouping`2 gc) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 4503
+   at System.Linq.Enumerable.ListSelectIterator`2.ToList()
+   at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_0.<CoalesceRecurse>b__2(IGrouping`2 g)
+   at System.Linq.Enumerable.IEnumerableWhereSelectIterator`2.ToList()
+   at OpenXmlPowerTools.WmlComparer.CoalesceRecurse(OpenXmlPart part, IEnumerable`1 list, Int32 level, WmlComparerSettings settings) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 4474
+   at OpenXmlPowerTools.WmlComparer.ProduceDocumentWithTrackedRevisions(WmlComparerSettings settings, WmlDocument wmlResult, WordprocessingDocument wDoc1, WordprocessingDocument wDoc2) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 1686
+   at OpenXmlPowerTools.WmlComparer.CompareInternal(WmlDocument source1, WmlDocument source2, WmlComparerSettings settings, Boolean preProcessMarkupInOriginal) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 213
+   at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 786
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1710", name1: "WC/WC034-Endnotes-Before.docx", name2: "WC/WC034-Endnotes-After3.docx", revisionCount: 7) [53 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 7
+Actual:   6
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2092", name1: "WC/WC066-Textbox-Before-Ins-Mod.docx", name2: "WC/WC066-Textbox-Before-Ins.docx", revisionCount: 1) [147 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1410", name1: "WC/WC020-FootNote-Before.docx", name2: "WC/WC020-FootNote-After-2.docx", revisionCount: 5) [124 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1480", name1: "WC/WC025-Simple-Table-Before.docx", name2: "WC/WC025-Simple-Table-After.docx", revisionCount: 4) [113 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1630", name1: "WC/WC034-Footnotes-After3.docx", name2: "WC/WC034-Footnotes-Before.docx", revisionCount: 3) [114 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1070", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-InsertAtBeginning.docx", revisionCount: 1) [97 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1110", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-InsertInMiddle.docx", revisionCount: 1) [97 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1730", name1: "WC/WC035-Endnote-Before.docx", name2: "WC/WC035-Endnote-After.docx", revisionCount: 2) [148 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1950", name1: "WC/WC053-Text-in-Cell.docx", name2: "WC/WC053-Text-in-Cell-Mod.docx", revisionCount: 2) [106 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1580", name1: "WC/WC033-Merged-Cells-Before.docx", name2: "WC/WC033-Merged-Cells-After2.docx", revisionCount: 4) [104 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1140", name1: "WC/WC006-Table.docx", name2: "WC/WC006-Table-Delete-Row.docx", revisionCount: 1) [99 ms]
+[xUnit.net 00:00:43.33]     OxPt.WcTests.WC003_Compare(testId: "WC-1810", name1: "RC/RC002-Image.docx", name2: "RC/RC002-Image-After1.docx", revisionCount: 1) [FAIL]
+[xUnit.net 00:00:43.33]       Error
+[xUnit.net 00:00:43.33]         ErrorType: Package
+[xUnit.net 00:00:43.33]         Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+[xUnit.net 00:00:43.33]         Part: /word/document.xml
+[xUnit.net 00:00:43.33]         XPath: 
+[xUnit.net 00:00:43.33]       
+[xUnit.net 00:00:43.33]       Stack Trace:
+[xUnit.net 00:00:43.33]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(750,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:43.33]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:43.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2000", name1: "WC/WC058-Table-Merged-Cell.docx", name2: "WC/WC058-Table-Merged-Cell-Mod.docx", revisionCount: 6) [97 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1320", name1: "WC/WC014-SmartArt-With-Image-Before.docx", name2: "WC/WC014-SmartArt-With-Image-Deleted-After2.docx", revisionCount: 1) [172 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1540", name1: "WC/WC030-Image-Math-Before.docx", name2: "WC/WC030-Image-Math-After.docx", revisionCount: 2) [140 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1960", name1: "WC/WC054-Text-in-Cell.docx", name2: "WC/WC054-Text-in-Cell-Mod.docx", revisionCount: 0) [97 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2020", name1: "WC/WC060-Endnote.docx", name2: "WC/WC060-Endnote-Mod.docx", revisionCount: 3) [103 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1550", name1: "WC/WC031-Two-Maths-Before.docx", name2: "WC/WC031-Two-Maths-After.docx", revisionCount: 4) [102 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2050", name1: "WC/WC063-Footnote.docx", name2: "WC/WC063-Footnote-Mod.docx", revisionCount: 1) [104 ms]
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1810", name1: "RC/RC002-Image.docx", name2: "RC/RC002-Image-After1.docx", revisionCount: 1) [31 ms]
+  Error Message:
+   Error
+  ErrorType: Package
+  Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+  Part: /word/document.xml
+  XPath: 
+
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 750
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1090", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DeleteAtEnd.docx", revisionCount: 1) [84 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1230", name1: "WC/WC012-Math-Before.docx", name2: "WC/WC012-Math-After.docx", revisionCount: 2) [92 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1970", name1: "WC/WC055-French.docx", name2: "WC/WC055-French-Mod.docx", revisionCount: 0) [93 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1800", name1: "RC/RC001-Before.docx", name2: "RC/RC001-After1.docx", revisionCount: 2) [86 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1870", name1: "WC/WC045-Text-Box.docx", name2: "WC/WC045-Text-Box-Mod.docx", revisionCount: 2) [95 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1020", name1: "WC/WC001-Digits.docx", name2: "WC/WC001-Digits-Deleted-Paragraph.docx", revisionCount: 1) [100 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1680", name1: "WC/WC034-Endnotes-Before.docx", name2: "WC/WC034-Endnotes-After1.docx", revisionCount: 1) [114 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1340", name1: "WC/WC016-Para-Image-Para.docx", name2: "WC/WC016-Para-Image-Para-w-Deleted-Image.docx", revisionCount: 1) [104 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1400", name1: "WC/WC020-FootNote-Before.docx", name2: "WC/WC020-FootNote-After-1.docx", revisionCount: 3) [121 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1450", name1: "WC/WC023-Table-4-Row-Image-Before.docx", name2: "WC/WC023-Table-4-Row-Image-After-Delete-1-Row.docx", revisionCount: 7) [294 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1150", name1: "WC/WC006-Table-Delete-Row.docx", name2: "WC/WC006-Table.docx", revisionCount: 1) [104 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1430", name1: "WC/WC021-Math-Before-2.docx", name2: "WC/WC021-Math-After-2.docx", revisionCount: 6) [128 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1520", name1: "WC/WC027-Twenty-Paras-After-1.docx", name2: "WC/WC027-Twenty-Paras-Before.docx", revisionCount: 2) [102 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1600", name1: "WC/WC034-Footnotes-Before.docx", name2: "WC/WC034-Footnotes-After1.docx", revisionCount: 1) [108 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1560", name1: "WC/WC032-Para-with-Para-Props.docx", name2: "WC/WC032-Para-with-Para-Props-After.docx", revisionCount: 3) [88 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1040", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DiffInMiddle.docx", revisionCount: 2) [84 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1280", name1: "WC/WC014-SmartArt-With-Image-Before.docx", name2: "WC/WC014-SmartArt-With-Image-After.docx", revisionCount: 2) [144 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1360", name1: "WC/WC018-Field-Simple-Before.docx", name2: "WC/WC018-Field-Simple-After-1.docx", revisionCount: 2) [81 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1570", name1: "WC/WC033-Merged-Cells-Before.docx", name2: "WC/WC033-Merged-Cells-After1.docx", revisionCount: 2) [103 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1900", name1: "WC/WC048-Text-Box-in-Cell.docx", name2: "WC/WC048-Text-Box-in-Cell-Mod.docx", revisionCount: 6) [145 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1820", name1: "WC/WC039-Break-In-Row.docx", name2: "WC/WC039-Break-In-Row-After1.docx", revisionCount: 1) [97 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1890", name1: "WC/WC047-Two-Text-Box.docx", name2: "WC/WC047-Two-Text-Box-Mod.docx", revisionCount: 2) [141 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1060", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DeleteAtBeginning.docx", revisionCount: 1) [116 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1390", name1: "WC/WC019-Hyperlink-Before.docx", name2: "WC/WC019-Hyperlink-After-2.docx", revisionCount: 5) [130 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2070", name1: "WC/WC064-Footnote.docx", name2: "WC/WC064-Footnote-Mod.docx", revisionCount: 0) [133 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2090", name1: "WC/WC066-Textbox-Before-Ins.docx", name2: "WC/WC066-Textbox-Before-Ins-Mod.docx", revisionCount: 1) [90 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1170", name1: "WC/WC007-Unmodified.docx", name2: "WC/WC007-Longest-At-End.docx", revisionCount: 2) [85 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1260", name1: "WC/WC013-Image-Before2.docx", name2: "WC/WC013-Image-After2.docx", revisionCount: 2) [95 ms]
+[xUnit.net 00:00:46.70]     OxPt.WcTests.WC003_Compare(testId: "WC-1500", name1: "WC/WC026-Long-Table-Before.docx", name2: "WC/WC026-Long-Table-After-1.docx", revisionCount: 2) [FAIL]
+[xUnit.net 00:00:46.70]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:46.70]       Expected: 2
+[xUnit.net 00:00:46.70]       Actual:   10
+[xUnit.net 00:00:46.70]       Stack Trace:
+[xUnit.net 00:00:46.70]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(757,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:46.70]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:46.70]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:46.74]     OxPt.WcTests.WC003_Compare(testId: "WC-1760", name1: "WC/WC036-Endnote-With-Table-After.docx", name2: "WC/WC036-Endnote-With-Table-Before.docx", revisionCount: 6) [FAIL]
+[xUnit.net 00:00:46.74]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:46.74]       Expected: 6
+[xUnit.net 00:00:46.74]       Actual:   0
+[xUnit.net 00:00:46.74]       Stack Trace:
+[xUnit.net 00:00:46.74]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(757,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:46.74]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:46.74]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1310", name1: "WC/WC014-SmartArt-With-Image-Before.docx", name2: "WC/WC014-SmartArt-With-Image-Deleted-After.docx", revisionCount: 3) [150 ms]
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1500", name1: "WC/WC026-Long-Table-Before.docx", name2: "WC/WC026-Long-Table-After-1.docx", revisionCount: 2) [40 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 2
+Actual:   10
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1760", name1: "WC/WC036-Endnote-With-Table-After.docx", name2: "WC/WC036-Endnote-With-Table-Before.docx", revisionCount: 6) [48 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 6
+Actual:   0
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2100", name1: "WC/WC067-Textbox-Image.docx", name2: "WC/WC067-Textbox-Image-Mod.docx", revisionCount: 2) [115 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1380", name1: "WC/WC019-Hyperlink-Before.docx", name2: "WC/WC019-Hyperlink-After-1.docx", revisionCount: 3) [95 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2010", name1: "WC/WC059-Footnote.docx", name2: "WC/WC059-Footnote-Mod.docx", revisionCount: 5) [97 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1620", name1: "WC/WC034-Footnotes-Before.docx", name2: "WC/WC034-Footnotes-After3.docx", revisionCount: 3) [145 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1530", name1: "WC/WC027-Twenty-Paras-Before.docx", name2: "WC/WC027-Twenty-Paras-After-2.docx", revisionCount: 4) [104 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1050", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-DiffAtBeginning.docx", revisionCount: 2) [96 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2040", name1: "WC/WC062-New-Char-Style-Added.docx", name2: "WC/WC062-New-Char-Style-Added-Mod.docx", revisionCount: 2) [95 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1920", name1: "WC/WC050-Table-in-Text-Box.docx", name2: "WC/WC050-Table-in-Text-Box-Mod.docx", revisionCount: 8) [143 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1030", name1: "WC/WC001-Digits-Deleted-Paragraph.docx", name2: "WC/WC001-Digits.docx", revisionCount: 1) [90 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2060", name1: "WC/WC063-Footnote-Mod.docx", name2: "WC/WC063-Footnote.docx", revisionCount: 1) [108 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1640", name1: "WC/WC035-Footnote-Before.docx", name2: "WC/WC035-Footnote-After.docx", revisionCount: 2) [170 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1350", name1: "WC/WC017-Image.docx", name2: "WC/WC017-Image-After.docx", revisionCount: 3) [98 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1860", name1: "WC/WC044-Text-Box.docx", name2: "WC/WC044-Text-Box-Mod.docx", revisionCount: 2) [101 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1000", name1: "CA/CA001-Plain.docx", name2: "CA/CA001-Plain-Mod.docx", revisionCount: 1) [91 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1210", name1: "WC/WC010-Para-Before-Table-Unmodified.docx", name2: "WC/WC010-Para-Before-Table-Mod.docx", revisionCount: 3) [96 ms]
+[xUnit.net 00:00:48.66]     OxPt.WcTests.WC003_Compare(testId: "WC-1670", name1: "WC/WC036-Footnote-With-Table-After.docx", name2: "WC/WC036-Footnote-With-Table-Before.docx", revisionCount: 5) [FAIL]
+[xUnit.net 00:00:48.66]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:48.66]       Expected: 5
+[xUnit.net 00:00:48.66]       Actual:   0
+[xUnit.net 00:00:48.66]       Stack Trace:
+[xUnit.net 00:00:48.66]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(757,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:48.66]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:48.66]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:48.90]     OxPt.WcTests.WC003_Compare(testId: "WC-1750", name1: "WC/WC036-Endnote-With-Table-Before.docx", name2: "WC/WC036-Endnote-With-Table-After.docx", revisionCount: 6) [FAIL]
+[xUnit.net 00:00:48.90]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:48.90]       Expected: 6
+[xUnit.net 00:00:48.90]       Actual:   0
+[xUnit.net 00:00:48.90]       Stack Trace:
+[xUnit.net 00:00:48.90]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(757,0): at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount)
+[xUnit.net 00:00:48.90]            at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+[xUnit.net 00:00:48.90]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1830", name1: "WC/WC041-Table-5.docx", name2: "WC/WC041-Table-5-Mod.docx", revisionCount: 2) [112 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1250", name1: "WC/WC013-Image-Before.docx", name2: "WC/WC013-Image-After2.docx", revisionCount: 2) [97 ms]
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1670", name1: "WC/WC036-Footnote-With-Table-After.docx", name2: "WC/WC036-Footnote-With-Table-Before.docx", revisionCount: 5) [52 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 5
+Actual:   0
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1010", name1: "WC/WC001-Digits.docx", name2: "WC/WC001-Digits-Mod.docx", revisionCount: 4) [92 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1180", name1: "WC/WC007-Unmodified.docx", name2: "WC/WC007-Deleted-at-Beginning-of-Para.docx", revisionCount: 1) [90 ms]
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1750", name1: "WC/WC036-Endnote-With-Table-Before.docx", name2: "WC/WC036-Endnote-With-Table-After.docx", revisionCount: 6) [59 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 6
+Actual:   0
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1780", name1: "WC/WC038-Document-With-BR-Before.docx", name2: "WC/WC038-Document-With-BR-After.docx", revisionCount: 2) [130 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1940", name1: "WC/WC052-SmartArt-Same.docx", name2: "WC/WC052-SmartArt-Same-Mod.docx", revisionCount: 2) [193 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1080", name1: "WC/WC002-Unmodified.docx", name2: "WC/WC002-InsertAtEnd.docx", revisionCount: 1) [113 ms]
+[xUnit.net 00:00:49.73]     OxPt.WcTests.WC001_Consolidate(testId: "RC-0020", originalName: "RC/RC002-Image.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [FAIL]
+[xUnit.net 00:00:49.73]       Error
+[xUnit.net 00:00:49.73]         ErrorType: Package
+[xUnit.net 00:00:49.73]         Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+[xUnit.net 00:00:49.73]         Part: /word/document.xml
+[xUnit.net 00:00:49.73]         XPath: 
+[xUnit.net 00:00:49.73]       
+[xUnit.net 00:00:49.73]       Stack Trace:
+[xUnit.net 00:00:49.73]         J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs(258,0): at OxPt.WcTests.WC001_Consolidate(String testId, String originalName, String revisedDocumentsXml)
+[xUnit.net 00:00:49.73]            at InvokeStub_WcTests.WC001_Consolidate(Object, Span`1)
+[xUnit.net 00:00:49.73]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0070", originalName: "RC/RC004-Before.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [84 ms]
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0010", originalName: "RC/RC001-Before.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [87 ms]
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0080", originalName: "RC/RC005-Before.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [52 ms]
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0050", originalName: "WC/WC027-Twenty-Paras-Before.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [58 ms]
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0060", originalName: "RC/RC003-Multi-Paras.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [50 ms]
+  Failed OxPt.WcTests.WC001_Consolidate(testId: "RC-0020", originalName: "RC/RC002-Image.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [57 ms]
+  Error Message:
+   Error
+  ErrorType: Package
+  Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+  Part: /word/document.xml
+  XPath: 
+
+  Stack Trace:
+     at OxPt.WcTests.WC001_Consolidate(String testId, String originalName, String revisedDocumentsXml) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 258
+   at InvokeStub_WcTests.WC001_Consolidate(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0030", originalName: "RC/RC002-Image-After1.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [55 ms]
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0040", originalName: "WC/WC027-Twenty-Paras-Before.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [58 ms]
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0100", originalName: "RC/RC007-Endnotes-Before.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [72 ms]
+[xUnit.net 00:00:50.02]   Finished:    OpenXmlPowerTools.Tests
+  Passed OxPt.WcTests.WC001_Consolidate(testId: "RC-0090", originalName: "RC/RC006-Before.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [59 ms]
+  Passed OxPt.WcTests.WC005_Compare_CaseInsensitive(testId: "WCI-1000", name1: "WC/WC040-Case-Before.docx", name2: "WC/WC040-Case-After.docx", revisionCount: 2) [42 ms]
+
+Test Run Failed.
+Total tests: 979
+     Passed: 956
+     Failed: 22
+    Skipped: 1
+ Total time: 50.5794 Seconds
+     1>Project "J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.sln" (1) is building "J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\OpenXmlPowerTools.Tests.csproj" (3) on node 2 (VSTest target(s)).
+     3>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     3>Done Building Project "J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\OpenXmlPowerTools.Tests.csproj" (VSTest target(s)) -- FAILED.
+     1>Done Building Project "J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.sln" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:51.62

@@ -1,0 +1,10 @@
+﻿[*.cs]
+
+# RCS1139: Add summary element to documentation comment
+dotnet_diagnostic.RCS1139.severity = none
+
+# RCS1044: Remove original exception from throw statement
+dotnet_diagnostic.RCS1044.severity = none
+
+# RCS1102: Make class static
+dotnet_diagnostic.RCS1102.severity = suggestion

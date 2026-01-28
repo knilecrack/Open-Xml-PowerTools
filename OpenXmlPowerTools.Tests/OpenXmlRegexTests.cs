@@ -12,17 +12,17 @@ using Xunit;
 
 #if !ELIDE_XUNIT_TESTS
 
-namespace OpenXmlPowerTools.Tests
+namespace OpenXmlPowerTools.Tests;
+
+public class OpenXmlRegexTests
 {
-    public class OpenXmlRegexTests
-    {
-        private const WordprocessingDocumentType DocumentType = WordprocessingDocumentType.Document;
+    private const WordprocessingDocumentType DocumentType = WordprocessingDocumentType.Document;
 
-        private const string LeftDoubleQuotationMarks = @"[\u0022“„«»”]";
-        private const string Words = @"[\w\-&/]+(?:\s[\w\-&/]+)*";
-        private const string RightDoubleQuotationMarks = @"[\u0022”‟»«“]";
+    private const string LeftDoubleQuotationMarks = @"[\u0022“„«»”]";
+    private const string Words = @"[\w\-&/]+(?:\s[\w\-&/]+)*";
+    private const string RightDoubleQuotationMarks = @"[\u0022”‟»«“]";
 
-        private const string QuotationMarksDocumentXmlString =
+    private const string QuotationMarksDocumentXmlString =
 @"<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
   <w:body>
     <w:p>
@@ -45,7 +45,7 @@ namespace OpenXmlPowerTools.Tests
   </w:body>
 </w:document>";
 
-        private const string QuotationMarksAndTrackedChangesDocumentXmlString =
+    private const string QuotationMarksAndTrackedChangesDocumentXmlString =
 @"<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
   <w:body>
     <w:p>
@@ -97,7 +97,7 @@ namespace OpenXmlPowerTools.Tests
   </w:body>
 </w:document>";
 
-        private const string SymbolsAndTrackedChangesDocumentXmlString =
+    private const string SymbolsAndTrackedChangesDocumentXmlString =
 @"<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
   <w:body>
     <w:p>
@@ -128,7 +128,7 @@ namespace OpenXmlPowerTools.Tests
   </w:body>
 </w:document>";
 
-        private const string FieldsDocumentXmlString =
+    private const string FieldsDocumentXmlString =
 @"<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
   <w:body>
     <w:p>
@@ -202,183 +202,182 @@ namespace OpenXmlPowerTools.Tests
   </w:body>
 </w:document>";
 
-        private static string InnerText(XContainer e)
-        {
-            return e.Descendants(W.r)
-                .Where(r => r.Parent.Name != W.del)
-                .Select(UnicodeMapper.RunToString)
-                .StringConcatenate();
-        }
+    private static string InnerText(XContainer e)
+    {
+        return e.Descendants(W.r)
+            .Where(r => r.Parent.Name != W.del)
+            .Select(UnicodeMapper.RunToString)
+            .StringConcatenate();
+    }
 
-        private static string InnerDelText(XContainer e)
-        {
-            return e.Descendants(W.delText)
-                .Select(delText => delText.Value)
-                .StringConcatenate();
-        }
+    private static string InnerDelText(XContainer e)
+    {
+        return e.Descendants(W.delText)
+            .Select(delText => delText.Value)
+            .StringConcatenate();
+    }
 
-        [Fact]
-        public void CanReplaceTextWithQuotationMarks()
-        {
-            XDocument partDocument = XDocument.Parse(QuotationMarksDocumentXmlString);
-            XElement p = partDocument.Descendants(W.p).First();
-            string innerText = InnerText(p);
+    [Fact]
+    public void CanReplaceTextWithQuotationMarks()
+    {
+        XDocument partDocument = XDocument.Parse(QuotationMarksDocumentXmlString);
+        XElement p = partDocument.Descendants(W.p).First();
+        string innerText = InnerText(p);
 
+        Assert.Equal(
+            "Text can be enclosed in “normal double quotes” and in «double angle quotation marks».",
+            innerText);
+
+        using (var stream = new MemoryStream())
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
+        {
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.PutXDocument(partDocument);
+
+            IEnumerable<XElement> content = partDocument.Descendants(W.p);
+            var regex = new Regex(string.Format("{0}(?<words>{1}){2}", LeftDoubleQuotationMarks, Words,
+                RightDoubleQuotationMarks));
+            int count = OpenXmlRegex.Replace(content, regex, "‘changed ${words}’", null);
+
+            p = partDocument.Descendants(W.p).First();
+            innerText = InnerText(p);
+
+            Assert.Equal(2, count);
             Assert.Equal(
-                "Text can be enclosed in “normal double quotes” and in «double angle quotation marks».",
+                "Text can be enclosed in ‘changed normal double quotes’ and in ‘changed double angle quotation marks’.",
                 innerText);
-
-            using (var stream = new MemoryStream())
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.PutXDocument(partDocument);
-
-                IEnumerable<XElement> content = partDocument.Descendants(W.p);
-                var regex = new Regex(string.Format("{0}(?<words>{1}){2}", LeftDoubleQuotationMarks, Words,
-                    RightDoubleQuotationMarks));
-                int count = OpenXmlRegex.Replace(content, regex, "‘changed ${words}’", null);
-
-                p = partDocument.Descendants(W.p).First();
-                innerText = InnerText(p);
-
-                Assert.Equal(2, count);
-                Assert.Equal(
-                    "Text can be enclosed in ‘changed normal double quotes’ and in ‘changed double angle quotation marks’.",
-                    innerText);
-            }
         }
+    }
 
-        [Fact]
-        public void CanReplaceTextWithQuotationMarksAndAddTrackedChangesWhenReplacing()
+    [Fact]
+    public void CanReplaceTextWithQuotationMarksAndAddTrackedChangesWhenReplacing()
+    {
+        XDocument partDocument = XDocument.Parse(QuotationMarksDocumentXmlString);
+        XElement p = partDocument.Descendants(W.p).First();
+        string innerText = InnerText(p);
+
+        Assert.Equal(
+            "Text can be enclosed in “normal double quotes” and in «double angle quotation marks».",
+            innerText);
+
+        using (var stream = new MemoryStream())
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
         {
-            XDocument partDocument = XDocument.Parse(QuotationMarksDocumentXmlString);
-            XElement p = partDocument.Descendants(W.p).First();
-            string innerText = InnerText(p);
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.PutXDocument(partDocument);
 
+            IEnumerable<XElement> content = partDocument.Descendants(W.p);
+            var regex = new Regex(string.Format("{0}(?<words>{1}){2}", LeftDoubleQuotationMarks, Words,
+                RightDoubleQuotationMarks));
+            int count = OpenXmlRegex.Replace(content, regex, "‘changed ${words}’", null, true, "John Doe");
+
+            p = partDocument.Descendants(W.p).First();
+            innerText = InnerText(p);
+
+            Assert.Equal(2, count);
             Assert.Equal(
-                "Text can be enclosed in “normal double quotes” and in «double angle quotation marks».",
+                "Text can be enclosed in ‘changed normal double quotes’ and in ‘changed double angle quotation marks’.",
                 innerText);
 
-            using (var stream = new MemoryStream())
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.PutXDocument(partDocument);
+            Assert.Contains(p.Elements(W.ins), e => InnerText(e) == "‘changed normal double quotes’");
+            Assert.Contains(p.Elements(W.ins), e => InnerText(e) == "‘changed double angle quotation marks’");
 
-                IEnumerable<XElement> content = partDocument.Descendants(W.p);
-                var regex = new Regex(string.Format("{0}(?<words>{1}){2}", LeftDoubleQuotationMarks, Words,
-                    RightDoubleQuotationMarks));
-                int count = OpenXmlRegex.Replace(content, regex, "‘changed ${words}’", null, true, "John Doe");
-
-                p = partDocument.Descendants(W.p).First();
-                innerText = InnerText(p);
-
-                Assert.Equal(2, count);
-                Assert.Equal(
-                    "Text can be enclosed in ‘changed normal double quotes’ and in ‘changed double angle quotation marks’.",
-                    innerText);
-
-                Assert.Contains(p.Elements(W.ins), e => InnerText(e) == "‘changed normal double quotes’");
-                Assert.Contains(p.Elements(W.ins), e => InnerText(e) == "‘changed double angle quotation marks’");
-
-                Assert.Contains(p.Elements(W.del), e => InnerDelText(e) == "“normal double quotes”");
-                Assert.Contains(p.Elements(W.del), e => InnerDelText(e) == "«double angle quotation marks»");
-            }
+            Assert.Contains(p.Elements(W.del), e => InnerDelText(e) == "“normal double quotes”");
+            Assert.Contains(p.Elements(W.del), e => InnerDelText(e) == "«double angle quotation marks»");
         }
+    }
 
-        [Fact]
-        public void CanReplaceTextWithQuotationMarksAndTrackedChanges()
+    [Fact]
+    public void CanReplaceTextWithQuotationMarksAndTrackedChanges()
+    {
+        XDocument partDocument = XDocument.Parse(QuotationMarksAndTrackedChangesDocumentXmlString);
+        XElement p = partDocument.Descendants(W.p).First();
+        string innerText = InnerText(p);
+
+        Assert.Equal(
+            "Text can be enclosed in “normal double quotes” and in «double angle quotation marks».",
+            innerText);
+
+        using (var stream = new MemoryStream())
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
         {
-            XDocument partDocument = XDocument.Parse(QuotationMarksAndTrackedChangesDocumentXmlString);
-            XElement p = partDocument.Descendants(W.p).First();
-            string innerText = InnerText(p);
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.PutXDocument(partDocument);
 
+            IEnumerable<XElement> content = partDocument.Descendants(W.p);
+            var regex = new Regex(string.Format("{0}(?<words>{1}){2}", LeftDoubleQuotationMarks, Words,
+                RightDoubleQuotationMarks));
+            int count = OpenXmlRegex.Replace(content, regex, "‘changed ${words}’", null, true, "John Doe");
+
+            p = partDocument.Descendants(W.p).First();
+            innerText = InnerText(p);
+
+            Assert.Equal(2, count);
             Assert.Equal(
-                "Text can be enclosed in “normal double quotes” and in «double angle quotation marks».",
+                "Text can be enclosed in ‘changed normal double quotes’ and in ‘changed double angle quotation marks’.",
                 innerText);
 
-            using (var stream = new MemoryStream())
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.PutXDocument(partDocument);
-
-                IEnumerable<XElement> content = partDocument.Descendants(W.p);
-                var regex = new Regex(string.Format("{0}(?<words>{1}){2}", LeftDoubleQuotationMarks, Words,
-                    RightDoubleQuotationMarks));
-                int count = OpenXmlRegex.Replace(content, regex, "‘changed ${words}’", null, true, "John Doe");
-
-                p = partDocument.Descendants(W.p).First();
-                innerText = InnerText(p);
-
-                Assert.Equal(2, count);
-                Assert.Equal(
-                    "Text can be enclosed in ‘changed normal double quotes’ and in ‘changed double angle quotation marks’.",
-                    innerText);
-
-                Assert.Contains(p.Elements(W.ins), e => InnerText(e) == "‘changed normal double quotes’");
-                Assert.Contains(p.Elements(W.ins), e => InnerText(e) == "‘changed double angle quotation marks’");
-            }
+            Assert.Contains(p.Elements(W.ins), e => InnerText(e) == "‘changed normal double quotes’");
+            Assert.Contains(p.Elements(W.ins), e => InnerText(e) == "‘changed double angle quotation marks’");
         }
+    }
 
-        [Fact]
-        public void CanReplaceTextWithSymbolsAndTrackedChanges()
+    [Fact]
+    public void CanReplaceTextWithSymbolsAndTrackedChanges()
+    {
+        XDocument partDocument = XDocument.Parse(SymbolsAndTrackedChangesDocumentXmlString);
+        XElement p = partDocument.Descendants(W.p).First();
+        string innerText = InnerText(p);
+
+        Assert.Equal("We can also use symbols such as \uF021 or \uF028.", innerText);
+
+        using (var stream = new MemoryStream())
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
         {
-            XDocument partDocument = XDocument.Parse(SymbolsAndTrackedChangesDocumentXmlString);
-            XElement p = partDocument.Descendants(W.p).First();
-            string innerText = InnerText(p);
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.PutXDocument(partDocument);
 
-            Assert.Equal("We can also use symbols such as \uF021 or \uF028.", innerText);
+            IEnumerable<XElement> content = partDocument.Descendants(W.p);
+            var regex = new Regex(@"[\uF021]");
+            int count = OpenXmlRegex.Replace(content, regex, "\uF028", null, true, "John Doe");
 
-            using (var stream = new MemoryStream())
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.PutXDocument(partDocument);
+            p = partDocument.Descendants(W.p).First();
+            innerText = InnerText(p);
 
-                IEnumerable<XElement> content = partDocument.Descendants(W.p);
-                var regex = new Regex(@"[\uF021]");
-                int count = OpenXmlRegex.Replace(content, regex, "\uF028", null, true, "John Doe");
+            Assert.Equal(1, count);
+            Assert.Equal("We can also use symbols such as \uF028 or \uF028.", innerText);
 
-                p = partDocument.Descendants(W.p).First();
-                innerText = InnerText(p);
-
-                Assert.Equal(1, count);
-                Assert.Equal("We can also use symbols such as \uF028 or \uF028.", innerText);
-
-                Assert.Contains(p.Descendants(W.ins), ins => ins.Descendants(W.sym).Any(
-                        sym => sym.Attribute(W.font).Value == "Wingdings" && 
-                               sym.Attribute(W._char).Value == "F028"));
-            }
+            Assert.Contains(p.Descendants(W.ins), ins => ins.Descendants(W.sym).Any(
+                    sym => sym.Attribute(W.font).Value == "Wingdings" &&
+                           sym.Attribute(W._char).Value == "F028"));
         }
+    }
 
-        [Fact]
-        public void CanReplaceTextWithFields()
+    [Fact]
+    public void CanReplaceTextWithFields()
+    {
+        XDocument partDocument = XDocument.Parse(FieldsDocumentXmlString);
+        XElement p = partDocument.Descendants(W.p).Last();
+        string innerText = InnerText(p);
+
+        Assert.Equal("As stated in Article {__1} and this Section {__1.1}, this is described in Schedule C (Performance Framework).",
+            innerText);
+
+        using (var stream = new MemoryStream())
+        using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
         {
-            XDocument partDocument = XDocument.Parse(FieldsDocumentXmlString);
-            XElement p = partDocument.Descendants(W.p).Last();
-            string innerText = InnerText(p);
+            MainDocumentPart part = wordDocument.AddMainDocumentPart();
+            part.PutXDocument(partDocument);
 
-            Assert.Equal("As stated in Article {__1} and this Section {__1.1}, this is described in Schedule C (Performance Framework).",
-                innerText);
+            IEnumerable<XElement> content = partDocument.Descendants(W.p);
+            var regex = new Regex(@"Schedule C \(Performance Framework\)");
+            int count = OpenXmlRegex.Replace(content, regex, "Exhibit 4", null, true, "John Doe");
 
-            using (var stream = new MemoryStream())
-            using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(stream, DocumentType))
-            {
-                MainDocumentPart part = wordDocument.AddMainDocumentPart();
-                part.PutXDocument(partDocument);
+            p = partDocument.Descendants(W.p).Last();
+            innerText = InnerText(p);
 
-                IEnumerable<XElement> content = partDocument.Descendants(W.p);
-                var regex = new Regex(@"Schedule C \(Performance Framework\)");
-                int count = OpenXmlRegex.Replace(content, regex, "Exhibit 4", null, true, "John Doe");
-
-                p = partDocument.Descendants(W.p).Last();
-                innerText = InnerText(p);
-
-                Assert.Equal(1, count);
-                Assert.Equal("As stated in Article {__1} and this Section {__1.1}, this is described in Exhibit 4.", innerText);
-            }
+            Assert.Equal(1, count);
+            Assert.Equal("As stated in Article {__1} and this Section {__1.1}, this is described in Exhibit 4.", innerText);
         }
     }
 }

@@ -1,0 +1,242 @@
+# Test Failure Analysis
+
+## Summary
+- Total tests: 979
+- Passed: 956 (97.6%)
+- Failed: 22 (2.2%)
+- Skipped: 1 (0.1%)
+
+## Failed Tests by Category
+
+### 1. PowerToolsBlockExtensionsTests (1 failure)
+  Failed OpenXmlPowerTools.Tests.PowerToolsBlockExtensionsTests.MustEndPowerToolsBlockToUseStronglyTypedClasses [36 ms]
+  Error Message:
+   Assert.Single() Failure: The collection contained 2 items
+Collection: [[···], [···]]
+  Stack Trace:
+     at OpenXmlPowerTools.Tests.PowerToolsBlockExtensionsTests.MustEndPowerToolsBlockToUseStronglyTypedClasses() in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\PowerToolsBlockExtensionsTests.cs:line 115
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "G3:G3", expected: "₩ -", expectedColor: null) [25 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+
+### 2. CfTests - Currency Formatting (7 failures)
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "G3:G3", expected: "₩ -", expectedColor: null) [25 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "₩ -"
+Actual:   "-₩ -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+--
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "H3:H3", expected: "£ -", expectedColor: null) [3 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "£ -"
+Actual:   "-£ -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+--
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "E3:E3", expected: "¥ -", expectedColor: null) [10 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "¥ -"
+Actual:   "-¥ -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+--
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "D3:D3", expected: "€  -", expectedColor: null) [3 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "€  -"
+Actual:   "-€  -"
+           ↑ (pos 0)
+  Stack Trace:
+     at OxPt.CfTests.CF002(String name, String sheetName, String range, String expected, String expectedColor) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SmlCellFormatterTests.cs:line 144
+   at InvokeStub_CfTests.CF002(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithManyArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+--
+  Failed OxPt.CfTests.CF002(name: "SH151-Custom-Cell-Format-Currency.xlsx", sheetName: "Sheet1", range: "F3:F3", expected: "CHF  -", expectedColor: null) [4 ms]
+  Error Message:
+
+### 3. SpreadsheetWriter Tests (1 failure)
+  Failed OxPt.SwTests.SW002_AllDataTypes [670 ms]
+  Error Message:
+   Assert.Empty() Failure: Collection was not empty
+Collection: [ValidationErrorInfo { Description = "Cell contents have invalid value '2012-01-09T00:00"···, ErrorType = Semantic, Id = "Sem_CellValue", Node = [···], Part = WorksheetPart { ContentType = "application/vnd.openxmlformats-officedocument.spre"···, ControlPropertiesParts = [···], CustomPropertyParts = [···], DataPartReferenceRelationships = [···], DrawingsPart = null, ··· }, ··· }, ValidationErrorInfo { Description = "Cell contents have invalid value '2012-01-08T00:00"···, ErrorType = Semantic, Id = "Sem_CellValue", Node = [···], Part = WorksheetPart { ContentType = "application/vnd.openxmlformats-officedocument.spre"···, ControlPropertiesParts = [···], CustomPropertyParts = [···], DataPartReferenceRelationships = [···], DrawingsPart = null, ··· }, ··· }]
+  Stack Trace:
+     at OxPt.SwTests.Validate(FileInfo fi) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SpreadsheetWriterTests.cs:line 335
+   at OxPt.SwTests.SW002_AllDataTypes() in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\SpreadsheetWriterTests.cs:line 309
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH102-9-x-9.xlsx", sheetName: "Sheet1") [36 ms]
+  Passed OxPt.ShTests.SH005_ConvertSheet(name: "SH129-FmtNumId-20.xlsx", sheetName: "Sheet1") [8 ms]
+
+### 4. PresentationBuilder Tests (1 failure)
+  Failed OxPt.PbTests.PB006_VideoFormats [305 ms]
+  Error Message:
+   System.IO.IOException : Entries cannot be opened multiple times in Update mode.
+  Stack Trace:
+     at System.IO.Compression.ZipArchiveEntry.OpenInUpdateMode()
+   at System.IO.Compression.ZipArchiveEntry.Open()
+   at System.IO.Packaging.ZipStreamManager.Open(ZipArchiveEntry zipArchiveEntry, FileAccess streamFileAccess)
+   at System.IO.Packaging.ZipPackagePart.GetStreamCore(FileMode streamFileMode, FileAccess streamFileAccess)
+   at System.IO.Packaging.PackagePart.GetStream(FileMode mode, FileAccess access)
+   at DocumentFormat.OpenXml.Features.PackageFeatureBase.PackagePart.GetStream(FileMode open, FileAccess write)
+   at DocumentFormat.OpenXml.Packaging.DataPart.GetStream(FileMode mode, FileAccess access)
+
+### 5. DocumentBuilder Tests (1 failure)
+  Failed OxPt.DbTests.DB009_ShredDocument [492 ms]
+  Error Message:
+   System.Xml.XmlException : Data at the root level is invalid. Line 57, position 9.
+  Stack Trace:
+     at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+   at System.Xml.XmlTextReaderImpl.Throw(String res, String arg)
+   at System.Xml.XmlTextReaderImpl.ParseRootLevelWhitespace()
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.Linq.XElement.ReadElementFrom(XmlReader r, LoadOptions o)
+   at System.Xml.Linq.XElement.Load(XmlReader reader, LoadOptions options)
+   at OpenXmlPowerTools.ReferenceAdder.AddToc(WordprocessingDocument doc, String xPath, String switches, String title, Nullable`1 rightTabPos) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\ReferenceAdder.cs:line 119
+
+### 6. WmlComparer Tests (11 failures)
+  Failed OxPt.WcTests.WC002_Consolidate_Bulk_Test(testId: "WCB-1740", name1: "RC/RC002-Image.docx", name2: "RC/RC002-Image-After1.docx") [69 ms]
+  Error Message:
+   Error
+  ErrorType: Package
+  Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+  Part: /word/document.xml
+  XPath: 
+
+  Stack Trace:
+     at OxPt.WcTests.WC002_Consolidate_Bulk_Test(String testId, String name1, String name2) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 487
+   at InvokeStub_WcTests.WC002_Consolidate_Bulk_Test(Object, Span`1)
+--
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1720", name1: "WC/WC034-Endnotes-After3.docx", name2: "WC/WC034-Endnotes-Before.docx", revisionCount: 7) [45 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 7
+Actual:   6
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:39.84]     OxPt.WcTests.WC003_Compare(testId: "WC-1660", name1: "WC/WC036-Footnote-With-Table-Before.docx", name2: "WC/WC036-Footnote-With-Table-After.docx", revisionCount: 5) [FAIL]
+[xUnit.net 00:00:39.84]       Assert.Equal() Failure: Values differ
+--
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1660", name1: "WC/WC036-Footnote-With-Table-Before.docx", name2: "WC/WC036-Footnote-With-Table-After.docx", revisionCount: 5) [62 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 5
+Actual:   0
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2080", name1: "WC/WC065-Textbox.docx", name2: "WC/WC065-Textbox-Mod.docx", revisionCount: 2) [110 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1270", name1: "WC/WC014-SmartArt-Before.docx", name2: "WC/WC014-SmartArt-After.docx", revisionCount: 2) [151 ms]
+--
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1240", name1: "WC/WC013-Image-Before.docx", name2: "WC/WC013-Image-After.docx", revisionCount: 2) [138 ms]
+  Error Message:
+   System.InvalidOperationException : PackageRelationship with specified ID does not exist for the source part.
+  Stack Trace:
+     at System.IO.Packaging.PackagePart.GetRelationship(String id)
+   at OpenXmlPowerTools.WmlComparer.MoveRelatedPartsToDestination(PackagePart partOfDeletedContent, PackagePart partInNewDocument, XElement contentElement) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 4753
+   at OpenXmlPowerTools.WmlComparer.<>c__DisplayClass69_6.<CoalesceRecurse>b__18(ComparisonUnitAtom gce) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools\WmlComparer.cs:line 4621
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.MoveNext()
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+   at System.Xml.Linq.XContainer.AddContentSkipNotify(Object content)
+--
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1710", name1: "WC/WC034-Endnotes-Before.docx", name2: "WC/WC034-Endnotes-After3.docx", revisionCount: 7) [53 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 7
+Actual:   6
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2092", name1: "WC/WC066-Textbox-Before-Ins-Mod.docx", name2: "WC/WC066-Textbox-Before-Ins.docx", revisionCount: 1) [147 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1410", name1: "WC/WC020-FootNote-Before.docx", name2: "WC/WC020-FootNote-After-2.docx", revisionCount: 5) [124 ms]
+--
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1810", name1: "RC/RC002-Image.docx", name2: "RC/RC002-Image-After1.docx", revisionCount: 1) [31 ms]
+  Error Message:
+   Error
+  ErrorType: Package
+  Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+  Part: /word/document.xml
+  XPath: 
+
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 750
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+--
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1500", name1: "WC/WC026-Long-Table-Before.docx", name2: "WC/WC026-Long-Table-After-1.docx", revisionCount: 2) [40 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 2
+Actual:   10
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1760", name1: "WC/WC036-Endnote-With-Table-After.docx", name2: "WC/WC036-Endnote-With-Table-Before.docx", revisionCount: 6) [48 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 6
+Actual:   0
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-2100", name1: "WC/WC067-Textbox-Image.docx", name2: "WC/WC067-Textbox-Image-Mod.docx", revisionCount: 2) [115 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1380", name1: "WC/WC019-Hyperlink-Before.docx", name2: "WC/WC019-Hyperlink-After-1.docx", revisionCount: 3) [95 ms]
+--
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1670", name1: "WC/WC036-Footnote-With-Table-After.docx", name2: "WC/WC036-Footnote-With-Table-Before.docx", revisionCount: 5) [52 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 5
+Actual:   0
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1010", name1: "WC/WC001-Digits.docx", name2: "WC/WC001-Digits-Mod.docx", revisionCount: 4) [92 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1180", name1: "WC/WC007-Unmodified.docx", name2: "WC/WC007-Deleted-at-Beginning-of-Para.docx", revisionCount: 1) [90 ms]
+  Failed OxPt.WcTests.WC003_Compare(testId: "WC-1750", name1: "WC/WC036-Endnote-With-Table-Before.docx", name2: "WC/WC036-Endnote-With-Table-After.docx", revisionCount: 6) [59 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 6
+Actual:   0
+  Stack Trace:
+     at OxPt.WcTests.WC003_Compare(String testId, String name1, String name2, Int32 revisionCount) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 757
+   at InvokeStub_WcTests.WC003_Compare(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1780", name1: "WC/WC038-Document-With-BR-Before.docx", name2: "WC/WC038-Document-With-BR-After.docx", revisionCount: 2) [130 ms]
+  Passed OxPt.WcTests.WC003_Compare(testId: "WC-1940", name1: "WC/WC052-SmartArt-Same.docx", name2: "WC/WC052-SmartArt-Same-Mod.docx", revisionCount: 2) [193 ms]
+--
+  Failed OxPt.WcTests.WC001_Consolidate(testId: "RC-0020", originalName: "RC/RC002-Image.docx", revisedDocumentsXml: "<Root>\r\n              <RcInfo>\r\n              "···) [57 ms]
+  Error Message:
+   Error
+  ErrorType: Package
+  Description: The package/part 'MainDocumentPart{/word/document.xml}' can only have one instance of relationship that targets part 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable'.
+  Part: /word/document.xml
+  XPath: 
+
+  Stack Trace:
+     at OxPt.WcTests.WC001_Consolidate(String testId, String originalName, String revisedDocumentsXml) in J:\repos\knilecrack\Open-Xml-PowerTools\OpenXmlPowerTools.Tests\WmlComparerTests.cs:line 258
+   at InvokeStub_WcTests.WC001_Consolidate(Object, Span`1)
